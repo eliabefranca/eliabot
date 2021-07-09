@@ -1,0 +1,7 @@
+ELIABOT.data.json
+db/*.json
+yarn*.*
+
+logs
+.node-persist
+node_modules

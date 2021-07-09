@@ -1,0 +1,27 @@
+{
+  "name": "zapzap-bot",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "@open-wa/wa-automate": "^4.8.2",
+    "lodash": "^4.17.21"
+  },
+  "devDependencies": {
+    "@types/jest": "^26.0.24",
+    "@types/lodash": "^4.14.171",
+    "@types/node": "^16.3.0",
+    "babel-jest": "^27.0.6",
+    "jest": "^27.0.6",
+    "nodemon": "^2.0.11",
+    "ts-jest": "^27.0.3",
+    "ts-node": "^10.0.0",
+    "typescript": "^4.3.5"
+  },
+  "scripts": {
+    "start": "ts-node src/index",
+    "dev": "nodemon --watch 'src/**' --ext 'ts,json'  --exec 'ts-node src/index.ts' --config './nodemon.json'",
+    "test": "jest",
+    "test:unit": "jest --passWithNoTests --runInBand"
+  }
+}
