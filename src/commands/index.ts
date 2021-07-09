@@ -1,6 +1,7 @@
 import { Client, Message } from '@open-wa/wa-automate';
-import { commandList } from './command-list';
+import { getCommands } from './command-list';
 import { commandParser } from './command-parser';
+import { CommandData } from './protocols/command';
 
 interface ExecCommandParams {
   message: Message;
@@ -12,13 +13,29 @@ export async function execCommand({ message, client }: ExecCommandParams) {
 
   const { value, command } = commandParser(query);
 
+  let commandToBeExecuted: CommandData | null = null;
+
+  const commandList = await getCommands();
+
   for (const commandData of commandList) {
     if (commandData.command === command) {
-      commandData.func({
-        client,
-        message,
-        value,
-      });
+      commandToBeExecuted = commandData;
+      break;
     }
   }
+
+  if (!commandToBeExecuted) {
+    return;
+  }
+
+  if (commandToBeExecuted.onlyForGroups && !message.chat.isGroup) {
+    await client.sendText(message.from, 'Este comando é apenas para grupos');
+    return;
+  }
+
+  commandToBeExecuted.func({
+    client,
+    message,
+    value,
+  });
 }

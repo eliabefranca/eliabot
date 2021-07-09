@@ -7,8 +7,10 @@ const func: Command = async (params) => {
   await client.reply(message.from, `${answers[option]}`, message.id);
 };
 
-export const yesOrNo: CommandData = {
+const yesOrNo: CommandData = {
   command: '.p',
-  description: '.p _pergunta_ -> responde sim ou não',
+  description: 'Responde sim ou não',
   func,
 };
+
+export default yesOrNo;

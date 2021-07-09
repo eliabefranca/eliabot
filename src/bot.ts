@@ -47,7 +47,14 @@ export class Bot {
     client: Client
   ): Promise<void> {
     if (message?.body?.charAt(0) === '.') {
-      execCommand({ message, client });
+      execCommand({ message, client }).catch(async (error) => {
+        console.log(error);
+        await client.reply(
+          message.from,
+          'Erro ao executar o comando :(',
+          message.id
+        );
+      });
     }
   }
 

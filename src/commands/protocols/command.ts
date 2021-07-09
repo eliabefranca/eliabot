@@ -1,9 +1,11 @@
 import { Client, Message } from '@open-wa/wa-automate';
 
 export interface CommandData {
-  command: '.p';
+  command: string;
   description: string;
   func: Command;
+  onlyForGroups?: boolean;
+  allowedUsers?: string; // TODO: add roles
 }
 
 export interface CommandParams {
