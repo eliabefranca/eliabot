@@ -19,7 +19,7 @@ export class Bot {
       headless: true,
       hostNotificationLang: NotificationLanguage.PTBR,
       useChrome: true,
-      logConsole: true,
+      logConsole: false,
       popup: false,
       qrTimeout: 0, //0 means it will wait forever for you to scan the qr code
       restartOnCrash: false,
@@ -46,15 +46,17 @@ export class Bot {
     message: Message,
     client: Client
   ): Promise<void> {
-    if (message?.body?.charAt(0) === '.') {
-      execCommand({ message, client }).catch(async (error) => {
-        console.log(error);
-        await client.reply(
-          message.from,
-          'Erro ao executar o comando :(',
-          message.id
-        );
-      });
+    let isAcommand =
+      message?.body?.charAt(0) === '.' || message?.caption?.charAt(0) === '.';
+    let query = message.body;
+
+    if (message?.caption?.charAt(0) === '.') {
+      query = message.caption;
+    }
+
+    console.log(message.caption, isAcommand);
+    if (isAcommand) {
+      execCommand({ message, client, query });
     }
   }
 

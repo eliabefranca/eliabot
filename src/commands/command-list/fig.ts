@@ -1,15 +1,22 @@
-import { decryptMedia } from '@open-wa/wa-automate';
+import { decryptMedia, Message } from '@open-wa/wa-automate';
 import { Command, CommandData } from '../protocols/command';
 
 const func: Command = async ({ value, client, message }) => {
+  let mediaMsg: Message = message;
+
+  console.log('Creating sticker for ' + message.sender.name);
+
   const quotedMessage = message.quotedMsg;
+  if (quotedMessage) {
+    mediaMsg = quotedMessage;
+  }
 
-  if (quotedMessage && quotedMessage.mimetype) {
-    let mediaData = await decryptMedia(quotedMessage);
+  if (mediaMsg.mimetype) {
+    const mediaData = await decryptMedia(mediaMsg);
 
-    const imageBase64 = `data:${
-      quotedMessage.mimetype
-    };base64,${mediaData.toString('base64')}`;
+    const imageBase64 = `data:${mediaMsg.mimetype};base64,${mediaData.toString(
+      'base64'
+    )}`;
 
     await client.sendImageAsSticker(message.from, imageBase64, {
       author: 'Eliabot',

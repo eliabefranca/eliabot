@@ -6,36 +6,48 @@ import { CommandData } from './protocols/command';
 interface ExecCommandParams {
   message: Message;
   client: Client;
+  query: string;
 }
 
-export async function execCommand({ message, client }: ExecCommandParams) {
-  const query = message.body;
+export async function execCommand({
+  message,
+  client,
+  query,
+}: ExecCommandParams) {
+  try {
+    const { value, command } = commandParser(query);
 
-  const { value, command } = commandParser(query);
+    let commandToBeExecuted: CommandData | null = null;
 
-  let commandToBeExecuted: CommandData | null = null;
+    const commandList = await getCommands();
 
-  const commandList = await getCommands();
-
-  for (const commandData of commandList) {
-    if (commandData.command === command) {
-      commandToBeExecuted = commandData;
-      break;
+    for (const commandData of commandList) {
+      if (commandData.command === command) {
+        commandToBeExecuted = commandData;
+        break;
+      }
     }
-  }
 
-  if (!commandToBeExecuted) {
-    return;
-  }
+    if (!commandToBeExecuted) {
+      return;
+    }
 
-  if (commandToBeExecuted.onlyForGroups && !message.chat.isGroup) {
-    await client.sendText(message.from, 'Este comando é apenas para grupos');
-    return;
-  }
+    if (commandToBeExecuted.onlyForGroups && !message.chat.isGroup) {
+      await client.sendText(message.from, 'Este comando é apenas para grupos');
+      return;
+    }
 
-  commandToBeExecuted.func({
-    client,
-    message,
-    value,
-  });
+    commandToBeExecuted.func({
+      client,
+      message,
+      value,
+    });
+  } catch (error) {
+    console.log(error);
+    await client.reply(
+      message.from,
+      'Erro ao executar o comando :(',
+      message.id
+    );
+  }
 }
