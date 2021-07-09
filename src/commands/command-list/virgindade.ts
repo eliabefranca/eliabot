@@ -1,6 +1,6 @@
 import { Command, CommandData } from '../protocols/command';
 
-const func: Command = async ({ message, client, value }) => {
+const func: Command = async ({ client, message }) => {
   let groupMembers = await client.getGroupMembers(message.chat.id as any);
 
   let filtered = groupMembers.filter((member) => {
@@ -11,18 +11,24 @@ const func: Command = async ({ message, client, value }) => {
 
   const contactNumber1 = firstMember.id.split('@')[0];
 
+  // await client.sendText(message.from, `😶👉 @${contactNumber1}`, message.id);
+
   await client.sendTextWithMentions(
     message.from,
-    `quem ${value}: 😶👉 @${contactNumber1}`,
+    `Filha : Mae Quero Perder A Virgindade 😨
+Mae : Com Quem ? 👀
+Filha : Com o @${contactNumber1}
+Mãe : Você Tá Louca Quer Perde A Virgindade Ou A Capacidade de Andar😨💔
+    
+taporra 🥴💥`,
     message.id as any
   );
 };
 
-const quem: CommandData = {
+const virgindade: CommandData = {
+  command: '.virgindade',
   func,
-  command: '.quem',
-  description: 'Escolhe um membro aleatório do grupo como responsável',
-  onlyForGroups: true,
+  description: 'Descubra 😳',
 };
 
-export default quem;
+export default virgindade;

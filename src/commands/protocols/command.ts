@@ -6,6 +6,7 @@ export interface CommandData {
   func: Command;
   onlyForGroups?: boolean;
   allowedUsers?: string; // TODO: add roles
+  hidden?: boolean;
 }
 
 export interface CommandParams {
