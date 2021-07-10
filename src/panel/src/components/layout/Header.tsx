@@ -5,10 +5,10 @@ import {
   Collapse,
   Navbar,
   NavbarToggler,
+  NavbarTogglerProps,
   NavbarBrand,
   Nav,
   NavItem,
-  NavLink,
 } from 'reactstrap';
 
 const Header = () => {
@@ -18,7 +18,7 @@ const Header = () => {
 
   return (
     <div>
-      <Navbar color="faded" style={{ backgroundColor: '#333' }}>
+      <Navbar color="faded" dark style={{ backgroundColor: '#333' }}>
         <NavbarBrand href="/" className="ml-1 mr-auto">
           <Container>Eliabot's Panel</Container>
         </NavbarBrand>
@@ -26,10 +26,14 @@ const Header = () => {
         <Collapse isOpen={!collapsed} navbar>
           <Nav navbar>
             <NavItem>
-              <Link to="users">Usuários</Link>
+              <Link className="nav-link" to="users">
+                Usuários
+              </Link>
             </NavItem>
             <NavItem>
-              <Link to="users">Histórico</Link>
+              <Link className="nav-link" to="history">
+                Histórico
+              </Link>
             </NavItem>
           </Nav>
         </Collapse>

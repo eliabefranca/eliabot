@@ -16,6 +16,7 @@ interface History {
   message: string;
   created_at: string;
   updated_at: string;
+  chat: string;
 }
 
 function HistoryPage() {
@@ -35,6 +36,7 @@ function HistoryPage() {
           <tr>
             <th>Usuário</th>
             <th>Mensagem</th>
+            <th>Chat</th>
             <th>Data</th>
           </tr>
         </thead>
@@ -45,7 +47,7 @@ function HistoryPage() {
                 <div className="text-center" style={{ maxWidth: 80 }}>
                   <Link to={`/user/${item.user.id}`}>
                     <img
-                      src={item.user.profilePic}
+                      src={item.user.profilePic || 'assets/img/user.png'}
                       alt={item.user.name}
                       className="img-thumbnail"
                     />
@@ -53,7 +55,9 @@ function HistoryPage() {
                   </Link>
                 </div>
               </th>
+
               <td>{item.message}</td>
+              <td>{item.chat}</td>
               <td>{item.created_at}</td>
             </tr>
           ))}
