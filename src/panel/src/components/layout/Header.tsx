@@ -117,6 +117,11 @@ const Header = () => {
               </Link>
             </NavItem>
             <NavItem>
+              <Link className="nav-link" to="/groups">
+                Groups
+              </Link>
+            </NavItem>
+            <NavItem>
               <Link className="nav-link" to="/history">
                 Histórico
               </Link>

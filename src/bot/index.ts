@@ -2,8 +2,7 @@ import { Bot } from './bot';
 import { getCommands } from './commands/command-list';
 import { getTimeStamp } from '../helpers/date';
 import { getNumberFromContactId } from '../helpers/get-number-from-contact-id';
-import { blockedUsersDb, usersDb, historyDb } from '../database/json/db';
-import { ChatMuteDuration } from '@open-wa/wa-automate';
+import { groupsDb, usersDb, historyDb } from '../database/json/db';
 
 const bot = new Bot();
 
@@ -18,23 +17,36 @@ bot.on('commandReceived', (client, message, query) => {
       profilePic: message.sender.profilePicThumbObj.eurl,
     };
 
-    console.log(message.chat);
     usersDb.save(user);
   }
 
   const { chat } = message;
 
-  historyDb.save({
-    user,
-    message: query,
-    chat: {
-      id: chat.id,
-      isGroup: chat.isGroup,
-      name: chat.name,
-    },
-    created_at: getTimeStamp(),
-    updated_at: getTimeStamp(),
-  });
+  if (query !== '.') {
+    historyDb.save({
+      user,
+      message: query,
+      chat: {
+        id: chat.id,
+        isGroup: chat.isGroup,
+        name: chat.name,
+      },
+      created_at: getTimeStamp(),
+      updated_at: getTimeStamp(),
+    });
+  }
+
+  if (message.chat.isGroup) {
+    let group = groupsDb.getFirst({ id: message.chat.id });
+
+    if (!group) {
+      groupsDb.save({
+        id: message.chat.id,
+        name: message.chat.name,
+        thumb: message.chat.contact.profilePicThumbObj.eurl,
+      });
+    }
+  }
 });
 
 bot.start();

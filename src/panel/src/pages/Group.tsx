@@ -4,25 +4,24 @@ import { Card, CardHeader, CardImg, CardBody, CardText } from 'reactstrap';
 import axios from 'axios';
 import Base from '../components/layout/Base';
 
-interface User {
+interface Group {
   id: string;
   name: string;
-  number: string;
-  profilePic: string;
+  thumb: string;
 }
 
 function User() {
-  const [user, setUser] = useState<User | null>();
+  const [group, setGroup] = useState<Group | null>();
   const { id } = useParams<{ id: string }>();
 
   useEffect(() => {
     axios
       .get(`http://localhost:8080/users/${id}`)
-      .then((response) => setUser(response.data))
-      .catch(() => setUser(null));
+      .then((response) => setGroup(response.data))
+      .catch(() => setGroup(null));
   }, []);
 
-  if (user === null) {
+  if (group === null) {
     return (
       <Base>
         <h4 className="text-muted text-center">&lt;Usuário não existe /&gt;</h4>
@@ -32,22 +31,22 @@ function User() {
 
   return (
     <Base>
-      {user && (
+      {group && (
         <>
-          <h1>{user.name}</h1>
+          <h1>{group.name}</h1>
 
           <Card style={{ maxWidth: 400 }}>
             <CardHeader>
               <div className="text-center">
                 <CardImg
-                  src={user.profilePic || '/assets/img/user.png'}
-                  alt={user.name}
+                  src={group.thumb || '/assets/img/user.png'}
+                  alt={group.name}
                   style={{ maxHeight: '50vh', width: 'auto' }}
                 ></CardImg>
               </div>
               <CardBody>
-                <h4>Telefone:</h4>
-                <CardText>+{user.number}</CardText>
+                <h4>Id:</h4>
+                <CardText>+{group.id}</CardText>
                 <div className="divider"></div>
               </CardBody>
             </CardHeader>
