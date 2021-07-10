@@ -5,4 +5,5 @@ export interface History {
   message: string;
   created_at: string;
   updated_at: string;
+  chat: string;
 }
