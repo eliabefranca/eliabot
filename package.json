@@ -7,12 +7,15 @@
     "@open-wa/wa-automate": "^4.8.2",
     "axios": "^0.21.1",
     "concurrently": "^6.2.0",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
     "g-i-s": "^2.1.6",
     "image-data-uri": "^2.0.1",
     "lodash": "^4.17.21",
     "mime-types": "^2.1.31"
   },
   "devDependencies": {
+    "@types/express": "^4.17.13",
     "@types/jest": "^26.0.24",
     "@types/lodash": "^4.14.171",
     "@types/node": "^16.3.0",
