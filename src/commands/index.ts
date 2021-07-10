@@ -37,11 +37,20 @@ export async function execCommand({
       return;
     }
 
-    commandToBeExecuted.func({
-      client,
-      message,
-      value,
-    });
+    commandToBeExecuted
+      .func({
+        client,
+        message,
+        value,
+      })
+      .catch(async (error) => {
+        console.log(error);
+        await client.reply(
+          message.from,
+          'Erro ao executar o comando :(',
+          message.id
+        );
+      });
   } catch (error) {
     console.log(error);
     await client.reply(

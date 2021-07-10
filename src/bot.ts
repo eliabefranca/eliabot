@@ -54,7 +54,6 @@ export class Bot {
       query = message.caption;
     }
 
-    console.log(message.caption, isAcommand);
     if (isAcommand) {
       execCommand({ message, client, query });
     }

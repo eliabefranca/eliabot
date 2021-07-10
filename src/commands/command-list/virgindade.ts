@@ -29,6 +29,7 @@ const virgindade: CommandData = {
   command: '.virgindade',
   func,
   description: 'Descubra 😳',
+  onlyForGroups: true,
 };
 
 export default virgindade;

@@ -15,4 +15,4 @@ export interface CommandParams {
   value?: string;
 }
 
-export type Command = (params: CommandParams) => void;
+export type Command = (params: CommandParams) => Promise<void>;

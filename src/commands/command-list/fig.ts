@@ -18,13 +18,29 @@ const func: Command = async ({ value, client, message }) => {
       'base64'
     )}`;
 
-    await client.sendImageAsSticker(message.from, imageBase64, {
-      author: 'Eliabot',
-      keepScale: true,
-      pack: 'teucu',
-      circle: value?.includes('circle'),
-      removebg: value?.includes('removebg'),
-    });
+    if (mediaMsg.mimetype.includes('mp4')) {
+      await client.sendMp4AsSticker(
+        message.from,
+        imageBase64,
+        {},
+        {
+          author: 'Eliabot',
+          keepScale: true,
+          pack: 'teucu',
+          circle: value?.includes('circle'),
+          removebg: value?.includes('removebg'),
+        }
+      );
+    } else {
+      await client.sendImageAsSticker(message.from, imageBase64, {
+        author: 'Eliabot',
+        keepScale: true,
+        pack: 'teucu',
+        circle: value?.includes('circle'),
+        removebg: value?.includes('removebg'),
+      });
+    }
+
     await client.sendText(message.from, 'De nada.');
     // await client.sendText(message.from, quotedMessage.mimetype);
   } else {

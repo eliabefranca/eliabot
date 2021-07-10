@@ -11,7 +11,9 @@ const func: Command = async ({ client, message }) => {
 
   let groupMsg = `*Comandos específicos para grupos*\n\n`;
 
-  commandList.forEach((command) => {
+  const availableCommands = commandList.filter((command) => !command.hidden);
+
+  availableCommands.forEach((command) => {
     if (command.onlyForGroups) {
       groupMsg += `${sm + command.command + sm}: ${
         ita + command.description + ita

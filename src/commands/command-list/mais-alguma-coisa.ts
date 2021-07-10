@@ -10,6 +10,7 @@ const func: Command = async ({ message, client, value }) => {
       'Você precisa me enviar um adjetivo',
       message.id
     );
+    return;
   }
 
   let groupMembers = await client.getGroupMembers(message.chat.id as any);
