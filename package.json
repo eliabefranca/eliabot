@@ -28,7 +28,7 @@
     "start": "concurrently yarn:start*",
     "start:bot": "ts-node src/index",
     "start:panel": "cd src/panel && yarn start",
-    "dev": "concurrently yarn:start*",
+    "dev": "./startdev.sh",
     "dev:bot": "nodemon --watch 'src/**' --ext 'ts,json'  --exec 'ts-node src/index.ts' --config './nodemon.json'",
     "dev:panel": "cd src/panel && yarn start",
     "test": "jest",
