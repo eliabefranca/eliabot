@@ -7,8 +7,22 @@ import {
 } from '@open-wa/wa-automate';
 import { execCommand } from './commands';
 
+type MessageEventHandler = (
+  client: Client,
+  message: Message,
+  query: string
+) => void;
+type EventTypes = 'commandReceived';
+
 export class Bot {
   client: Client | null = null;
+  private commandReceivedEvents = [] as MessageEventHandler[];
+
+  on(event: EventTypes, func: MessageEventHandler) {
+    if (event === 'commandReceived') {
+      this.commandReceivedEvents.push(func);
+    }
+  }
 
   async start(): Promise<void> {
     this.client = await wa.create({
@@ -55,6 +69,9 @@ export class Bot {
     }
 
     if (isAcommand) {
+      this.commandReceivedEvents.forEach((func) => {
+        func(client, message, query);
+      });
       execCommand({ message, client, query });
     }
   }

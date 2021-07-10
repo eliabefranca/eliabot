@@ -6,6 +6,7 @@
   "dependencies": {
     "@open-wa/wa-automate": "^4.8.2",
     "axios": "^0.21.1",
+    "concurrently": "^6.2.0",
     "g-i-s": "^2.1.6",
     "image-data-uri": "^2.0.1",
     "lodash": "^4.17.21",
@@ -24,8 +25,12 @@
     "typescript": "^4.3.5"
   },
   "scripts": {
-    "start": "ts-node src/index",
-    "dev": "nodemon --watch 'src/**' --ext 'ts,json'  --exec 'ts-node src/index.ts' --config './nodemon.json'",
+    "start": "concurrently yarn:start*",
+    "start:bot": "ts-node src/index",
+    "start:panel": "cd src/panel && yarn start",
+    "dev": "concurrently yarn:start*",
+    "dev:bot": "nodemon --watch 'src/**' --ext 'ts,json'  --exec 'ts-node src/index.ts' --config './nodemon.json'",
+    "dev:panel": "cd src/panel && yarn start",
     "test": "jest",
     "test:unit": "jest --passWithNoTests --runInBand"
   }
