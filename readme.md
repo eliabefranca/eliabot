@@ -43,8 +43,36 @@ Para executar apenas o painel:
   yarn dev:panel
 ```
 
+## Adicionando comandos novos
+
+Os comandos ficam na pasta ```src/bot/commands/command-list```.
+
+Não é necessário incluir o comando em nenhum lugar. Ao criá-lo ele será automaticamente importado usando o [fast-glob]([htlinktps://](https://github.com/mrmlnc/fast-glob)).
+
+## Exemplo de um comando
+
+```typescript
+import { Command, CommandData } from '../protocols/command';
+
+const func: Command = async ({client, message}) => {
+  await client.sendText(message.from, 'hello world');
+};
+
+const sampleCommand: CommandData = {
+  command: '.hello', // o quê o usuário precisará digitar
+  description: 'Printa "hello world"', // descrição, isso printa no comando ajuda
+  func, // função que o comando executa
+};
+
+export default sampleCommand;
+
+```
+
+
 ## Testando
-Rodar os testes unitários
+Este projeto não possui muitos testes 😥
+
+Rodando os testes unitários
 ```bash
   yarn test:unit
 ```
