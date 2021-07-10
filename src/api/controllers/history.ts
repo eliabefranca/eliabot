@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 
-import { historyDb } from '../../main/db';
+import { historyDb } from '../../database/json/db';
 import { History } from '../../models/history';
 
 class HistoryController {

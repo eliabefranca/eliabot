@@ -1,8 +1,8 @@
 import path from 'path';
 import fs from 'fs';
-import { getNumberFromContactId } from '../../helpers/get-number-from-contact-id';
+import { getNumberFromContactId } from '../../../helpers/get-number-from-contact-id';
 import { Command, CommandData } from '../protocols/command';
-import { getRamdom } from '../../helpers/get-random';
+import { getRamdom } from '../../../helpers/get-random';
 const mime = require('mime-types');
 
 const func: Command = async ({ client, message, value }) => {

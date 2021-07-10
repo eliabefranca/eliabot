@@ -1,4 +1,11 @@
 {
   "verbose": true,
-  "ignore": ["*.test.js", "*.spec.ts", "*.data.json", "node_modules"]
+  "ignore": [
+    "*.test.js",
+    "*.spec.ts",
+    "*.data.json",
+    "node_modules",
+    "src/panel/*",
+    "*.tsx"
+  ]
 }

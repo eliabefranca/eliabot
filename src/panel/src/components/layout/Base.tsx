@@ -1,7 +1,16 @@
 import React from 'react';
+import Header from './Header';
 
-function Base() {
-  return <div></div>;
+interface Props {
+  children: React.ReactNode;
+}
+
+function Base({ children }: Props) {
+  return (
+    <div>
+      <Header></Header>
+    </div>
+  );
 }
 
 export default Base;

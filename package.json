@@ -32,7 +32,7 @@
     "start:bot": "ts-node src/index",
     "start:panel": "cd src/panel && yarn start",
     "dev": "concurrently yarn:dev:*",
-    "dev:bot": "nodemon --watch 'src/**' --ext 'ts,json'  --exec 'ts-node src/index.ts' --config './nodemon.json'",
+    "dev:bot": "nodemon --watch 'src/bot/**' --ext 'ts,json'  --exec 'ts-node src/bot/index.ts' --config './nodemon.json'",
     "dev:panel": "yarn --cwd ./src/panel start",
     "dev:api": "ts-node ./src/api/index.ts",
     "test": "jest",

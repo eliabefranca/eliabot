@@ -1,4 +1,4 @@
-import { getNumberFromContactId } from '../../helpers/get-number-from-contact-id';
+import { getNumberFromContactId } from '../../../helpers/get-number-from-contact-id';
 import { Command, CommandData } from '../protocols/command';
 
 const func: Command = async ({ message, client, value }) => {

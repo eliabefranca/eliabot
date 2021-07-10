@@ -1,8 +1,8 @@
 import { Bot } from './bot';
 import { getCommands } from './commands/command-list';
-import { getTimeStamp } from './helpers/date';
-import { getNumberFromContactId } from './helpers/get-number-from-contact-id';
-import { blockedUsersDb, usersDb, historyDb } from './main/db';
+import { getTimeStamp } from '../helpers/date';
+import { getNumberFromContactId } from '../helpers/get-number-from-contact-id';
+import { blockedUsersDb, usersDb, historyDb } from '../database/json/db';
 
 const bot = new Bot();
 
