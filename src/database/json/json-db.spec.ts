@@ -72,4 +72,15 @@ describe('JsonDbHelper', () => {
     const sut = new JsonDb<FakeSchema>('valid_file_path');
     sut.save;
   });
+
+  test('update should update values', () => {
+    const sut = new JsonDb<FakeSchema>('valid_file_path');
+
+    sut.update({ id: 1 }, { value: 'asdauhsd' });
+
+    expect(sut.virtualData).toEqual([
+      { id: 1, value: 'asdauhsd' },
+      { id: 2, value: 'another_value' },
+    ]);
+  });
 });

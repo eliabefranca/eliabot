@@ -19,6 +19,10 @@ export class JsonDb<T extends Schema> {
     this.init();
   }
 
+  public get virtualData() {
+    return this.data;
+  }
+
   getData(): T[] {
     const stringData = fs.readFileSync(this.path, { encoding: 'utf-8' });
     const jsonData = JSON.parse(stringData) as T[];
@@ -51,6 +55,33 @@ export class JsonDb<T extends Schema> {
     this.updateFile();
   }
 
+  match(schema: Schema, data: T): boolean {
+    const schemaKeys = Object.keys(schema);
+
+    let matches = 0;
+    for (const schemaKey of schemaKeys) {
+      if (data[schemaKey] && data[schemaKey] === schema[schemaKey]) {
+        matches += 1;
+      }
+    }
+
+    return matches === schemaKeys.length;
+  }
+
+  update(schema: Schema, newValues: Schema): void {
+    this.refresh();
+
+    for (let i = 0; i < this.data.length; i++) {
+      let item = this.data[i];
+
+      if (this.match(schema, item)) {
+        this.data[i] = Object.assign({}, item, newValues);
+      }
+    }
+
+    this.updateFile();
+  }
+
   private init(): void {
     this.refresh();
   }
@@ -58,16 +89,8 @@ export class JsonDb<T extends Schema> {
   get(schema: Schema): T[] {
     this.refresh();
 
-    const schemaKeys = Object.keys(schema);
-
     const values = this.data.filter((item) => {
-      for (const schemaKey of schemaKeys) {
-        if (item[schemaKey] && item[schemaKey] === schema[schemaKey]) {
-          return true;
-        }
-      }
-
-      return false;
+      return this.match(schema, item);
     });
 
     return values;
@@ -95,13 +118,9 @@ export class JsonDb<T extends Schema> {
   getFirst(schema: Schema): T | null {
     this.refresh();
 
-    const schemaKeys = Object.keys(schema);
-
     for (const item of this.data) {
-      for (const schemaKey of schemaKeys) {
-        if (item[schemaKey] && item[schemaKey] === schema[schemaKey]) {
-          return item;
-        }
+      if (this.match(schema, item)) {
+        return item;
       }
     }
 

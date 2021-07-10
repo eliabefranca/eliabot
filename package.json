@@ -35,7 +35,7 @@
     "dev:bot": "nodemon --watch 'src/bot/**' --ext 'ts,json'  --exec 'ts-node src/bot/index.ts' --config './nodemon.json'",
     "dev:panel": "yarn --cwd ./src/panel start",
     "dev:api": "nodemon --watch 'src/bot/**' --ext 'ts,json'  --exec 'ts-node src/api/index.ts' --config './nodemon.json'",
-    "test": "jest",
-    "test:unit": "jest --passWithNoTests --runInBand"
+    "test": "jest --config ./jest.config.js",
+    "test:unit": "jest --config ./jest.config.js --passWithNoTests --runInBand"
   }
 }
