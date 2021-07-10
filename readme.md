@@ -6,7 +6,6 @@ Um bot para whatspapp feito com [@open-wa/wa-automate]([https://link](https://gi
 
 Nada sério, é só por diversão.
 
-<br/>
 
 ## Funcionalidades
 
@@ -16,7 +15,6 @@ Além do automatizador para o Whatsapp, o projeto tem:
 - Um painel simples feito em ReactJS 
 - Uma API em  NodeJS com Express
 
-<br/>
 
 ## Instalando dependências
 
