@@ -39,7 +39,7 @@ function User() {
           <Card style={{ maxWidth: 400 }}>
             <CardHeader>
               <CardImg
-                src={user.profilePic || 'assets/img/user.png'}
+                src={user.profilePic || '/assets/img/user.png'}
                 alt={user.name}
                 style={{ maxHeight: '50vh', width: 'auto' }}
               ></CardImg>

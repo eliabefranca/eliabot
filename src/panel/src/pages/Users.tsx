@@ -40,7 +40,7 @@ function HistoryPage() {
                 <div className="text-center" style={{ maxWidth: 80 }}>
                   <Link to={`/user/${user.id}`}>
                     <img
-                      src={user.profilePic || 'assets/img/user.png'}
+                      src={user.profilePic || '/assets/img/user.png'}
                       alt={user.name}
                       className="img-thumbnail"
                     />

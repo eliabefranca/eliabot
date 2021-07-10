@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { Table } from 'reactstrap';
+import { reverse } from 'lodash';
+
 import Base from '../components/layout/Base';
 
 interface User {
@@ -16,7 +18,7 @@ interface History {
   message: string;
   created_at: string;
   updated_at: string;
-  chat: string;
+  chat: { id: string; name: string; isGroup: boolean };
 }
 
 function HistoryPage() {
@@ -25,7 +27,7 @@ function HistoryPage() {
   useEffect(() => {
     axios
       .get('http://localhost:8080/history')
-      .then((response) => setHistory(response.data));
+      .then((response) => setHistory(reverse(response.data)));
   }, []);
 
   return (
@@ -42,12 +44,12 @@ function HistoryPage() {
         </thead>
         <tbody>
           {history.map((item) => (
-            <tr>
+            <tr key={item.created_at + item.user.id}>
               <th scope="row">
                 <div className="text-center" style={{ maxWidth: 80 }}>
                   <Link to={`/user/${item.user.id}`}>
                     <img
-                      src={item.user.profilePic || 'assets/img/user.png'}
+                      src={item.user.profilePic || '/assets/img/user.png'}
                       alt={item.user.name}
                       className="img-thumbnail"
                     />
@@ -57,7 +59,15 @@ function HistoryPage() {
               </th>
 
               <td>{item.message}</td>
-              <td>{item.chat}</td>
+              <td>
+                {item.chat.isGroup ? (
+                  <Link to={`/groups/${item.chat.id}`}>
+                    <p>{item.chat.name}</p>
+                  </Link>
+                ) : (
+                  <p>{item.chat.name}</p>
+                )}
+              </td>
               <td>{item.created_at}</td>
             </tr>
           ))}

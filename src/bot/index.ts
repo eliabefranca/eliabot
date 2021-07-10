@@ -18,14 +18,20 @@ bot.on('commandReceived', (client, message, query) => {
       profilePic: message.sender.profilePicThumbObj.eurl,
     };
 
-    console.log(message.sender);
+    console.log(message.chat);
     usersDb.save(user);
   }
+
+  const { chat } = message;
 
   historyDb.save({
     user,
     message: query,
-    chat: message.chat.name,
+    chat: {
+      id: chat.id,
+      isGroup: chat.isGroup,
+      name: chat.name,
+    },
     created_at: getTimeStamp(),
     updated_at: getTimeStamp(),
   });

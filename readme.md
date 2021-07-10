@@ -1,4 +1,5 @@
 <h1 align="center">Eliabot</h1>
+<div align="center"><img src="./logo.png" /></div>
 
 ## O que é
 
