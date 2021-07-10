@@ -1,6 +1,7 @@
 import { useState } from 'react';
-
+import { Link } from 'react-router-dom';
 import {
+  Container,
   Collapse,
   Navbar,
   NavbarToggler,
@@ -17,20 +18,18 @@ const Header = () => {
 
   return (
     <div>
-      <Navbar color="faded" dark>
-        <NavbarBrand href="/" className="mr-auto">
-          reactstrap
+      <Navbar color="faded" style={{ backgroundColor: '#333' }}>
+        <NavbarBrand href="/" className="ml-1 mr-auto">
+          <Container>Eliabot's Panel</Container>
         </NavbarBrand>
         <NavbarToggler onClick={toggleNavbar} className="mr-2" />
         <Collapse isOpen={!collapsed} navbar>
           <Nav navbar>
             <NavItem>
-              <NavLink href="/components/">Components</NavLink>
+              <Link to="users">Usuários</Link>
             </NavItem>
             <NavItem>
-              <NavLink href="https://github.com/reactstrap/reactstrap">
-                GitHub
-              </NavLink>
+              <Link to="users">Histórico</Link>
             </NavItem>
           </Nav>
         </Collapse>

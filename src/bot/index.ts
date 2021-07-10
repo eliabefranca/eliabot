@@ -14,8 +14,10 @@ bot.on('commandReceived', (client, message, query) => {
       id: message.sender.id,
       name: message.sender.formattedName,
       number: getNumberFromContactId(message.sender.id),
-      profilePic: message.sender.profilePicThumbObj.imgFull,
+      profilePic: message.sender.profilePicThumbObj.eurl,
     };
+
+    console.log(message.sender.profilePicThumbObj);
     usersDb.save(user);
   }
 

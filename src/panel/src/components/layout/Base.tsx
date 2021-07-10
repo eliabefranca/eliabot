@@ -1,5 +1,9 @@
 import React from 'react';
+import { Container } from 'reactstrap';
+
 import Header from './Header';
+
+import './index.css';
 
 interface Props {
   children: React.ReactNode;
@@ -7,9 +11,11 @@ interface Props {
 
 function Base({ children }: Props) {
   return (
-    <div>
+    <main className="h-100">
       <Header></Header>
-    </div>
+      <div className="mb-4"></div>
+      <Container>{children}</Container>
+    </main>
   );
 }
 

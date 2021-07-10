@@ -11,50 +11,44 @@ interface User {
   profilePic: string;
 }
 
-interface History {
-  user: User;
-  message: string;
-  created_at: string;
-  updated_at: string;
-}
-
 function HistoryPage() {
-  const [history, setHistory] = useState([] as History[]);
+  const [users, setUsers] = useState([] as User[]);
 
   useEffect(() => {
     axios
-      .get('http://localhost:8080/history')
-      .then((response) => setHistory(response.data));
+      .get('http://localhost:8080/users')
+      .then((response) => setUsers(response.data));
   }, []);
 
   return (
     <Base>
-      <h1 className="mb-4">Histórico</h1>
+      <h1 className="mb-4">Usuários</h1>
       <Table>
         <thead>
           <tr>
-            <th>Usuário</th>
-            <th>Mensagem</th>
-            <th>Data</th>
+            <th>id</th>
+            <th>Foto</th>
+            <th>Nome</th>
+            <th>Número</th>
           </tr>
         </thead>
         <tbody>
-          {history.map((item) => (
+          {users.map((user) => (
             <tr>
+              <th>{user.id}</th>
               <th scope="row">
                 <div className="text-center" style={{ maxWidth: 80 }}>
-                  <Link to={`/user/${item.user.id}`}>
+                  <Link to={`/user/${user.id}`}>
                     <img
-                      src={item.user.profilePic}
-                      alt={item.user.name}
+                      src={user.profilePic}
+                      alt={user.name}
                       className="img-thumbnail"
                     />
-                    <small>{item.user.name}</small>
                   </Link>
                 </div>
               </th>
-              <td>{item.message}</td>
-              <td>{item.created_at}</td>
+              <td>{user.name}</td>
+              <td>{user.number}</td>
             </tr>
           ))}
         </tbody>

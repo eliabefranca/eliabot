@@ -1,5 +1,7 @@
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import History from '../pages/History';
+import User from '../pages/User';
+import Users from '../pages/Users';
 
 function Router() {
   return (
@@ -8,7 +10,13 @@ function Router() {
         <Route exact={true} path="/history">
           <History />
         </Route>
-        <Route>
+        <Route path="/users">
+          <Users />
+        </Route>
+        <Route path="/user/:id">
+          <User />
+        </Route>
+        <Route path="/">
           <History />
         </Route>
       </Switch>
