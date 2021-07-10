@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import { Table } from 'reactstrap';
+import { Table, Button } from 'reactstrap';
 import Base from '../components/layout/Base';
 
 interface User {
@@ -30,6 +30,7 @@ function HistoryPage() {
             <th>Foto</th>
             <th>Nome</th>
             <th>Número</th>
+            <th></th>
           </tr>
         </thead>
         <tbody>
@@ -49,6 +50,13 @@ function HistoryPage() {
               </th>
               <td>{user.name}</td>
               <td>{user.number}</td>
+              <td>
+                <Link to={`/user/${user.id}`}>
+                  <Button color="primary">
+                    <i className="far fa-eye"></i> Ver mais
+                  </Button>
+                </Link>
+              </td>
             </tr>
           ))}
         </tbody>

@@ -16,7 +16,7 @@ function User() {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:8080/users/${id}`)
+      .get(`http://localhost:8080/groups/${id}`)
       .then((response) => setGroup(response.data))
       .catch(() => setGroup(null));
   }, []);
@@ -24,7 +24,7 @@ function User() {
   if (group === null) {
     return (
       <Base>
-        <h4 className="text-muted text-center">&lt;Usuário não existe /&gt;</h4>
+        <h4 className="text-muted text-center">&lt;Grupo não existe /&gt;</h4>
       </Base>
     );
   }

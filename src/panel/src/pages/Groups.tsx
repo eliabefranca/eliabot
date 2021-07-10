@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import { Table } from 'reactstrap';
+import { Table, Button } from 'reactstrap';
 import Base from '../components/layout/Base';
 
 interface Group {
@@ -21,13 +21,14 @@ function Groups() {
 
   return (
     <Base>
-      <h1 className="mb-4">Usuários</h1>
+      <h1 className="mb-4">Grupos</h1>
       <Table>
         <thead>
           <tr>
             <th>id</th>
             <th>Thumb</th>
             <th>Nome</th>
+            <th></th>
           </tr>
         </thead>
         <tbody>
@@ -46,6 +47,13 @@ function Groups() {
                 </div>
               </th>
               <td>{group.name}</td>
+              <td>
+                <Link to={`/group/${group.id}`}>
+                  <Button color="primary">
+                    <i className="far fa-eye"></i> Ver mais
+                  </Button>
+                </Link>
+              </td>
             </tr>
           ))}
         </tbody>

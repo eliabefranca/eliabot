@@ -3,6 +3,7 @@ import History from '../pages/History';
 import User from '../pages/User';
 import Users from '../pages/Users';
 import Groups from '../pages/Groups';
+import Group from '../pages/Group';
 
 function Router() {
   return (
@@ -13,6 +14,9 @@ function Router() {
         </Route>
         <Route path="/groups">
           <Groups />
+        </Route>
+        <Route path="/group/:id">
+          <Group />
         </Route>
         <Route path="/users">
           <Users />

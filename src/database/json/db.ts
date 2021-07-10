@@ -1,10 +1,10 @@
 import path from 'path';
 
 import { JsonDb } from './json-db';
-import { BlockedUsers } from '../../models/blocked-users';
-import { History } from '../../models/history';
-import { User } from '../../models/user';
-import { Group } from '../../models/groups';
+import { BlockedUsers } from '../models/blocked-users';
+import { History } from '../models/history';
+import { User } from '../models/user';
+import { Group } from '../models/groups';
 
 const dbFolder = path.join(__dirname, '..', '..', '..', 'db');
 const historyDbJson = path.join(dbFolder, 'history.json');
