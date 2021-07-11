@@ -6,7 +6,7 @@ const func: Command = async ({ client, message, value }) => {
   if (!value) {
     await client.reply(
       message.from,
-      'Você precisa marcar o usuário ou me enviar o número',
+      'Você precisa marcar o usuário ou me enviar o número.',
       message.id
     );
   }
