@@ -11,7 +11,7 @@ export const parseCommand = (query: string) => {
   };
 };
 
-export function getCommand(
+function getCommand(
   command: string,
   commandList: CommandData[]
 ): CommandData | null {
@@ -27,25 +27,35 @@ export function getCommand(
 }
 
 interface CommandHandlerParams {
+  commandData: CommandData;
   query: string;
   message: Message;
   client: Client;
 }
 
+export const getCommandData = async (
+  query: string
+): Promise<CommandData | null> => {
+  const commandList = await getCommandList();
+
+  const { command } = parseCommand(query);
+
+  const commandData = getCommand(command, commandList);
+
+  return commandData;
+};
+
 export async function handleCommand({
+  commandData,
   query,
   client,
   message,
 }: CommandHandlerParams): Promise<boolean> {
-  const commandList = await getCommandList();
-
-  const { command, value } = parseCommand(query);
-
-  const commandData = getCommand(command, commandList);
-
   if (!commandData) {
     return false;
   }
+
+  const { command, value } = parseCommand(query);
 
   if (commandData.onlyForGroups && !message.chat.isGroup) {
     await client.sendText(message.from, 'Este comando é apenas para grupos');

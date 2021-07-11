@@ -5,8 +5,9 @@ import {
   Message,
   NotificationLanguage,
 } from '@open-wa/wa-automate';
-import { userStatsDb } from '../database/json/db';
-import { handleCommand } from './helpers/command';
+import { getCommandData, handleCommand } from './helpers/command';
+import { CommandData } from './commands/protocols/command';
+import { getCommandList } from './commands/command-list';
 
 type MessageEventHandler = (
   client: Client,
@@ -14,15 +15,27 @@ type MessageEventHandler = (
   query: string
 ) => void;
 
+interface CommandMiddlewareParams {
+  commandData: CommandData;
+  client: Client;
+  message: Message;
+  query: string;
+}
+type CommandMiddleware = (params: CommandMiddlewareParams) => Promise<boolean>;
 type GroupAddEventHandler = (chat: Chat, client: Client) => void;
 
-type EventTypes = 'addedToGroup' | 'commandSuccess';
+type EventTypes = 'addedToGroup' | 'commandSuccess' | 'commandReceived';
 type EventHandler = GroupAddEventHandler | MessageEventHandler;
 
 export class Bot {
   client: Client | null = null;
   private commandSuccessEvents = [] as MessageEventHandler[];
+  private commandMiddlewares = [] as CommandMiddleware[];
   private groupAddEvents = [] as GroupAddEventHandler[];
+
+  useMiddleware(func: CommandMiddleware): void {
+    this.commandMiddlewares.push(func);
+  }
 
   on(event: EventTypes, func: EventHandler): void {
     if (event === 'addedToGroup') {
@@ -81,7 +94,31 @@ export class Bot {
       return;
     }
 
-    const success = await handleCommand({ query, message, client });
+    const commandData = await getCommandData(query);
+    if (commandData === null) {
+      return;
+    }
+
+    let shouldContinue = true;
+
+    for (const middleware of this.commandMiddlewares) {
+      const success = await middleware({ commandData, message, query, client });
+      if (!success) {
+        shouldContinue = false;
+        break;
+      }
+    }
+
+    if (!shouldContinue) {
+      return;
+    }
+
+    const success = await handleCommand({
+      query,
+      message,
+      client,
+      commandData,
+    });
 
     if (success) {
       this.commandSuccessEvents.forEach((func) => {

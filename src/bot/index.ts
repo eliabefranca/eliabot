@@ -37,6 +37,28 @@ bot.on('commandSuccess', (client, message, query) => {
   }
 });
 
+// admin middleware
+bot.useMiddleware(
+  async ({ commandData, client, message, query }): Promise<boolean> => {
+    if (commandData.allowedUsers !== 'admin') {
+      return true;
+    }
+
+    const user = usersDb.getFirst({ id: message.sender.id });
+
+    if (user && user.role !== 'admin') {
+      await client.reply(
+        message.from,
+        'Este comando é apenas para administradores.',
+        message.id
+      );
+      return false;
+    }
+
+    return true;
+  }
+);
+
 bot.on('commandSuccess', (client, message, query) => {
   const userStats = userStatsDb.getFirst({ id: message.sender.id });
 

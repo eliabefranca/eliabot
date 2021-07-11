@@ -3,4 +3,5 @@ export interface User {
   name: string;
   number: string;
   profilePic: string;
+  role?: 'admin' | 'moderator';
 }
