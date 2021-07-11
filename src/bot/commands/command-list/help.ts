@@ -1,8 +1,8 @@
-import { getCommands } from '.';
+import { getCommandList } from '.';
 import { Command, CommandData } from '../protocols/command';
 
 const func: Command = async ({ client, message }) => {
-  const commandList = await getCommands();
+  const commandList = await getCommandList();
 
   let msg = '*Comandos gerais*\n\n';
 

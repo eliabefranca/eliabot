@@ -1,8 +1,8 @@
 import { Bot } from './bot';
-import { getCommands } from './commands/command-list';
 import { getTimeStamp } from '../helpers/date';
 import { getNumberFromContactId } from '../helpers/get-number-from-contact-id';
 import { groupsDb, usersDb, historyDb } from '../database/json/db';
+import { Chat, Client } from '@open-wa/wa-automate';
 
 const bot = new Bot();
 
@@ -35,20 +35,18 @@ bot.on('commandReceived', (client, message, query) => {
       updated_at: getTimeStamp(),
     });
   }
+});
 
-  if (message.chat.isGroup) {
-    let group = groupsDb.getFirst({ id: message.chat.id });
+bot.on('addedToGroup', (chat: Chat, client: Client) => {
+  let group = groupsDb.getFirst({ id: chat.id });
 
-    if (!group) {
-      groupsDb.save({
-        id: message.chat.id,
-        name: message.chat.name,
-        thumb: message.chat.contact.profilePicThumbObj.eurl,
-      });
-    }
+  if (!group) {
+    groupsDb.save({
+      id: chat.id,
+      name: chat.name,
+      thumb: chat.contact.profilePicThumbObj.eurl,
+    });
   }
 });
 
 bot.start();
-
-getCommands();

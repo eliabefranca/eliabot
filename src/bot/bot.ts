@@ -5,22 +5,33 @@ import {
   Message,
   NotificationLanguage,
 } from '@open-wa/wa-automate';
-import { execCommand } from './commands';
+import { handleCommand } from './helpers/command';
 
 type MessageEventHandler = (
   client: Client,
   message: Message,
   query: string
 ) => void;
-type EventTypes = 'commandReceived';
+
+type GroupAddEventHandler = (chat: Chat, client: Client) => void;
+
+type EventTypes = 'commandReceived' | 'addedToGroup';
+type EventHandler = GroupAddEventHandler | MessageEventHandler;
 
 export class Bot {
   client: Client | null = null;
   private commandReceivedEvents = [] as MessageEventHandler[];
+  private groupAddEvents = [] as GroupAddEventHandler[];
 
-  on(event: EventTypes, func: MessageEventHandler) {
+  on(event: EventTypes, func: EventHandler): void {
     if (event === 'commandReceived') {
-      this.commandReceivedEvents.push(func);
+      this.commandReceivedEvents.push(func as MessageEventHandler);
+      return;
+    }
+
+    if (event === 'addedToGroup') {
+      this.groupAddEvents.push(func as GroupAddEventHandler);
+      return;
     }
   }
 
@@ -60,20 +71,13 @@ export class Bot {
     message: Message,
     client: Client
   ): Promise<void> {
-    let isAcommand =
-      message?.body?.charAt(0) === '.' || message?.caption?.charAt(0) === '.';
     let query = message.body;
 
-    if (message?.caption?.charAt(0) === '.') {
-      query = message.caption;
+    if (message.isMedia) {
+      query = message.caption ?? '';
     }
 
-    if (isAcommand) {
-      this.commandReceivedEvents.forEach((func) => {
-        func(client, message, query);
-      });
-      execCommand({ message, client, query });
-    }
+    handleCommand({ query, message, client });
   }
 
   private async handleOnAddedToGroup(

@@ -2,7 +2,7 @@ import fg from 'fast-glob';
 import path from 'path';
 import { CommandData } from '../protocols/command';
 
-export const getCommands = async (): Promise<CommandData[]> => {
+export const getCommandList = async (): Promise<CommandData[]> => {
   const files = fg
     .sync(path.join(__dirname, '*.ts'))
     .filter((file) => !/index.ts$/.test(file));
