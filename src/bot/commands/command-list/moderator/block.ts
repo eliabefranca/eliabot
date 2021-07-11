@@ -9,6 +9,7 @@ const func: Command = async ({ client, message, value }) => {
       'Você precisa marcar o usuário ou me enviar o número.',
       message.id
     );
+    return;
   }
 
   const userId = value?.trim().replace('@', '').replace('+', '') + '@c.us';
@@ -41,6 +42,7 @@ const func: Command = async ({ client, message, value }) => {
     'Usuário bloqueado com sucesso.',
     message.id
   );
+  return;
 };
 
 const block: CommandData = {
