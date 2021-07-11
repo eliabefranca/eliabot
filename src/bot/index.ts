@@ -1,12 +1,12 @@
 import { Bot } from './bot';
 import { getTimeStamp } from '../helpers/date';
 import { getNumberFromContactId } from '../helpers/get-number-from-contact-id';
-import { groupsDb, usersDb, historyDb } from '../database/json/db';
+import { groupsDb, usersDb, historyDb, userStatsDb } from '../database/json/db';
 import { Chat, Client } from '@open-wa/wa-automate';
 
 const bot = new Bot();
 
-bot.on('commandReceived', (client, message, query) => {
+bot.on('commandSuccess', (client, message, query) => {
   let user = usersDb.getFirst({ id: message.sender.id });
 
   if (!user) {
@@ -33,6 +33,19 @@ bot.on('commandReceived', (client, message, query) => {
       },
       created_at: getTimeStamp(),
       updated_at: getTimeStamp(),
+    });
+  }
+});
+
+bot.on('commandSuccess', (client, message, query) => {
+  const userStats = userStatsDb.getFirst({ id: message.sender.id });
+
+  if (userStats) {
+    userStatsDb.update(userStats, { commands: userStats.commands + 1 });
+  } else {
+    userStatsDb.save({
+      id: message.sender.id,
+      commands: 1,
     });
   }
 });

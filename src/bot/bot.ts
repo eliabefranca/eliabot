@@ -5,6 +5,7 @@ import {
   Message,
   NotificationLanguage,
 } from '@open-wa/wa-automate';
+import { userStatsDb } from '../database/json/db';
 import { handleCommand } from './helpers/command';
 
 type MessageEventHandler = (
@@ -15,22 +16,22 @@ type MessageEventHandler = (
 
 type GroupAddEventHandler = (chat: Chat, client: Client) => void;
 
-type EventTypes = 'commandReceived' | 'addedToGroup';
+type EventTypes = 'addedToGroup' | 'commandSuccess';
 type EventHandler = GroupAddEventHandler | MessageEventHandler;
 
 export class Bot {
   client: Client | null = null;
-  private commandReceivedEvents = [] as MessageEventHandler[];
+  private commandSuccessEvents = [] as MessageEventHandler[];
   private groupAddEvents = [] as GroupAddEventHandler[];
 
   on(event: EventTypes, func: EventHandler): void {
-    if (event === 'commandReceived') {
-      this.commandReceivedEvents.push(func as MessageEventHandler);
+    if (event === 'addedToGroup') {
+      this.groupAddEvents.push(func as GroupAddEventHandler);
       return;
     }
 
-    if (event === 'addedToGroup') {
-      this.groupAddEvents.push(func as GroupAddEventHandler);
+    if (event === 'commandSuccess') {
+      this.commandSuccessEvents.push(func as MessageEventHandler);
       return;
     }
   }
@@ -51,10 +52,10 @@ export class Bot {
       killProcessOnBrowserClose: true,
     });
 
-    this.setEvents();
+    this.setWaEvents();
   }
 
-  private setEvents(): void {
+  private setWaEvents(): void {
     if (!this.client) {
       return;
     }
@@ -72,12 +73,17 @@ export class Bot {
     client: Client
   ): Promise<void> {
     let query = message.body;
-
     if (message.isMedia) {
       query = message.caption ?? '';
     }
 
-    handleCommand({ query, message, client });
+    const success = await handleCommand({ query, message, client });
+
+    if (success) {
+      this.commandSuccessEvents.forEach((func) => {
+        func(client, message, query);
+      });
+    }
   }
 
   private async handleOnAddedToGroup(
