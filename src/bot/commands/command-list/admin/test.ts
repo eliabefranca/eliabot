@@ -7,7 +7,7 @@ const func: Command = async ({ client, message }) => {
 const test: CommandData = {
   func,
   description: '',
-  command: '.test',
+  command: '.admin',
   allowedUsers: 'admin',
 };
 

@@ -1,7 +1,13 @@
 import { Bot } from './bot';
 import { getTimeStamp } from '../helpers/date';
 import { getNumberFromContactId } from '../helpers/get-number-from-contact-id';
-import { groupsDb, usersDb, historyDb, userStatsDb } from '../database/json/db';
+import {
+  groupsDb,
+  usersDb,
+  historyDb,
+  userStatsDb,
+  blockedUsersDb,
+} from '../database/json/db';
 import { Chat, Client } from '@open-wa/wa-automate';
 
 const bot = new Bot();
@@ -37,19 +43,23 @@ bot.on('commandSuccess', (client, message, query) => {
   }
 });
 
-// admin middleware
+// moderator  middleware
 bot.useMiddleware(
   async ({ commandData, client, message, query }): Promise<boolean> => {
-    if (commandData.allowedUsers !== 'admin') {
+    if (!commandData.allowedUsers) {
       return true;
     }
 
-    const user = usersDb.getFirst({ id: message.sender.id });
+    if (commandData.allowedUsers.includes('moderator')) {
+      const user = usersDb.getFirst({ id: message.sender.id });
 
-    if (user && user.role !== 'admin') {
+      if (user?.role === 'admin' || user?.role === 'moderator') {
+        return true;
+      }
+
       await client.reply(
         message.from,
-        'Este comando é apenas para administradores.',
+        'Este comando é apenas para moderadores e administradores.',
         message.id
       );
       return false;
@@ -58,6 +68,18 @@ bot.useMiddleware(
     return true;
   }
 );
+
+// blocked users middleware
+bot.useMiddleware(async ({ client, message }): Promise<boolean> => {
+  const blockedUser = blockedUsersDb.getFirst({ userId: message.sender.id });
+
+  if (blockedUser) {
+    await client.reply(message.from, 'Usuário bloqueado.', message.id);
+    return false;
+  }
+
+  return true;
+});
 
 bot.on('commandSuccess', (client, message, query) => {
   const userStats = userStatsDb.getFirst({ id: message.sender.id });

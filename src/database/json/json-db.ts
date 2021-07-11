@@ -103,16 +103,8 @@ export class JsonDb<T extends Schema> {
   delete(schema: Schema): void {
     this.refresh();
 
-    const schemaKeys = Object.keys(schema);
-
     const filteredData = this.data.filter((item) => {
-      for (const schemaKey of schemaKeys) {
-        if (item[schemaKey] && item[schemaKey] === schema[schemaKey]) {
-          return false;
-        }
-      }
-
-      return true;
+      return !this.match(schema, item);
     });
 
     this.data = filteredData;

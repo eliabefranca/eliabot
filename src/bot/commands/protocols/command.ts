@@ -5,7 +5,7 @@ export interface CommandData {
   description: string;
   func: Command;
   onlyForGroups?: boolean;
-  allowedUsers?: string; // TODO: add roles
+  allowedUsers?: string | string[]; // TODO: add roles
   hidden?: boolean;
 }
 
