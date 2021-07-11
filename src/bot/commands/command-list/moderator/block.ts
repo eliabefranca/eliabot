@@ -12,20 +12,20 @@ const func: Command = async ({ client, message, value }) => {
   }
 
   const userId = value?.trim().replace('@', '').replace('+', '') + '@c.us';
+  const user = await usersDb.getFirst({ id: userId });
+
+  if (user && (user.role === 'admin' || user.role === 'moderator')) {
+    await client.reply(
+      message.from,
+      'Não é possível bloquear administradores e moderadores.',
+      message.id
+    );
+    return;
+  }
+
   const blockedUser = blockedUsersDb.getFirst({ userId: userId });
 
   if (blockedUser) {
-    const user = await usersDb.getFirst({ id: blockedUser.userId });
-
-    if (user && (user.role === 'admin' || user.role === 'moderator')) {
-      await client.reply(
-        message.from,
-        'Não é possível bloquear administradores e moderadores.',
-        message.id
-      );
-      return;
-    }
-
     blockedUsersDb.delete(blockedUser);
   }
 
