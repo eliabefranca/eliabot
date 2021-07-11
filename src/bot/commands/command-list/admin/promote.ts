@@ -33,6 +33,7 @@ const promote: CommandData = {
   description: '',
   command: '.promote',
   allowedUsers: 'admin',
+  hidden: true,
 };
 
 export default promote;
