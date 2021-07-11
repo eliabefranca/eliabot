@@ -1,5 +1,5 @@
-import { userStatsDb } from '../../../../database/json/db';
-import { Command, CommandData } from '../../protocols/command';
+import { userStatsDb } from '../../../database/json/db';
+import { Command, CommandData } from '../protocols/command';
 
 const func: Command = async ({ client, message }) => {
   const schemaList = message.chat.groupMetadata.participants.map(
