@@ -77,6 +77,10 @@ export class Bot {
       query = message.caption ?? '';
     }
 
+    if (typeof query !== 'string') {
+      return;
+    }
+
     const success = await handleCommand({ query, message, client });
 
     if (success) {

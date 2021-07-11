@@ -45,6 +45,7 @@ bot.on('commandSuccess', (client, message, query) => {
   } else {
     userStatsDb.save({
       id: message.sender.id,
+      name: message.sender.pushname,
       commands: 1,
     });
   }

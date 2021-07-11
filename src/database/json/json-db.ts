@@ -86,10 +86,14 @@ export class JsonDb<T extends Schema> {
     this.refresh();
   }
 
-  get(schema: Schema): T[] {
+  get(schema: Schema | Schema[]): T[] {
     this.refresh();
 
     const values = this.data.filter((item) => {
+      if (schema instanceof Array) {
+        return schema.some((sch) => this.match(sch, item));
+      }
+
       return this.match(schema, item);
     });
 

@@ -14,5 +14,12 @@ export const getCommandList = async (): Promise<CommandData[]> => {
     commands.push(command);
   }
 
+  const adminFiles = fg.sync(path.join(__dirname, 'admin', '*.ts'));
+
+  for (const file of adminFiles) {
+    const command = (await import(`${file}`)).default;
+    commands.push(command);
+  }
+
   return commands;
 };
