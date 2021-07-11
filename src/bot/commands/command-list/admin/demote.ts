@@ -33,6 +33,7 @@ const demote: CommandData = {
   description: '',
   command: '.demote',
   allowedUsers: 'admin',
+  hidden: true,
 };
 
 export default demote;
