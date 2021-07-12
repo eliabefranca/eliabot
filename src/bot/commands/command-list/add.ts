@@ -28,7 +28,15 @@ const func: Command = async ({ client, message, value }) => {
     );
   }
 
-  const userId = value?.trim().replace('@', '').replace('+', '') + '@c.us';
+  const userId =
+    value
+      ?.trim()
+      .replace('@', '')
+      .replace('+', '')
+      .replace(/\(/gi, '')
+      .replace(/\)/gi, '')
+      .replace(/-/gi, '')
+      .replace(/ /gi, '') + '@c.us';
 
   const success = await client
     .addParticipant(message.chat.id as any, userId as any)
