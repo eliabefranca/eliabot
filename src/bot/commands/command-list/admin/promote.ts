@@ -19,6 +19,24 @@ const func: Command = async ({ client, message, value }) => {
     return;
   }
 
+  if (user.role === 'admin') {
+    await client.reply(
+      message.from,
+      'O usuário informado é um administrador.',
+      message.id
+    );
+    return;
+  }
+
+  if (user.role === 'moderator') {
+    await client.reply(
+      message.from,
+      'O usuário informado já é um moderador.',
+      message.id
+    );
+    return;
+  }
+
   usersDb.update(user, { role: 'moderator' });
 
   await client.reply(
