@@ -5,7 +5,7 @@ const func: Command = async ({ client, message, value }) => {
   if (!groupsThatIamAdmin.includes(message.chat.id as any)) {
     await client.reply(
       message.from,
-      'Eu não sou administrador desse grupo.',
+      'Eu não sou administrador deste grupo.',
       message.id
     );
     return;
@@ -16,7 +16,7 @@ const func: Command = async ({ client, message, value }) => {
       (participant.id as any) === message.sender.id && participant.isAdmin
   );
   if (!senderIsAdmin) {
-    await client.reply(message.from, 'Você não é um administrador', message.id);
+    await client.reply(message.from, 'Você não é um administrador deste grupo.', message.id);
     return;
   }
 
