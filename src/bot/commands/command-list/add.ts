@@ -26,6 +26,7 @@ const func: Command = async ({ client, message, value }) => {
       'Você precisa me enviar o número.',
       message.id
     );
+    return;
   }
 
   const userId =

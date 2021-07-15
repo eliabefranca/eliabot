@@ -16,7 +16,11 @@ const func: Command = async ({ client, message, value }) => {
       (participant.id as any) === message.sender.id && participant.isAdmin
   );
   if (!senderIsAdmin) {
-    await client.reply(message.from, 'Você não é um administrador deste grupo.', message.id);
+    await client.reply(
+      message.from,
+      'Você não é um administrador deste grupo.',
+      message.id
+    );
     return;
   }
 
@@ -26,6 +30,7 @@ const func: Command = async ({ client, message, value }) => {
       'Você precisa marcar o usuário ou me enviar o número.',
       message.id
     );
+    return;
   }
 
   let userId = '';
