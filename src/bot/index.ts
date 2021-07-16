@@ -1,38 +1,110 @@
-import fg from 'fast-glob';
-import path from 'path';
-import { CommandData } from '../protocols/command';
+import { Bot } from './bot';
+import { getTimeStamp } from '../helpers/date';
+import { getNumberFromContactId } from '../helpers/get-number-from-contact-id';
+import {
+  groupsDb,
+  usersDb,
+  historyDb,
+  userStatsDb,
+  blockedUsersDb,
+} from '../database/json/db';
+import { Chat, Client } from '@open-wa/wa-automate';
 
-function getFiles(subDirectory?: string): string {
-  if (subDirectory) {
-    return path.join(__dirname, subDirectory, '*.ts').replace(/\\/g, '/');
+const bot = new Bot();
+
+bot.on('commandSuccess', (client, message, query) => {
+  let user = usersDb.getFirst({ id: message.sender.id });
+
+  if (!user) {
+    user = {
+      id: message.sender.id,
+      name: message.sender.pushname,
+      number: getNumberFromContactId(message.sender.id),
+      profilePic: message.sender.profilePicThumbObj.eurl,
+    };
+
+    usersDb.save(user);
   }
 
-  return path.join(__dirname, '*.ts').replace(/\\/g, '/');
-}
+  const { chat } = message;
 
-export const getCommandList = async (): Promise<CommandData[]> => {
-  const files = fg.sync(getFiles()).filter((file) => !/index.ts$/.test(file));
+  if (query !== '.') {
+    historyDb.save({
+      user,
+      message: query,
+      chat: {
+        id: chat.id,
+        isGroup: chat.isGroup,
+        name: chat.name,
+      },
+      created_at: getTimeStamp(),
+      updated_at: getTimeStamp(),
+    });
+  }
+});
 
-  const commands = [] as CommandData[];
+// moderator  middleware
+bot.useMiddleware(
+  async ({ commandData, client, message, query }): Promise<boolean> => {
+    if (!commandData.allowedUsers) {
+      return true;
+    }
 
-  for (const file of files) {
-    const command = (await import(`${file}`)).default;
-    commands.push(command);
+    if (commandData.allowedUsers.includes('moderator')) {
+      const user = usersDb.getFirst({ id: message.sender.id });
+
+      if (user?.role === 'admin' || user?.role === 'moderator') {
+        return true;
+      }
+
+      await client.reply(
+        message.from,
+        'Este comando é apenas para moderadores e administradores.',
+        message.id
+      );
+      return false;
+    }
+
+    return true;
+  }
+);
+
+// blocked users middleware
+bot.useMiddleware(async ({ client, message }): Promise<boolean> => {
+  const blockedUser = blockedUsersDb.getFirst({ userId: message.sender.id });
+
+  if (blockedUser) {
+    await client.reply(message.from, 'Usuário bloqueado.', message.id);
+    return false;
   }
 
-  const adminFiles = fg.sync(getFiles('admin'));
+  return true;
+});
 
-  for (const file of adminFiles) {
-    const command = (await import(`${file}`)).default;
-    commands.push(command);
+bot.on('commandSuccess', (client, message, query) => {
+  const userStats = userStatsDb.getFirst({ id: message.sender.id });
+
+  if (userStats) {
+    userStatsDb.update(userStats, { commands: userStats.commands + 1 });
+  } else {
+    userStatsDb.save({
+      id: message.sender.id,
+      name: message.sender.pushname,
+      commands: 1,
+    });
   }
+});
 
-  const moderatorFiles = fg.sync(getFiles('moderator'));
+bot.on('addedToGroup', (chat: Chat, client: Client) => {
+  let group = groupsDb.getFirst({ id: chat.id });
 
-  for (const file of moderatorFiles) {
-    const command = (await import(`${file}`)).default;
-    commands.push(command);
+  if (!group) {
+    groupsDb.save({
+      id: chat.id,
+      name: chat.name,
+      thumb: chat.contact.profilePicThumbObj.eurl,
+    });
   }
+});
 
-  return commands;
-};
+bot.start();
