@@ -7,8 +7,9 @@ import { History } from '../models/history';
 import { User } from '../models/user';
 import { Group } from '../models/groups';
 import { UserStats } from '../models/user-stats';
+import { CONFIG } from '../../../config';
 
-const dbFolder = path.join(__dirname, '..', '..', '..', 'db');
+const dbFolder = path.join(CONFIG.dbFolder);
 const historyDbJson = path.join(dbFolder, 'history.json');
 const usersDbJson = path.join(dbFolder, 'users.json');
 const groupsDbJson = path.join(dbFolder, 'groups.json');
