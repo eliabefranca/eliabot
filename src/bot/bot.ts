@@ -15,20 +15,16 @@ type MessageEventHandler = (
   query: string
 ) => void;
 
-interface CommandMiddlewareParams {
+export interface CommandMiddlewareParams {
   commandData: CommandData;
   client: Client;
   message: Message;
   query: string;
 }
 
-interface groupMiddlewareParams {
-  client: Client;
-  chat: Chat;
-  message: Message;
-}
-
-type CommandMiddleware = (params: CommandMiddlewareParams) => Promise<boolean>;
+export type CommandMiddleware = (
+  params: CommandMiddlewareParams
+) => Promise<boolean>;
 type GroupAddEventHandler = (chat: Chat, client: Client) => void;
 
 type EventTypes = 'addedToGroup' | 'commandSuccess' | 'commandReceived';
