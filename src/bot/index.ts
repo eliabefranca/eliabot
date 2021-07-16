@@ -7,6 +7,7 @@ import {
   historyDb,
   userStatsDb,
   blockedUsersDb,
+  blockedGroupsDb,
 } from '../database/json/db';
 import { Chat, Client } from '@open-wa/wa-automate';
 
@@ -75,6 +76,18 @@ bot.useMiddleware(async ({ client, message }): Promise<boolean> => {
 
   if (blockedUser) {
     await client.reply(message.from, 'Usuário bloqueado.', message.id);
+    return false;
+  }
+
+  return true;
+});
+
+// blocked groups middleware
+bot.useGroupMiddleware(async ({ client, chat, message }): Promise<boolean> => {
+  const blockedGroup = blockedGroupsDb.getFirst({ groupId: chat.id });
+
+  if (blockedGroup) {
+    // await client.reply(message.from, 'Grupo bloqueado.', message.id);
     return false;
   }
 
