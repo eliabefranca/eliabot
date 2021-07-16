@@ -1,5 +1,6 @@
 import fs from 'fs';
 import { isEqual } from 'lodash';
+import { CONFIG } from '../../../config';
 
 export interface Schema {
   [key: string]: any;
@@ -11,6 +12,10 @@ export class JsonDb<T extends Schema> {
 
   constructor(storagePath: string) {
     this.path = storagePath;
+
+    if (!fs.existsSync(CONFIG.dbFolder)) {
+      fs.mkdirSync(CONFIG.dbFolder);
+    }
 
     if (!fs.existsSync(this.path)) {
       fs.writeFileSync(this.path, '[]');

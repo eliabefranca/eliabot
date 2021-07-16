@@ -7,6 +7,7 @@ import { setupMiddlewares } from './middlewares';
 
 const bot = new Bot();
 
+// TODO: move to a helper function
 bot.on('commandSuccess', (client, message, query) => {
   let user = usersDb.getFirst({ id: message.sender.id });
 
@@ -38,6 +39,7 @@ bot.on('commandSuccess', (client, message, query) => {
   }
 });
 
+// TODO: move to a helper function
 bot.on('commandSuccess', (client, message, query) => {
   const userStats = userStatsDb.getFirst({ id: message.sender.id });
 
@@ -52,6 +54,7 @@ bot.on('commandSuccess', (client, message, query) => {
   }
 });
 
+// TODO: move to a helper function
 bot.on('addedToGroup', (chat: Chat, client: Client) => {
   let group = groupsDb.getFirst({ id: chat.id });
 
