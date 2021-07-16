@@ -4,16 +4,16 @@ import { CommandData } from '../protocols/command';
 
 function getFiles(subDirectory?: string): string {
   if (subDirectory) {
-    return path.join(__dirname, subDirectory, '*.ts').replace(/\\/g, '/');
+    return path.join(__dirname, subDirectory, '*.(ts|js)').replace(/\\/g, '/');
   }
 
-  return path.join(__dirname, '*.ts').replace(/\\/g, '/');
+  return path.join(__dirname, '*.(ts|js)').replace(/\\/g, '/');
 }
 
 export const getCommandList = async (): Promise<CommandData[]> => {
   const publicCommandFiles = fg
     .sync(getFiles())
-    .filter((file) => !/index.ts$/.test(file));
+    .filter((file) => !/index\..s$/.test(file));
   const moderatorCommandFiles = fg.sync(getFiles('moderator'));
   const adminCommandFiles = fg.sync(getFiles('admin'));
   const commands = [] as CommandData[];
