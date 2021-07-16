@@ -21,7 +21,15 @@ interface CommandMiddlewareParams {
   message: Message;
   query: string;
 }
+
+interface groupMiddlewareParams {
+  client: Client;
+  chat: Chat;
+  message: Message;
+}
+
 type CommandMiddleware = (params: CommandMiddlewareParams) => Promise<boolean>;
+type GroupMiddleware = (params: groupMiddlewareParams) => Promise<boolean>;
 type GroupAddEventHandler = (chat: Chat, client: Client) => void;
 
 type EventTypes = 'addedToGroup' | 'commandSuccess' | 'commandReceived';
@@ -31,10 +39,15 @@ export class Bot {
   client: Client | null = null;
   private commandSuccessEvents = [] as MessageEventHandler[];
   private commandMiddlewares = [] as CommandMiddleware[];
+  private groupMiddlewares = [] as GroupMiddleware[];
   private groupAddEvents = [] as GroupAddEventHandler[];
 
   useMiddleware(func: CommandMiddleware): void {
     this.commandMiddlewares.push(func);
+  }
+
+  useGroupMiddleware(func: GroupMiddleware): void {
+    this.groupMiddlewares.push(func);
   }
 
   on(event: EventTypes, func: EventHandler): void {
@@ -55,7 +68,7 @@ export class Bot {
       authTimeout: 60, //wait only 60 seconds to get a connection with the host account device
       blockCrashLogs: true,
       disableSpins: true,
-      headless: true,
+      headless: false,
       hostNotificationLang: NotificationLanguage.PTBR,
       useChrome: true,
       logConsole: false,
