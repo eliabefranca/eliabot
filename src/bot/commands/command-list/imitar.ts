@@ -15,7 +15,8 @@ const func: Command = async ({ client, message, value }) => {
   const { body, caption } = quotedMsg;
   let txt = body ? body : caption;
 
-  txt = txt.replace(/[aeiouãẽĩõũáéíóúâêîôûàèìòùäëïöü]/gi, 'i');
+  txt = txt.replace(/[aeiouãẽĩõũáéíóúâêîôûàèìòùäëïöü]/g, 'i');
+  txt = txt.replace(/[AEIOUÃẼĨÕŨÁÉÍÓÚÂÊÎÔÛÀÈÌÒÙÄËÏÖÜ]/g, 'I');
 
   await client.reply(message.from, txt, quotedMsg.id);
 };
