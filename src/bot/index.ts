@@ -83,7 +83,13 @@ bot.useMiddleware(async ({ client, message }): Promise<boolean> => {
 });
 
 // blocked groups middleware
-bot.useGroupMiddleware(async ({ client, chat, message }): Promise<boolean> => {
+bot.useMiddleware(async ({ client, message }): Promise<boolean> => {
+  const { chat } = message;
+
+  if (!chat.isGroup) {
+    return true;
+  }
+
   const blockedGroup = blockedGroupsDb.getFirst({ groupId: chat.id });
 
   if (blockedGroup) {

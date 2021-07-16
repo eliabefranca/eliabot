@@ -29,7 +29,6 @@ interface groupMiddlewareParams {
 }
 
 type CommandMiddleware = (params: CommandMiddlewareParams) => Promise<boolean>;
-type GroupMiddleware = (params: groupMiddlewareParams) => Promise<boolean>;
 type GroupAddEventHandler = (chat: Chat, client: Client) => void;
 
 type EventTypes = 'addedToGroup' | 'commandSuccess' | 'commandReceived';
@@ -39,15 +38,10 @@ export class Bot {
   client: Client | null = null;
   private commandSuccessEvents = [] as MessageEventHandler[];
   private commandMiddlewares = [] as CommandMiddleware[];
-  private groupMiddlewares = [] as GroupMiddleware[];
   private groupAddEvents = [] as GroupAddEventHandler[];
 
   useMiddleware(func: CommandMiddleware): void {
     this.commandMiddlewares.push(func);
-  }
-
-  useGroupMiddleware(func: GroupMiddleware): void {
-    this.groupMiddlewares.push(func);
   }
 
   on(event: EventTypes, func: EventHandler): void {
