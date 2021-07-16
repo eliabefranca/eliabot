@@ -33,9 +33,9 @@
     "start:bot": "ts-node src/index",
     "start:panel": "cd src/panel && yarn start",
     "dev": "concurrently yarn:dev:*",
-    "dev:bot": "nodemon --watch 'src/bot/**' --ext 'ts,json'  --exec 'ts-node src/bot/index.ts' --config './nodemon.json'",
+    "dev:bot": "nodemon --watch 'src/bot/**' --ext \"ts,json'  --exec 'yarn ts-node src/bot/index.ts\" --config \"./nodemon.json\"",
     "dev:panel": "yarn --cwd ./src/panel start",
-    "dev:api": "nodemon --watch 'src/bot/**' --ext 'ts,json'  --exec 'ts-node src/api/index.ts' --config './nodemon.json'",
+    "dev:api": "nodemon --watch \"src/bot/**\" --ext \"ts,json\"  --exec \"yarn ts-node src/api/index.ts\" --config \"./nodemon.json\"",
     "test": "jest --config ./jest.config.js",
     "test:unit": "jest --config ./jest.config.js --passWithNoTests --runInBand"
   }
