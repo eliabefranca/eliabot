@@ -121,11 +121,6 @@ const Header = () => {
                 Groups
               </Link>
             </NavItem>
-            <NavItem>
-              <Link className="nav-link" to="/history">
-                Histórico
-              </Link>
-            </NavItem>
           </Nav>
         </Collapse>
       </Navbar>

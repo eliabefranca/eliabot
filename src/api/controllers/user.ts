@@ -1,6 +1,6 @@
-import { Request, Response } from "express";
+import { Request, Response } from 'express';
 
-import { usersDb } from "../../database/json/db";
+import { usersDb } from '../../database/json/db';
 
 class UserController {
   get(req: Request, res: Response) {
@@ -8,7 +8,7 @@ class UserController {
     const user = usersDb.getFirst({ id });
 
     if (!user) {
-      return res.status(404).json({ message: "User not found" });
+      return res.status(404).json({ message: 'User not found' });
     }
 
     return res.json(user);
@@ -25,7 +25,7 @@ class UserController {
     const user = usersDb.getFirst({ id });
 
     if (!user) {
-      return res.status(404).json({ message: "User not found" });
+      return res.status(404).json({ message: 'User not found' });
     }
 
     usersDb.delete(user);
@@ -38,12 +38,14 @@ class UserController {
     const user = usersDb.getFirst({ id });
 
     if (!user) {
-      return res.status(404).json({ message: "User not found" });
+      return res.status(404).json({ message: 'User not found' });
     }
 
-    usersDb.update(user, req.body);
+    usersDb.update({ id }, req.body);
 
-    return res.json(user);
+    const updatedUser = usersDb.getFirst({ id });
+
+    return res.json(updatedUser);
   }
 }
 

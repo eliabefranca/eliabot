@@ -1,5 +1,4 @@
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
-import History from '../pages/History';
 import User from '../pages/User';
 import Users from '../pages/Users';
 import Groups from '../pages/Groups';
@@ -9,9 +8,6 @@ function Router() {
   return (
     <BrowserRouter>
       <Switch>
-        <Route exact={true} path="/history">
-          <History />
-        </Route>
         <Route path="/groups">
           <Groups />
         </Route>
@@ -25,7 +21,7 @@ function Router() {
           <User />
         </Route>
         <Route path="/">
-          <History />
+          <Users />
         </Route>
       </Switch>
     </BrowserRouter>
