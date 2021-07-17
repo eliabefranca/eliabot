@@ -24,14 +24,15 @@ export class JsonDb<T extends Schema> {
     return this.data;
   }
 
-  getData(): T[] {
+  private refresh(): void {
     const stringData = this.fileReader.read();
     const jsonData = JSON.parse(stringData) as T[];
-    return jsonData;
+    this.data = jsonData;
   }
 
-  private refresh(): void {
-    this.data = this.getData();
+  getData(): T[] {
+    this.refresh();
+    return this.data;
   }
 
   private updateFile(): void {
@@ -40,6 +41,8 @@ export class JsonDb<T extends Schema> {
   }
 
   save(data: T): void {
+    this.refresh();
+
     let found = false;
     this.data.forEach((item) => {
       if (isEqual(item, data)) {
@@ -56,6 +59,7 @@ export class JsonDb<T extends Schema> {
   }
 
   match(schema: Schema, data: T): boolean {
+    this.refresh();
     const schemaKeys = Object.keys(schema);
 
     let matches = 0;
@@ -69,6 +73,7 @@ export class JsonDb<T extends Schema> {
   }
 
   update(schema: Schema, newValues: Schema): void {
+    this.refresh();
     for (let i = 0; i < this.data.length; i++) {
       const item = this.data[i];
 
@@ -81,6 +86,7 @@ export class JsonDb<T extends Schema> {
   }
 
   updateOrInsert(schema: Schema, newValues: Schema): void {
+    this.refresh();
     const register = this.getFirst(schema);
 
     if (register) {
@@ -96,6 +102,7 @@ export class JsonDb<T extends Schema> {
   }
 
   get(schema: Schema | Schema[]): T[] {
+    this.refresh();
     const values = this.data.filter((item) => {
       if (schema instanceof Array) {
         return schema.some((sch) => this.match(sch, item));
@@ -108,6 +115,7 @@ export class JsonDb<T extends Schema> {
   }
 
   delete(schema: Schema): void {
+    this.refresh();
     const filteredData = this.data.filter((item) => {
       return !this.match(schema, item);
     });
@@ -117,6 +125,8 @@ export class JsonDb<T extends Schema> {
   }
 
   getFirst(schema: Schema): T | null {
+    this.refresh();
+
     for (const item of this.data) {
       if (this.match(schema, item)) {
         return item;
