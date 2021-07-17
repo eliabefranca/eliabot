@@ -1,4 +1,5 @@
 import path from 'path';
+import { FileReader } from './file-reader';
 
 import { JsonDb } from './json-db';
 import { BlockedUsers } from '../models/blocked-users';
@@ -17,9 +18,32 @@ const blockedUsersDbJson = path.join(dbFolder, 'blocked-users.json');
 const blockedGroupsDbJson = path.join(dbFolder, 'blocked-groups.json');
 const userStatsDbJson = path.join(dbFolder, 'user-stats.json');
 
-export const usersDb = new JsonDb<User>(usersDbJson);
-export const blockedUsersDb = new JsonDb<BlockedUsers>(blockedUsersDbJson);
-export const blockedGroupsDb = new JsonDb<BlockedGroups>(blockedGroupsDbJson);
-export const historyDb = new JsonDb<History>(historyDbJson);
-export const groupsDb = new JsonDb<Group>(groupsDbJson);
-export const userStatsDb = new JsonDb<UserStats>(userStatsDbJson);
+export const usersDb = new JsonDb<User>(
+  usersDbJson,
+  new FileReader(historyDbJson)
+);
+
+export const blockedUsersDb = new JsonDb<BlockedUsers>(
+  blockedUsersDbJson,
+  new FileReader(blockedUsersDbJson)
+);
+
+export const blockedGroupsDb = new JsonDb<BlockedGroups>(
+  blockedGroupsDbJson,
+  new FileReader(blockedGroupsDbJson)
+);
+
+export const historyDb = new JsonDb<History>(
+  historyDbJson,
+  new FileReader(historyDbJson)
+);
+
+export const groupsDb = new JsonDb<Group>(
+  groupsDbJson,
+  new FileReader(groupsDbJson)
+);
+
+export const userStatsDb = new JsonDb<UserStats>(
+  userStatsDbJson,
+  new FileReader(userStatsDbJson)
+);

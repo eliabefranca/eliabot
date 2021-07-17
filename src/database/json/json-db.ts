@@ -1,6 +1,6 @@
-import fs from 'fs';
 import { isEqual } from 'lodash';
 import { CONFIG } from '../../../config';
+import { IFileReader } from '../protocols/file-reader';
 
 export interface Schema {
   [key: string]: any;
@@ -9,18 +9,14 @@ export interface Schema {
 export class JsonDb<T extends Schema> {
   private data: T[] = [];
   private path: string;
+  private readonly fileReader: IFileReader;
 
-  constructor(storagePath: string) {
+  constructor(storagePath: string, fileReader: IFileReader) {
     this.path = storagePath;
+    this.fileReader = fileReader;
 
-    if (!fs.existsSync(CONFIG.dbFolder)) {
-      fs.mkdirSync(CONFIG.dbFolder);
-    }
-
-    if (!fs.existsSync(this.path)) {
-      fs.writeFileSync(this.path, '[]');
-    }
-
+    fileReader.createFileIfNotExist(this.path);
+    fileReader.createFolderIfNotExist(CONFIG.dbFolder);
     this.init();
   }
 
@@ -29,7 +25,7 @@ export class JsonDb<T extends Schema> {
   }
 
   getData(): T[] {
-    const stringData = fs.readFileSync(this.path, { encoding: 'utf-8' });
+    const stringData = this.fileReader.read();
     const jsonData = JSON.parse(stringData) as T[];
     return jsonData;
   }
@@ -39,12 +35,11 @@ export class JsonDb<T extends Schema> {
   }
 
   private updateFile(): void {
-    fs.writeFileSync(this.path, JSON.stringify(this.data));
+    this.fileReader.write(JSON.stringify(this.data));
+    this.refresh();
   }
 
   save(data: T): void {
-    this.refresh();
-
     let found = false;
     this.data.forEach((item) => {
       if (isEqual(item, data)) {
@@ -74,10 +69,8 @@ export class JsonDb<T extends Schema> {
   }
 
   update(schema: Schema, newValues: Schema): void {
-    this.refresh();
-
     for (let i = 0; i < this.data.length; i++) {
-      let item = this.data[i];
+      const item = this.data[i];
 
       if (this.match(schema, item)) {
         this.data[i] = Object.assign({}, item, newValues);
@@ -87,13 +80,22 @@ export class JsonDb<T extends Schema> {
     this.updateFile();
   }
 
+  updateOrInsert(schema: Schema, newValues: Schema): void {
+    const register = this.getFirst(schema);
+
+    if (register) {
+      this.update(schema, newValues);
+    } else {
+      const newRegister = Object.assign({}, schema, newValues) as T;
+      this.save(newRegister);
+    }
+  }
+
   private init(): void {
     this.refresh();
   }
 
   get(schema: Schema | Schema[]): T[] {
-    this.refresh();
-
     const values = this.data.filter((item) => {
       if (schema instanceof Array) {
         return schema.some((sch) => this.match(sch, item));
@@ -106,8 +108,6 @@ export class JsonDb<T extends Schema> {
   }
 
   delete(schema: Schema): void {
-    this.refresh();
-
     const filteredData = this.data.filter((item) => {
       return !this.match(schema, item);
     });
@@ -117,8 +117,6 @@ export class JsonDb<T extends Schema> {
   }
 
   getFirst(schema: Schema): T | null {
-    this.refresh();
-
     for (const item of this.data) {
       if (this.match(schema, item)) {
         return item;
