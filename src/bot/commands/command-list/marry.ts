@@ -1,8 +1,13 @@
 import { Client } from '@open-wa/wa-automate';
 import axios from 'axios';
+import { getNumberFromContactId } from '../../../helpers/get-number-from-contact-id';
 import { Command, CommandData } from '../protocols/command';
 const gis = require('g-i-s');
 const imageDataURI = require('image-data-uri');
+
+const names = ['Maki Zenin', 'Satoru Gojo', 'Nico Robin', 'Sanji Vinsmoke', 'Yuta Okkotsu',
+  'Megumi Fushiguro', 'Sukuna Ryomen', 'Monkey D. Luffy', 'Roronoa Zoro', 'Goro Majima',
+  'Uraraka', 'Izuku Midoriya', 'Kim Dahyun', 'Minatozaki Sana', 'Park Jihyo', 'Hirai Momo']
 
 const getImage = async (term: string) => {
   return new Promise((resolve, reject) => {
@@ -20,23 +25,6 @@ const getImage = async (term: string) => {
       gis(text, async (error: any, results: any[]) => {
         if (error || !results || !results[0]) {
           reject(false);
-        }
-
-        if (index) {
-          const image = results[index];
-          if (image) {
-            const headers = await axios
-              .get(image.url)
-              .then((resp) => resp.headers)
-              .catch(() => false);
-
-            if (!headers || headers['content-type'] === 'text/html') {
-              resolve('cant resolve');
-            }
-            resolve(image.url);
-          } else {
-            resolve('not found');
-          }
         }
 
         try {
@@ -64,47 +52,23 @@ const getImage = async (term: string) => {
 const func: Command = async (params) => {
   const { value, client, message } = params;
 
-  if (!value) {
-    await client.reply(
-      message.from,
-      'Cê precisa enviar o nome da imagem, bocó!',
-      message.id
-    );
-    return;
-  }
+  const marriagePartner = names[Math.floor(Math.random() * names.length)]
 
-  let imgUrl = await getImage(value)
+  let groupMembers = await client.getGroupMembers(message.chat.id as any);
+
+  let filtered = groupMembers.filter((member) => {
+    return !member.isMe;
+  });
+
+  const member = filtered[Math.floor(Math.random() * filtered.length)];
+
+  const contactNumber = getNumberFromContactId(member.id);
+
+  let imgUrl = await getImage(marriagePartner)
     .then((url) => url)
     .catch((results) => {
-      // client.sendText(message.from, `--${JSON.stringify(results)}`);
       return false;
     });
-
-  if (imgUrl === 'cant resolve') {
-    await client.reply(
-      message.from,
-      'Não foi possível carregar a imagem do servidor de origem',
-      message.id
-    );
-    return;
-  } else if (imgUrl === 'not found') {
-    await client.reply(
-      message.from,
-      'Não encontrei nenhum resultado, tente alterar o index',
-      message.id
-    );
-    return;
-  }
-
-  if (!imgUrl) {
-    await client.reply(
-      message.from,
-      `Não encontrei nenhum resultado de imagem para "${value}"`,
-      message.id
-    );
-    return;
-  }
-
 
   const imageName = imgUrl as string;
   const dataUri = await imageDataURI.encodeFromURL(imgUrl);
@@ -113,18 +77,16 @@ const func: Command = async (params) => {
     message.from,
     dataUri,
     imageName,
-    `Ta na mão.
-link: ${imgUrl}
-    `,
+    `💑 O 💍 casamento 💍 entre @${contactNumber} e *${marriagePartner}* está prestes a acontecer, vamos desejar felicidades ao casal. ✨ ✨ ✨`,
     message.id
   );
 };
 
-const searchImage: CommandData = {
-  command: '.img',
+const marry: CommandData = {
+  command: '.marry',
+  description: 'Um casamento aleatorio entre um membro do grupo e um personagem de anime',
   func,
-  description:
-    'Retorna uma imagem a partir de um term. Você pode escolher a posição do resultado com "#N" onde N é a posição da imagem.',
+  onlyForGroups: true,
 };
 
-export default searchImage;
+export default marry;
