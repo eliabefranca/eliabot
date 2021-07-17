@@ -23,20 +23,20 @@ function HistoryPage() {
   return (
     <Base>
       <h1 className="mb-4">Usuários</h1>
-      <Table>
+      <Table className="table-responsive">
         <thead>
           <tr>
-            <th>id</th>
+            <th className="d-none d-md-block">id</th>
             <th>Foto</th>
             <th>Nome</th>
-            <th>Número</th>
+            <th className="d-none d-md-block">Número</th>
             <th></th>
           </tr>
         </thead>
         <tbody>
           {users.map((user) => (
             <tr>
-              <th>{user.id}</th>
+              <th className="d-none d-md-block">{user.id}</th>
               <th scope="row">
                 <div className="text-center" style={{ maxWidth: 80 }}>
                   <Link to={`/user/${user.id}`}>
@@ -49,7 +49,7 @@ function HistoryPage() {
                 </div>
               </th>
               <td>{user.name}</td>
-              <td>{user.number}</td>
+              <td className="d-none d-md-block">{user.number}</td>
               <td>
                 <Link to={`/user/${user.id}`}>
                   <Button color="primary">

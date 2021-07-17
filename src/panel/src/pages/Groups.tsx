@@ -22,7 +22,7 @@ function Groups() {
   return (
     <Base>
       <h1 className="mb-4">Grupos</h1>
-      <Table>
+      <Table className="table-responsive">
         <thead>
           <tr>
             <th>id</th>
