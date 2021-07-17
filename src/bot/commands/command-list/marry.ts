@@ -7,7 +7,8 @@ const imageDataURI = require('image-data-uri');
 
 const names = ['Maki Zenin', 'Satoru Gojo', 'Nico Robin', 'Sanji Vinsmoke', 'Yuta Okkotsu',
   'Megumi Fushiguro', 'Sukuna Ryomen', 'Monkey D. Luffy', 'Roronoa Zoro', 'Goro Majima',
-  'Uraraka', 'Izuku Midoriya', 'Kim Dahyun', 'Minatozaki Sana', 'Park Jihyo', 'Hirai Momo']
+  'Uraraka', 'Izuku Midoriya', 'Kim Dahyun', 'Minatozaki Sana', 'Park Jihyo', 'Hirai Momo',
+  'Kim Ji Woo (Chuu)', 'Harry Styles', 'Zayn Malik', 'Liam Payne', 'Niall Horan', 'Louis Tomlinson']
 
 const getImage = async (term: string) => {
   return new Promise((resolve, reject) => {
