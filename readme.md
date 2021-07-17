@@ -20,26 +20,24 @@ Além do automatizador para o Whatsapp, o projeto tem:
 ## Instalando dependências
 
 ```bash
-  yarn install
+  yarn install &&
+  cd src/panel &&
+  yarn install &&
+  cd ../..  
 ```
 ## Rodando
 
-Para executar o bot, a api e o painel tudo de uma vez:
-```bash
-  yarn dev 
-```
-
-Para executar apenas o bot:
+Para executar o bot:
 ```bash
   yarn dev:bot
 ```
 
-Para executar apenas a api:
+Para executar a api:
 ```bash
   yarn dev:api
 ```
 
-Para executar apenas o painel:
+Para executar o painel:
 ```bash
   yarn dev:panel
 ```
