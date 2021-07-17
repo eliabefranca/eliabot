@@ -26,7 +26,7 @@ const func: Command = async ({ client, message, value }) => {
     lang: 'pt-BR',
     host: 'https://translate.google.com',
   });
-  client.sendAudio(message.chatId, audioUrl);
+  client.sendAudio(message.chatId, audioUrl, message.id);
 };
 
 const imitar: CommandData = {
