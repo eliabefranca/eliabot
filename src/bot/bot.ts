@@ -7,13 +7,9 @@ import {
 } from '@open-wa/wa-automate';
 import { getCommandData, handleCommand } from './helpers/command';
 import { CommandData } from './commands/protocols/command';
-import { getCommandList } from './commands/command-list';
-
-type MessageEventHandler = (
-  client: Client,
-  message: Message,
-  query: string
-) => void;
+import { updateUser } from './helpers/update-user';
+import { updateStats } from './helpers/update-stats';
+import { updateGroup } from './helpers/update-group';
 
 export interface CommandMiddlewareParams {
   commandData: CommandData;
@@ -25,31 +21,13 @@ export interface CommandMiddlewareParams {
 export type CommandMiddleware = (
   params: CommandMiddlewareParams
 ) => Promise<boolean>;
-type GroupAddEventHandler = (chat: Chat, client: Client) => void;
-
-type EventTypes = 'addedToGroup' | 'commandSuccess' | 'commandReceived';
-type EventHandler = GroupAddEventHandler | MessageEventHandler;
 
 export class Bot {
   client: Client | null = null;
-  private commandSuccessEvents = [] as MessageEventHandler[];
   private commandMiddlewares = [] as CommandMiddleware[];
-  private groupAddEvents = [] as GroupAddEventHandler[];
 
   useMiddleware(func: CommandMiddleware): void {
     this.commandMiddlewares.push(func);
-  }
-
-  on(event: EventTypes, func: EventHandler): void {
-    if (event === 'addedToGroup') {
-      this.groupAddEvents.push(func as GroupAddEventHandler);
-      return;
-    }
-
-    if (event === 'commandSuccess') {
-      this.commandSuccessEvents.push(func as MessageEventHandler);
-      return;
-    }
   }
 
   async start(): Promise<void> {
@@ -123,10 +101,11 @@ export class Bot {
       commandData,
     });
 
+    updateUser({ message, client, query });
+    updateGroup({ message, client, query });
+
     if (success) {
-      this.commandSuccessEvents.forEach((func) => {
-        func(client, message, query);
-      });
+      updateStats({ message, client, query });
     }
   }
 
