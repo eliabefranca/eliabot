@@ -20,7 +20,7 @@ const userStatsDbJson = path.join(dbFolder, 'user-stats.json');
 
 export const usersDb = new JsonDb<User>(
   usersDbJson,
-  new FileReader(historyDbJson)
+  new FileReader(usersDbJson)
 );
 
 export const blockedUsersDb = new JsonDb<BlockedUsers>(
