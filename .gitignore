@@ -4,6 +4,7 @@ yarn*.*
 logs
 .node-persist
 node_modules
+.build
 
 # managed by open-wa
 **.data.json
