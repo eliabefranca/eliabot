@@ -1,0 +1,7 @@
+{
+  "verbose": true,
+  "exec": "yarn ts-node src/bot/index.ts",
+  "ext": "ts",
+  "watch": "src/bot",
+  "ignore": ["*.test.js", "*.spec.ts"]
+}
