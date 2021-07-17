@@ -18,6 +18,7 @@ interface User {
   name: string;
   number: string;
   profilePic: string;
+  isBlocked: boolean;
   role?: string;
 }
 
@@ -59,6 +60,32 @@ function User() {
       });
   };
 
+  const blockUser = () => {
+    if (user) {
+      axios
+        .post(`http://localhost:8080/blocked-users/`, { userId: user.id })
+        .then(() => {
+          window.location.reload();
+        })
+        .catch(() => {
+          window.location.reload();
+        });
+    }
+  };
+
+  const unblockUser = () => {
+    if (user) {
+      axios
+        .delete(`http://localhost:8080/blocked-users/${user.id}`)
+        .then(() => {
+          window.location.reload();
+        })
+        .catch(() => {
+          window.location.reload();
+        });
+    }
+  };
+
   if (user === null) {
     return (
       <Base>
@@ -77,6 +104,9 @@ function User() {
           <Card style={{ maxWidth: 400 }}>
             <CardHeader>
               <div className="text-center">
+                {user.isBlocked && (
+                  <p className="text-danger">Este usuário está bloqueado.</p>
+                )}
                 <CardImg
                   src={user.profilePic || '/assets/img/user.png'}
                   alt={user.name}
@@ -121,6 +151,31 @@ function User() {
                       Remover Cargos
                     </Button>
                   )}
+
+                  {!user.isBlocked && (
+                    <Button
+                      type="button"
+                      color="warning"
+                      className="mr-2 mb-2"
+                      onClick={blockUser}
+                    >
+                      <i className="fa fa-ban"></i> Bloquear Usuário
+                    </Button>
+                  )}
+
+                  {user.isBlocked && (
+                    <div className="flex flex-row">
+                      <Button
+                        type="button"
+                        color="success"
+                        className="mr-2 mb-2"
+                        onClick={unblockUser}
+                      >
+                        <i className="fa fa-ban"></i> Desbloquear Usuário
+                      </Button>
+                    </div>
+                  )}
+
                   <Button
                     color="danger"
                     className="mr-2 mb-2"

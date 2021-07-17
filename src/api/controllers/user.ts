@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 
-import { usersDb } from '../../database/json/db';
+import { blockedUsersDb, usersDb } from '../../database/json/db';
 
 class UserController {
   get(req: Request, res: Response) {
@@ -11,7 +11,9 @@ class UserController {
       return res.status(404).json({ message: 'User not found' });
     }
 
-    return res.json(user);
+    const isBlocked = blockedUsersDb.getFirst({ userId: id }) !== null;
+
+    return res.json({ ...user, isBlocked });
   }
 
   getAll(req: Request, res: Response) {
