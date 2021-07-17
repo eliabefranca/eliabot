@@ -17,10 +17,10 @@
   },
   "devDependencies": {
     "@types/express": "^4.17.13",
+    "@types/giphy-api": "^2.0.3",
     "@types/jest": "^26.0.24",
     "@types/lodash": "^4.14.171",
     "@types/node": "^16.3.0",
-    "@types/giphy-api": "^2.0.3",
     "babel-jest": "^27.0.6",
     "fast-glob": "^3.2.7",
     "jest": "^27.0.6",
