@@ -1,4 +1,4 @@
-import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
 import User from '../pages/User';
 import Users from '../pages/Users';
 import Groups from '../pages/Groups';
@@ -8,21 +8,19 @@ function Router() {
   return (
     <BrowserRouter>
       <Switch>
-        <Route path="/groups">
+        <Route path="/groups" exact>
           <Groups />
         </Route>
-        <Route path="/group/:id">
+        <Route path="/group/:id" exact>
           <Group />
         </Route>
-        <Route path="/users">
+        <Route path="/users" exact>
           <Users />
         </Route>
-        <Route path="/user/:id">
+        <Route path="/user/:id" exact>
           <User />
         </Route>
-        <Route path="/">
-          <Users />
-        </Route>
+        <Redirect to="/users" />
       </Switch>
     </BrowserRouter>
   );

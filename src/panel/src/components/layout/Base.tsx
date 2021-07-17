@@ -1,5 +1,6 @@
 import React from 'react';
 import { Container } from 'reactstrap';
+import BreadCrumbs from './BreadCrumbs';
 
 import Header from './Header';
 
@@ -13,7 +14,7 @@ function Base({ children }: Props) {
   return (
     <main className="h-100">
       <Header></Header>
-      <div className="mb-4"></div>
+      <BreadCrumbs />
       <Container>{children}</Container>
     </main>
   );
