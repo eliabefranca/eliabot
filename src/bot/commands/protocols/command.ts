@@ -4,6 +4,14 @@ export interface CommandData {
   command: string;
   description: string;
   func: Command;
+  category:
+    | 'utils'
+    | 'funny'
+    | 'groupManagement'
+    | 'media'
+    | 'botStatistics'
+    | 'botAdministration'
+    | 'education';
   onlyForGroups?: boolean;
   allowedUsers?: string | string[]; // TODO: add roles
   hidden?: boolean;

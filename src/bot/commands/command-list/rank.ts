@@ -53,6 +53,7 @@ const func: Command = async ({ client, message }) => {
 const stats: CommandData = {
   command: '.rank',
   func,
+  category: 'botStatistics',
   description: 'Exibe o ranking dos usuários que mais utilizam o bot no grupo.',
   hidden: false,
   onlyForGroups: true,

@@ -55,6 +55,7 @@ const func: Command = async ({ value, client, message }) => {
 const search: CommandData = {
   command: '.fig',
   func,
+  category: 'utils',
   description: 'Cria uma figurinha a partir de uma imagem',
 };
 

@@ -23,6 +23,7 @@ const func: Command = async (params) => {
 
 const watch: CommandData = {
   command: '.watch',
+  category: 'media',
   description: 'Pesquisa um vídeo no youtube',
   func,
 };

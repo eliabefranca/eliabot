@@ -33,6 +33,7 @@ const imitar: CommandData = {
   func,
   command: '.imitar3',
   description: 'Imita em audio uma mensagem marcada.',
+  category: 'funny',
   onlyForGroups: false,
 };
 

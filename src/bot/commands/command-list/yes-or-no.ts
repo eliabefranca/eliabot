@@ -9,6 +9,7 @@ const func: Command = async (params) => {
 
 const yesOrNo: CommandData = {
   command: '.p',
+  category: 'funny',
   description: 'Responde sim, não ou talvez',
   func,
 };

@@ -37,6 +37,7 @@ const func: Command = async ({ client, message, value }) => {
 const block: CommandData = {
   func,
   description: '',
+  category: 'botAdministration',
   command: '.unblock',
   allowedUsers: ['admin', 'moderator'],
   hidden: true,

@@ -22,7 +22,7 @@ const getGif = async (term: string) => {
 
     const fetchGif = (gif: giphyApi.GIFObject) => {
       const src = gif && gif.images.original.url;
-      src ? resolve(src.replace(/media\d+/, "media")) : resolve('not found');
+      src ? resolve(src.replace(/media\d+/, 'media')) : resolve('not found');
     };
 
     if (text) {
@@ -31,7 +31,7 @@ const getGif = async (term: string) => {
           q: text,
           offset: index,
           limit: 1,
-          rating: "r"
+          rating: 'r',
         },
         (_err, res) => fetchGif(res.data[0])
       );
@@ -88,21 +88,26 @@ const func: Command = async (params) => {
 
   const gifName = gifUrl as string;
 
-  await client.sendGiphy(
-    message.from,
-    gifName,
-    `Ta na mão.
+  await client
+    .sendGiphy(
+      message.from,
+      gifName,
+      `Ta na mão.
 link: ${gifUrl}
-    `,
-  ).catch((err) => client.reply(
-    message.from,
-    `Deu ruim aqui, peço perdão pelo vacilo`,
-    message.id
-  ));
+    `
+    )
+    .catch((err) =>
+      client.reply(
+        message.from,
+        `Deu ruim aqui, peço perdão pelo vacilo`,
+        message.id
+      )
+    );
 };
 
 const searchGif: CommandData = {
   command: '.gif',
+  category: 'media',
   func,
   description:
     'Retorna um GIF a partir de um term. Você pode escolher a posição do resultado com "#N" onde N é a posição do gif. Utilizar a posição #R retornará um gif aleatório.',

@@ -156,6 +156,7 @@ const func: Command = async (params) => {
 
 const marry: CommandData = {
   command: '.marry',
+  category: 'funny',
   description:
     'Um casamento aleatorio entre um membro do grupo e um personagem de anime',
   func,

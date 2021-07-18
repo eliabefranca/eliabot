@@ -30,6 +30,7 @@ const func: Command = async ({ client, message }) => {
 
 const help: CommandData = {
   command: '.help',
+  category: 'utils',
   description: 'Exibe a lista de comandos',
   func,
 };

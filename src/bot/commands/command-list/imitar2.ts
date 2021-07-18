@@ -34,6 +34,7 @@ const func: Command = async ({ client, message, value }) => {
 
 const imitar: CommandData = {
   func,
+  category: 'funny',
   command: '.imitar2',
   description: 'Imita uma mensagem.',
   onlyForGroups: true,
