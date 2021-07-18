@@ -1,35 +1,75 @@
-import { getCommandList } from '.';
-import { Command, CommandData } from '../protocols/command';
+import {getCommandList} from '.';
+import {Command, CommandData} from '../protocols/command';
+import {CommandType} from "../protocols/commandType";
+
+const tableHeader = (str: string): string => {
+  return `╔═════════════════
+║ 📂 ${str}
+╠═════════════════`;
+};
+
+const tableCell = (str: string): string => {
+  return `
+╠ ${str}
+╚═════════════════`;
+};
+
+const bottomSpacing = `\n`;
 
 const func: Command = async ({ client, message }) => {
   const commandList = await getCommandList();
-
-  let msg = '*Comandos gerais*\n\n';
+  let utilsStr = tableHeader('Utilitários');
+  let funStr = tableHeader('Divertidos');
+  let mediaStr = tableHeader('Mídia');
+  let groupManageStr = tableHeader('Gerenciar Grupo');
+  let statsStr = tableHeader('Estatísticas');
 
   const sm = '```';
   const ita = '_';
 
-  let groupMsg = `*Comandos específicos para grupos*\n\n`;
-
   const availableCommands = commandList.filter((command) => !command.hidden);
 
   availableCommands.forEach((command) => {
-    if (command.onlyForGroups) {
-      groupMsg += `${sm + command.command + sm}: ${
-        ita + command.description + ita
-      } \n\n`;
-    } else {
-      msg += `${sm + command.command + sm}: ${
-        ita + command.description + ita
-      } \n\n`;
+    if (command.hidden) {
+      return;
+    }
+
+    switch (command.category) {
+      case CommandType.FUNNY:
+        funStr += tableCell(`${command.command}\n${command.description}`);
+        break;
+      case CommandType.GROUP_MANAGEMENT:
+        groupManageStr += tableCell(
+          `${command.command}\n${command.description}`
+        );
+        break;
+      case CommandType.MEDIA:
+        mediaStr += tableCell(`${command.command}\n${command.description}`);
+        break;
+      case CommandType.UTILS:
+        utilsStr += tableCell(`${command.command}\n${command.description}`);
+        break;
+      case CommandType.BOT_STATISTICS:
+        statsStr += tableCell(`${command.command}\n${command.description}`);
+        break;
     }
   });
 
-  client.reply(message.from, msg + groupMsg, message.id);
+  utilsStr += bottomSpacing;
+  groupManageStr += bottomSpacing;
+  funStr += bottomSpacing;
+  mediaStr += bottomSpacing;
+
+  let finalText = `${sm}${utilsStr}${groupManageStr}${funStr}${mediaStr}${sm}
+
+  Github: https://github.com/Eliabe45/eliabot`;
+
+  client.reply(message.from, finalText, message.id);
 };
 
 const help: CommandData = {
   command: '.help',
+  category: CommandType.UTILS,
   description: 'Exibe a lista de comandos',
   func,
 };

@@ -1,5 +1,6 @@
-import { Command, CommandData } from '../protocols/command';
-import getRandomContactNumber from "./utils/getContactNumber";
+import {Command, CommandData} from '../protocols/command';
+import {getRandomContactNumber} from "../../utils/get-random-contact-number";
+import {CommandType} from "../protocols/commandType";
 
 const func: Command = async ({ message, client, value }) => {
   const contactNumber = getRandomContactNumber(client, message)
@@ -14,6 +15,7 @@ const func: Command = async ({ message, client, value }) => {
 const quem: CommandData = {
   func,
   command: '.quem',
+  category: CommandType.FUNNY,
   description: 'Escolhe um membro aleatório do grupo como responsável',
   onlyForGroups: true,
 };

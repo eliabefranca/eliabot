@@ -1,5 +1,6 @@
-import { userStatsDb } from '../../../database/json/db';
-import { Command, CommandData } from '../protocols/command';
+import {userStatsDb} from '../../../database/json/db';
+import {Command, CommandData} from '../protocols/command';
+import {CommandType} from "../protocols/commandType";
 
 const func: Command = async ({ client, message }) => {
   const schemaList = message.chat.groupMetadata.participants.map(
@@ -9,7 +10,7 @@ const func: Command = async ({ client, message }) => {
   let rank = await userStatsDb.get(schemaList);
 
   if (rank.length === 0) {
-    await client.reply(
+    client.reply(
       message.from,
       'Este grupo ainda não tem ninguém nas estatísticas',
       message.id
@@ -29,7 +30,7 @@ const func: Command = async ({ client, message }) => {
   rank = rank.slice(0, 10);
 
   rank.forEach((user, index) => {
-    let m = index === 0 ? '🏆' : '';
+    let m: string;
     const w = '```';
 
     if (index === 0) {
@@ -53,6 +54,7 @@ const func: Command = async ({ client, message }) => {
 const stats: CommandData = {
   command: '.rank',
   func,
+  category: CommandType.BOT_STATISTICS,
   description: 'Exibe o ranking dos usuários que mais utilizam o bot no grupo.',
   hidden: false,
   onlyForGroups: true,

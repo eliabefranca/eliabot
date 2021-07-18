@@ -1,4 +1,5 @@
 import {Command, CommandData} from '../protocols/command';
+import * as googleTTS from 'google-tts-api';
 import {CommandType} from "../protocols/commandType";
 import {outputErrorMessage} from "../../utils/output-error-message";
 
@@ -11,20 +12,27 @@ const func: Command = async ({ client, message, value }) => {
   }
 
   const { body, caption } = quotedMsg;
-  let txt = body ? body : caption;
+  const txt = quotedMsg.isMedia ? caption : body;
 
-  txt = txt.replace(/[aeiouãẽĩõũáéíóúâêîôûàèìòùäëïöü]/g, 'i');
-  txt = txt.replace(/[AEIOUÃẼĨÕŨÁÉÍÓÚÂÊÎÔÛÀÈÌÒÙÄËÏÖÜ]/g, 'I');
+  if (!txt?.trim()) {
+    await outputErrorMessage(client, message, 'A mensagem está vazia.');
+    return;
+  }
 
-  await client.reply(message.from, txt, quotedMsg.id);
+  const audioUrl = googleTTS.getAudioUrl(txt, {
+    lang: 'pt-BR',
+    host: 'https://translate.google.com',
+  });
+
+  client.sendAudio(message.chatId, audioUrl, quotedMsg.id);
 };
 
 const imitar: CommandData = {
   func,
-  command: '.imitar',
+  command: '.imitar3',
+  description: 'Imita em audio uma mensagem marcada.',
   category: CommandType.FUNNY,
-  description: 'Imita uma mensagem.',
-  onlyForGroups: true,
+  onlyForGroups: false,
 };
 
 export default imitar;

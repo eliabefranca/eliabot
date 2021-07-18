@@ -1,13 +1,11 @@
-import { Command, CommandData } from '../protocols/command';
+import {Command, CommandData} from '../protocols/command';
+import {CommandType} from "../protocols/commandType";
+import {outputErrorMessage} from "../../utils/output-error-message";
 
 const func: Command = async ({ client, message, value }) => {
   const groupsThatIamAdmin = await client.iAmAdmin();
   if (!groupsThatIamAdmin.includes(message.chat.id as any)) {
-    await client.reply(
-      message.from,
-      'Eu não sou administrador desse grupo.',
-      message.id
-    );
+    await outputErrorMessage(client, message, 'Eu não sou administrador desse grupo.');
     return;
   }
 
@@ -16,16 +14,12 @@ const func: Command = async ({ client, message, value }) => {
       (participant.id as any) === message.sender.id && participant.isAdmin
   );
   if (!senderIsAdmin) {
-    await client.reply(message.from, 'Você não é um administrador', message.id);
+    await outputErrorMessage(client, message, 'Você não é um administrador') 
     return;
   }
 
   if (!value && !message.quotedMsg) {
-    await client.reply(
-      message.from,
-      'Você precisa me enviar o número.',
-      message.id
-    );
+    await outputErrorMessage(client, message, 'Você precisa me enviar o número.') 
     return;
   }
 
@@ -57,6 +51,7 @@ const func: Command = async ({ client, message, value }) => {
 
 const prob: CommandData = {
   command: '.add',
+  category: CommandType.GROUP_MANAGEMENT,
   func,
   description: 'Adiciona um membro ao grupo',
   onlyForGroups: true,

@@ -10,7 +10,7 @@ node_modules
 **.data.json
 **.node-persist**
 # end managed by open-wa
+files/images/*.png
 
 # IDE's
-.vscode
 .idea

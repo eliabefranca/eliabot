@@ -1,13 +1,11 @@
-import { Command, CommandData } from '../protocols/command';
+import {Command, CommandData} from '../protocols/command';
+import {CommandType} from "../protocols/commandType";
+import {outputErrorMessage} from "../../utils/output-error-message";
 
 const func: Command = async ({ client, message, value }) => {
   const groupsThatIamAdmin = await client.iAmAdmin();
   if (!groupsThatIamAdmin.includes(message.chat.id as any)) {
-    await client.reply(
-      message.from,
-      'Eu não sou administrador deste grupo.',
-      message.id
-    );
+    await outputErrorMessage(client, message, 'Eu não sou administrador deste grupo.');
     return;
   }
 
@@ -16,20 +14,12 @@ const func: Command = async ({ client, message, value }) => {
       (participant.id as any) === message.sender.id && participant.isAdmin
   );
   if (!senderIsAdmin) {
-    await client.reply(
-      message.from,
-      'Você não é um administrador deste grupo.',
-      message.id
-    );
+    await outputErrorMessage(client, message, 'Você precisa marcar o usuário ou me enviar o número.');
     return;
   }
 
   if (!value && !message.quotedMsg) {
-    await client.reply(
-      message.from,
-      'Você precisa marcar o usuário ou me enviar o número.',
-      message.id
-    );
+    await outputErrorMessage(client, message, 'Você precisa marcar o usuário ou me enviar o número.');
     return;
   }
 
@@ -48,11 +38,7 @@ const func: Command = async ({ client, message, value }) => {
     .catch(() => false);
 
   if (!success) {
-    await client.reply(
-      message.from,
-      'Não foi possível remover este membro, verifique o número fornecido ou se ele é dono do grupo.',
-      message.id
-    );
+    await outputErrorMessage(client, message, 'Não foi possível remover este membro, verifique o número fornecido ou se ele é dono do grupo.')
     return;
   }
 
@@ -61,6 +47,7 @@ const func: Command = async ({ client, message, value }) => {
 
 const prob: CommandData = {
   command: '.kick',
+  category: CommandType.GROUP_MANAGEMENT,
   func,
   description: 'Expulsa um membro do grupo',
   onlyForGroups: true,

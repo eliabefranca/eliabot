@@ -1,4 +1,7 @@
-import { Command, CommandData } from '../protocols/command';
+import {Command, CommandData} from '../protocols/command';
+import {outputErrorMessage} from "../../utils/output-error-message";
+import {CommandType} from "../protocols/commandType";
+
 const yts = require('yt-search');
 
 const func: Command = async (params) => {
@@ -7,10 +10,7 @@ const func: Command = async (params) => {
   const videos = await yts(value).catch(() => false);
 
   if (!videos || !videos.all || !videos.all[0]) {
-    await client.sendText(
-      message.from,
-      'Não foi possível encontrar o vídeo [' + value + ']'
-    );
+    await outputErrorMessage(client, message, 'Não foi possível encontrar o vídeo [' + value + ']');
     return;
   }
 
@@ -23,6 +23,7 @@ const func: Command = async (params) => {
 
 const watch: CommandData = {
   command: '.watch',
+  category: CommandType.MEDIA,
   description: 'Pesquisa um vídeo no youtube',
   func,
 };

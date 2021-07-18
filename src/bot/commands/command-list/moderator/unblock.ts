@@ -1,6 +1,6 @@
-import { blockedUsersDb } from '../../../../database/json/db';
-import { getTimeStamp } from '../../../../helpers/date';
-import { Command, CommandData } from '../../protocols/command';
+import {blockedUsersDb} from '../../../../database/json/db';
+import {Command, CommandData} from '../../protocols/command';
+import {CommandType} from "../../protocols/commandType";
 
 const func: Command = async ({ client, message, value }) => {
   if (!value) {
@@ -37,6 +37,7 @@ const func: Command = async ({ client, message, value }) => {
 const block: CommandData = {
   func,
   description: '',
+  category: CommandType.BOT_ADMINISTRATION,
   command: '.unblock',
   allowedUsers: ['admin', 'moderator'],
   hidden: true,

@@ -100,10 +100,10 @@ describe('JsonDbHelper', () => {
   test('update should update values', () => {
     const { sut } = makeSut();
 
-    sut.update({ id: 1 }, { value: 'asdauhsd' });
+    sut.update({ id: 1 }, { value: 'updated_value' });
 
     expect(sut.virtualData).toEqual([
-      { id: 1, value: 'asdauhsd' },
+      { id: 1, value: 'updated_value' },
       { id: 2, value: 'another_value' },
     ]);
   });

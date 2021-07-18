@@ -1,5 +1,6 @@
-import { usersDb } from '../../../../database/json/db';
-import { Command, CommandData } from '../../protocols/command';
+import {usersDb} from '../../../../database/json/db';
+import {Command, CommandData} from '../../protocols/command';
+import {CommandType} from "../../protocols/commandType";
 
 const func: Command = async ({ client, message, value }) => {
   if (!value) {
@@ -40,6 +41,7 @@ const func: Command = async ({ client, message, value }) => {
 const demote: CommandData = {
   func,
   description: '',
+  category: CommandType.BOT_ADMINISTRATION,
   command: '.demote',
   allowedUsers: 'admin',
   hidden: true,
