@@ -11,8 +11,11 @@
     "g-i-s": "^2.1.6",
     "giphy-api": "^2.0.2",
     "image-data-uri": "^2.0.1",
+    "instagram-url-direct": "^1.0.9",
     "lodash": "^4.17.21",
     "mime-types": "^2.1.31",
+    "simple-instagram-api": "^2.2.0",
+    "twitter-url-direct": "^1.0.1",
     "yt-search": "^2.9.0"
   },
   "devDependencies": {
