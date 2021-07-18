@@ -11,7 +11,7 @@ interface User {
   profilePic: string;
 }
 
-function HistoryPage() {
+function Users() {
   const [users, setUsers] = useState([] as User[]);
 
   useEffect(() => {
@@ -65,4 +65,4 @@ function HistoryPage() {
   );
 }
 
-export default HistoryPage;
+export default Users;

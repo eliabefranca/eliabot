@@ -61,6 +61,7 @@ const func: Command = async ({ client, message, value }) => {
 
 const prob: CommandData = {
   command: '.kick',
+  category: 'groupManagement',
   func,
   description: 'Expulsa um membro do grupo',
   onlyForGroups: true,

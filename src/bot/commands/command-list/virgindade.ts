@@ -27,6 +27,7 @@ taporra 🥴💥`,
 
 const virgindade: CommandData = {
   command: '.virgindade',
+  category: 'funny',
   func,
   description: 'Descubra 😳',
   onlyForGroups: true,

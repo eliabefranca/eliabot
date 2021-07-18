@@ -57,6 +57,7 @@ const func: Command = async ({ client, message, value }) => {
 
 const prob: CommandData = {
   command: '.add',
+  category: 'groupManagement',
   func,
   description: 'Adiciona um membro ao grupo',
   onlyForGroups: true,

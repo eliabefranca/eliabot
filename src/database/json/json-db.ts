@@ -74,14 +74,17 @@ export class JsonDb<T extends Schema> {
 
   update(schema: Schema, newValues: Schema): void {
     this.refresh();
+
+    const newData = [...this.data];
     for (let i = 0; i < this.data.length; i++) {
       const item = this.data[i];
 
       if (this.match(schema, item)) {
-        this.data[i] = Object.assign({}, item, newValues);
+        newData[i] = Object.assign({}, item, newValues);
       }
     }
 
+    this.data = newData;
     this.updateFile();
   }
 

@@ -105,7 +105,10 @@ const func: Command = async (params) => {
     return;
   }
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 417a76f2db609e8c56bdeed5fecd66075127d57c
   const imageName = imgUrl as string;
   const dataUri = await imageDataURI.encodeFromURL(imgUrl);
 
@@ -122,6 +125,7 @@ link: ${imgUrl}
 
 const searchImage: CommandData = {
   command: '.img',
+  category: 'media',
   func,
   description:
     'Retorna uma imagem a partir de um term. Você pode escolher a posição do resultado com "#N" onde N é a posição da imagem.',

@@ -10,7 +10,7 @@ interface Group {
   thumb: string;
 }
 
-function User() {
+function GroupPage() {
   const [group, setGroup] = useState<Group | null>();
   const { id } = useParams<{ id: string }>();
 
@@ -57,4 +57,4 @@ function User() {
   );
 }
 
-export default User;
+export default GroupPage;
