@@ -59,12 +59,17 @@ const func: Command = async ({ value, client, message }) => {
     `${message.sender.id}.png`
   );
 
+  const url = decodeURIComponent(resultItem.link)
+    .replace(/\?.*$/, '')
+    .replace(/\&.*$/, '');
+
   await printSite({
-    url: resultItem.link,
-    defaultViewport: { width: 320, height: 480 },
+    url,
+    defaultViewport: { width: 500, height: 2500 },
     mobile: true,
-    fullPage: true,
+    fullPage: false,
     path: imgPath,
+    captureBeyondViewport: false,
   });
 
   await client.sendImage(
@@ -72,7 +77,7 @@ const func: Command = async ({ value, client, message }) => {
     imgPath,
     'result.png',
     `Ta na mão.
-  link: ${resultItem.link}
+  link: ${url}
       `,
     message.id
   );
@@ -82,8 +87,8 @@ const googleSearch: CommandData = {
   command: '.gs',
   category: 'utils',
   func,
-  description: 'Retorna uma imagem de um resultado de uma pesquisa no google',
-  hidden: true,
+  description:
+    'Retorna a imagem de um resultado de uma pesquisa no google. Você pode usar a paginação com #N',
 };
 
 export default googleSearch;
