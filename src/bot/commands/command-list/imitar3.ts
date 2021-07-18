@@ -14,19 +14,19 @@ const func: Command = async ({ client, message, value }) => {
   }
 
   const { body, caption } = quotedMsg;
-  let txt = quotedMsg.isMedia ? caption : body;
+  const txt = quotedMsg.isMedia ? caption : body;
 
-  if (!txt.trim()) {
+  if (!txt?.trim()) {
     await client.reply(message.from, 'A mensagem está vazia.', message.id);
     return;
   }
-
 
   const audioUrl = googleTTS.getAudioUrl(txt, {
     lang: 'pt-BR',
     host: 'https://translate.google.com',
   });
-  client.sendAudio(message.chatId, audioUrl, message.id);
+
+  client.sendAudio(message.chatId, audioUrl, quotedMsg.id);
 };
 
 const imitar: CommandData = {
