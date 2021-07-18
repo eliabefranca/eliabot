@@ -7,7 +7,7 @@ const mime = require('mime-types');
 
 const func: Command = async ({ client, message, value }) => {
   const kissedPerson = await validPerson(client, message, value, 'Você precisa me dizer qual pessoa você quer beijar')
-  if (kissedPerson != null) {
+  if (kissedPerson) {
     const giphys = [
       'https://media.giphy.com/media/f5vXCvhSJsZxu/giphy.gif',
       'https://media.giphy.com/media/108M7gCS1JSoO4/giphy.gif',
