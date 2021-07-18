@@ -67,7 +67,6 @@ export default sampleCommand;
 
 ```
 
-
 ## Testando
 Este projeto não possui muitos testes 😥
 

@@ -26,15 +26,15 @@ const getGif = async (term: string) => {
     };
 
     if (text) {
-        giphy.search(
-          {
-            q: text,
-            offset: index,
-            limit: 1,
-            rating: "r"
-          },
-          (_err, res) => fetchGif(res.data[0])
-        );
+      giphy.search(
+        {
+          q: text,
+          offset: index,
+          limit: 1,
+          rating: "r"
+        },
+        (_err, res) => fetchGif(res.data[0])
+      );
     }
   }).catch((error) => {
     console.log(error);
