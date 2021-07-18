@@ -7,9 +7,8 @@ const validPerson = async function (client: Client, message: Message, value: str
     await outputErrorMessage(client, message, errorText);
     return null;
   }
-
   const person = value.trim();
-  const personExists = getPersonExists(message, person);
+  const personExists = await getPersonExists(message, person);
   if (!personExists) {
     await outputErrorMessage(client, message, 'A pessoa informada não existe no grupo');
     return null;
