@@ -1,5 +1,4 @@
 import path from 'path';
-import fs from 'fs';
 const gse = require('general-search-engine');
 import { printSite } from 'site-print/dist/index.js';
 
