@@ -86,14 +86,17 @@ const func: Command = async (params) => {
               .toUpperCase()}`;
     }
 
-    const langCodeIsValid = supportedLanguages.some((lang) =>
+    const lowerCasedLangCode = langCode.toLowerCase();
+    const targetLangCode = supportedLanguages.filter((lang) =>
       langCode.length < 4
-        ? lang.indexOf(langCode.toLowerCase()) === 0
+        ? lang.indexOf(lowerCasedLangCode) === 0 ||
+          lang.split('-')[1].toLowerCase().indexOf(lowerCasedLangCode) === 0
         : lang === langCode
-    );
+    )[0];
 
+    const langCodeIsValid = typeof targetLangCode === 'string';
     if (langCodeIsValid) {
-      lang = langCode;
+      lang = targetLangCode;
     } else {
       await client.reply(
         message.from,
@@ -114,11 +117,29 @@ const func: Command = async (params) => {
   }
 
   const text = value.replace(getLangRegex, '');
-  const audioUrl = googleTTS.getAudioUrl(text, {
-    lang,
-    host: 'https://translate.google.com',
-  });
-  client.sendAudio(message.chatId, audioUrl, message.id);
+  let audioUrl: string = '';
+  try {
+    audioUrl = googleTTS.getAudioUrl(text, {
+      lang,
+      host: 'https://translate.google.com',
+    });
+  } catch (error) {
+    client.reply(
+      message.from,
+      'Aconteceu um erro enquanto eu tentava baixar o áudio, tente novamente em alguns instantes.',
+      message.id
+    );
+  }
+
+  if (!audioUrl) {
+    client.reply(
+      message.from,
+      'Não consegui encontrar um áudio para o texto fornecido 😞',
+      message.id
+    );
+  }
+
+  await client.sendAudio(message.chatId, audioUrl, message.id);
 };
 
 const fala: CommandData = {
