@@ -5,10 +5,81 @@ import { Command, CommandData } from '../protocols/command';
 const gis = require('g-i-s');
 const imageDataURI = require('image-data-uri');
 
-const names = ['Maki Zenin', 'Satoru Gojo', 'Nico Robin', 'Sanji Vinsmoke', 'Yuta Okkotsu',
-  'Megumi Fushiguro', 'Sukuna Ryomen', 'Monkey D. Luffy', 'Roronoa Zoro', 'Goro Majima',
-  'Uraraka', 'Izuku Midoriya', 'Kim Dahyun', 'Minatozaki Sana', 'Park Jihyo', 'Hirai Momo',
-  'Kim Ji Woo (Chuu)', 'Harry Styles', 'Zayn Malik', 'Liam Payne', 'Niall Horan', 'Louis Tomlinson']
+const names = [
+  'Maki Zenin',
+  'Satoru Gojo',
+  'Nico Robin',
+  'Sanji Vinsmoke',
+  'Yuta Okkotsu',
+  'Megumi Fushiguro',
+  'Sukuna Ryomen',
+  'Monkey D. Luffy',
+  'Roronoa Zoro',
+  'Goro Majima',
+  'Uraraka',
+  'Izuku Midoriya',
+  'Kim Dahyun',
+  'Minatozaki Sana',
+  'Park Jihyo',
+  'Hirai Momo',
+  'Kim Ji Woo (Chuu)',
+  'Harry Styles',
+  'Zayn Malik',
+  'Liam Payne',
+  'Niall Horan',
+  'Louis Tomlinson',
+  'Felipe Neto',
+  'Fausto Silva',
+  'Renato Aragão',
+  'Leão Lobo',
+  'Leno Brega',
+  'Ronald Mcdonald',
+  'Carlos Bolsonaro',
+  'Renan Bolsonaro',
+  'Eduardo Bolsonaro',
+  'Jair Messias Bolsonaro',
+  'Lula',
+  'Mãmãe Falei',
+  'Sósia do Ronaldinho',
+  'Tio Sam',
+  'Ana Maria Braga',
+  'Pedro Bial',
+  'Luciano Huck',
+  'Eevee',
+  'Fátima Bernardes',
+  'Ednaldo Pereira',
+  'Agostinho Carrara',
+  'Dona Nenê',
+  'Glória Maria do Fantástico',
+  'Joelma do Calypso',
+  'Galerito',
+  'Gil da Esfiha',
+  'Cr7 de Facão',
+  'Vampeta',
+  'Gil do BBB21',
+  'Messi Careca',
+  'Juliette do BBB21',
+  'Monark',
+  'Véio da Havan',
+  'Sonia Abrão',
+  'Felipe Dylon',
+  'Nunes Filho',
+  'Galo Cego',
+  'Sua Mãe',
+  'Padre Marcelo Rossi',
+  'Galo de Kalsa',
+  'Galo de Tênis',
+  'Datena',
+  'Lázaro Barbosa do DF',
+  'Macaco Twelves do Latino',
+  'Vanessão 20 Reais',
+  'Bicha Muda',
+  'Bluezão',
+  'Kid Bengala',
+  'Henri Cristo',
+  'Beyonce',
+  'Nando Moura Anão',
+];
 
 const getImage = async (term: string) => {
   return new Promise((resolve, reject) => {
@@ -53,7 +124,7 @@ const getImage = async (term: string) => {
 const func: Command = async (params) => {
   const { value, client, message } = params;
 
-  const marriagePartner = names[Math.floor(Math.random() * names.length)]
+  const marriagePartner = names[Math.floor(Math.random() * names.length)];
 
   let groupMembers = await client.getGroupMembers(message.chat.id as any);
 
@@ -85,7 +156,9 @@ const func: Command = async (params) => {
 
 const marry: CommandData = {
   command: '.marry',
-  description: 'Um casamento aleatorio entre um membro do grupo e um personagem de anime',
+  category: 'funny',
+  description:
+    'Um casamento aleatorio entre um membro do grupo e um personagem de anime',
   func,
   onlyForGroups: true,
 };
