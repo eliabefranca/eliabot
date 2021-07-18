@@ -9,7 +9,7 @@ const func: Command = async ({ client, message }) => {
   let rank = await userStatsDb.get(schemaList);
 
   if (rank.length === 0) {
-    client.reply(
+    await client.reply(
       message.from,
       'Este grupo ainda não tem ninguém nas estatísticas',
       message.id
