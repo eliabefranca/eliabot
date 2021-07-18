@@ -59,7 +59,9 @@ const func: Command = async ({ client, message }) => {
   funStr += bottomSpacing;
   mediaStr += bottomSpacing;
 
-  let finalText = `${sm}${utilsStr}${groupManageStr}${funStr}${mediaStr}${sm}`;
+  let finalText = `${sm}${utilsStr}${groupManageStr}${funStr}${mediaStr}${sm}
+
+  Github: https://github.com/Eliabe45/eliabot`;
 
   client.reply(message.from, finalText, message.id);
 };
