@@ -2,14 +2,15 @@ import { userStatsDb } from '../../database/json/db';
 import { MessageEventHandler } from '../protocols/message-event-handler';
 
 export const updateStats: MessageEventHandler = ({ message }) => {
-  const userStats = userStatsDb.getFirst({ id: message.sender.id });
+  const { id, pushname: name } = message.sender;
+  const userStats = userStatsDb.getFirst({ id });
 
   if (userStats) {
-    userStatsDb.update(userStats, { commands: userStats.commands + 1 });
+    userStatsDb.update({ id }, { commands: userStats.commands + 1 });
   } else {
     userStatsDb.save({
-      id: message.sender.id,
-      name: message.sender.pushname,
+      id,
+      name,
       commands: 1,
     });
   }

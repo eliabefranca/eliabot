@@ -50,6 +50,7 @@ const func: Command = async ({ client, message, value }) => {
 const promote: CommandData = {
   func,
   description: '',
+  category: 'botAdministration',
   command: '.promote',
   allowedUsers: 'admin',
   hidden: true,

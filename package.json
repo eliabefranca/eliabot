@@ -9,13 +9,19 @@
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "g-i-s": "^2.1.6",
+    "general-search-engine": "^1.4.0",
     "giphy-api": "^2.0.2",
+    "google-tts-api": "^2.0.2",
     "image-data-uri": "^2.0.1",
     "instagram-url-direct": "^1.0.9",
     "lodash": "^4.17.21",
     "mime-types": "^2.1.31",
+<<<<<<< HEAD
     "simple-instagram-api": "^2.2.0",
     "twitter-url-direct": "^1.0.1",
+=======
+    "site-print": "^1.0.3",
+>>>>>>> 417a76f2db609e8c56bdeed5fecd66075127d57c
     "yt-search": "^2.9.0"
   },
   "devDependencies": {

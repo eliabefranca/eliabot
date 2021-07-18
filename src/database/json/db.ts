@@ -4,14 +4,12 @@ import { FileReader } from './file-reader';
 import { JsonDb } from './json-db';
 import { BlockedUsers } from '../models/blocked-users';
 import { BlockedGroups } from '../models/blocked-groups';
-import { History } from '../models/history';
 import { User } from '../models/user';
 import { Group } from '../models/groups';
 import { UserStats } from '../models/user-stats';
 import { CONFIG } from '../../../config';
 
 const dbFolder = path.join(CONFIG.dbFolder);
-const historyDbJson = path.join(dbFolder, 'history.json');
 const usersDbJson = path.join(dbFolder, 'users.json');
 const groupsDbJson = path.join(dbFolder, 'groups.json');
 const blockedUsersDbJson = path.join(dbFolder, 'blocked-users.json');
@@ -31,11 +29,6 @@ export const blockedUsersDb = new JsonDb<BlockedUsers>(
 export const blockedGroupsDb = new JsonDb<BlockedGroups>(
   blockedGroupsDbJson,
   new FileReader(blockedGroupsDbJson)
-);
-
-export const historyDb = new JsonDb<History>(
-  historyDbJson,
-  new FileReader(historyDbJson)
 );
 
 export const groupsDb = new JsonDb<Group>(

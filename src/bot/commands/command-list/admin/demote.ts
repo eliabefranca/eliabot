@@ -40,6 +40,7 @@ const func: Command = async ({ client, message, value }) => {
 const demote: CommandData = {
   func,
   description: '',
+  category: 'botAdministration',
   command: '.demote',
   allowedUsers: 'admin',
   hidden: true,

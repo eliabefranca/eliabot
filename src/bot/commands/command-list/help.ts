@@ -1,35 +1,74 @@
 import { getCommandList } from '.';
 import { Command, CommandData } from '../protocols/command';
 
+const tableHeader = (str: string): string => {
+  return `╔═════════════════
+║ 📂 ${str}
+╠═════════════════`;
+};
+
+const tableCell = (str: string): string => {
+  return `
+╠ ${str}
+╚═════════════════`;
+};
+
+const bottomSpacing = `\n`;
+
 const func: Command = async ({ client, message }) => {
   const commandList = await getCommandList();
-
-  let msg = '*Comandos gerais*\n\n';
+  let utilsStr = tableHeader('Utilitários');
+  let funStr = tableHeader('Divertidos');
+  let mediaStr = tableHeader('Mídia');
+  let groupManageStr = tableHeader('Gerenciar Grupo');
+  let statsStr = tableHeader('Estatísticas');
 
   const sm = '```';
   const ita = '_';
 
-  let groupMsg = `*Comandos específicos para grupos*\n\n`;
-
   const availableCommands = commandList.filter((command) => !command.hidden);
 
   availableCommands.forEach((command) => {
-    if (command.onlyForGroups) {
-      groupMsg += `${sm + command.command + sm}: ${
-        ita + command.description + ita
-      } \n\n`;
-    } else {
-      msg += `${sm + command.command + sm}: ${
-        ita + command.description + ita
-      } \n\n`;
+    if (command.hidden) {
+      return;
+    }
+
+    switch (command.category) {
+      case 'funny':
+        funStr += tableCell(`${command.command}\n${command.description}`);
+        break;
+      case 'groupManagement':
+        groupManageStr += tableCell(
+          `${command.command}\n${command.description}`
+        );
+        break;
+      case 'media':
+        mediaStr += tableCell(`${command.command}\n${command.description}`);
+        break;
+      case 'utils':
+        utilsStr += tableCell(`${command.command}\n${command.description}`);
+        break;
+      case 'botStatistics':
+        statsStr += tableCell(`${command.command}\n${command.description}`);
+        break;
     }
   });
 
-  client.reply(message.from, msg + groupMsg, message.id);
+  utilsStr += bottomSpacing;
+  groupManageStr += bottomSpacing;
+  funStr += bottomSpacing;
+  mediaStr += bottomSpacing;
+
+  let finalText = `${sm}${utilsStr}${groupManageStr}${funStr}${mediaStr}${sm}
+
+  Github: https://github.com/Eliabe45/eliabot`;
+
+  client.reply(message.from, finalText, message.id);
 };
 
 const help: CommandData = {
   command: '.help',
+  category: 'utils',
   description: 'Exibe a lista de comandos',
   func,
 };

@@ -21,6 +21,7 @@ const func: Command = async ({ message, client, value }) => {
 const quem: CommandData = {
   func,
   command: '.quem',
+  category: 'funny',
   description: 'Escolhe um membro aleatório do grupo como responsável',
   onlyForGroups: true,
 };

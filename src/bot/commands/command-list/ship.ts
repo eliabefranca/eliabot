@@ -27,6 +27,7 @@ const func: Command = async ({ client, message }) => {
 
 const ship: CommandData = {
   command: '.ship',
+  category: 'funny',
   description: 'Forma um casal aleatório no grupo',
   func,
   onlyForGroups: true,
