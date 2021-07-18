@@ -10,6 +10,7 @@
     "express": "^4.17.1",
     "g-i-s": "^2.1.6",
     "giphy-api": "^2.0.2",
+    "google-tts-api": "^2.0.2",
     "image-data-uri": "^2.0.1",
     "lodash": "^4.17.21",
     "mime-types": "^2.1.31",
