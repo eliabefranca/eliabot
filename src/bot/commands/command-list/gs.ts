@@ -31,13 +31,11 @@ function getIndexAndTextFromQuery(query: string): {
 
 const func: Command = async ({ value, client, message }) => {
   if (!value) {
-    await client.reply(
-      message.from,
-      'Cê precisa enviar o nome da imagem, bocó!',
-      message.id
-    );
+    client.reply(message.from, 'Você precisa me enviar a pesquisa', message.id);
     return;
   }
+
+  client.reply(message.from, 'Um momento, já estou procurando.', message.id);
 
   const { index, text } = getIndexAndTextFromQuery(value);
 
