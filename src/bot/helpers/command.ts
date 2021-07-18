@@ -2,6 +2,8 @@ import { Client, Message } from '@open-wa/wa-automate';
 import { getCommandList } from '../commands/command-list';
 import { CommandData } from '../commands/protocols/command';
 
+export let commandList: CommandData[] = []
+
 export const parseCommand = (query: string) => {
   const command = query.split(' ')[0].trim();
   const value = query.replace(command, '').trim();
@@ -36,7 +38,9 @@ interface CommandHandlerParams {
 export const getCommandData = async (
   query: string
 ): Promise<CommandData | null> => {
-  const commandList = await getCommandList();
+  if (!commandList.length) {
+    commandList = await getCommandList();
+  }
 
   const { command } = parseCommand(query);
 
