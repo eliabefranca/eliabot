@@ -16,12 +16,7 @@
     "instagram-url-direct": "^1.0.9",
     "lodash": "^4.17.21",
     "mime-types": "^2.1.31",
-<<<<<<< HEAD
-    "simple-instagram-api": "^2.2.0",
-    "twitter-url-direct": "^1.0.1",
-=======
     "site-print": "^1.0.3",
->>>>>>> 417a76f2db609e8c56bdeed5fecd66075127d57c
     "yt-search": "^2.9.0"
   },
   "devDependencies": {

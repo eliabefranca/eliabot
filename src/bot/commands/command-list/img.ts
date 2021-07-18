@@ -105,10 +105,6 @@ const func: Command = async (params) => {
     return;
   }
 
-<<<<<<< HEAD
-
-=======
->>>>>>> 417a76f2db609e8c56bdeed5fecd66075127d57c
   const imageName = imgUrl as string;
   const dataUri = await imageDataURI.encodeFromURL(imgUrl);
 

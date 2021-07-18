@@ -31,11 +31,7 @@ const getGif = async (term: string) => {
           q: text,
           offset: index,
           limit: 1,
-<<<<<<< HEAD
-          rating: "r"
-=======
           rating: 'r',
->>>>>>> 417a76f2db609e8c56bdeed5fecd66075127d57c
         },
         (_err, res) => fetchGif(res.data[0])
       );

@@ -163,8 +163,4 @@ const marry: CommandData = {
   onlyForGroups: true,
 };
 
-<<<<<<< HEAD
 export default marry;
-=======
-export default marry;
->>>>>>> 417a76f2db609e8c56bdeed5fecd66075127d57c
