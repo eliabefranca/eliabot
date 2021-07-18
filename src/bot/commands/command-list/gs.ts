@@ -1,15 +1,9 @@
 import path from 'path';
-const gse = require('general-search-engine');
+import gse, { SearchResultItem } from 'general-search-engine';
 import { printSite } from 'site-print/dist/index.js';
 
 import { Command, CommandData } from '../protocols/command';
 import { CONFIG } from '../../../../config';
-
-interface GSearchResultItem {
-  title: string;
-  link: string;
-  description: string;
-}
 
 function getIndexAndTextFromQuery(query: string): {
   index: number;
@@ -38,10 +32,10 @@ const func: Command = async ({ value, client, message }) => {
 
   const { index, text } = getIndexAndTextFromQuery(value);
 
-  const result: GSearchResultItem[] = await new gse.search()
+  const result = (await new gse.search()
     .setType('search')
     .setQuery(text)
-    .run();
+    .run()) as SearchResultItem[];
 
   const resultItem = result?.[index];
 
