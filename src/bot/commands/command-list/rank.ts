@@ -1,22 +1,9 @@
-import {userStatsDb} from '../../../database/json/db';
-import {Command, CommandData} from '../protocols/command';
-import {CommandType} from "../protocols/commandType";
+import { userStatsDb } from '../../../database/json/db';
+import { Command, CommandData } from '../protocols/command';
+import { CommandType } from '../protocols/commandType';
 
 const func: Command = async ({ client, message }) => {
-  const schemaList = message.chat.groupMetadata.participants.map(
-    (participant) => ({ id: participant.id })
-  );
-
-  let rank = await userStatsDb.get(schemaList);
-
-  if (rank.length === 0) {
-    client.reply(
-      message.from,
-      'Este grupo ainda não tem ninguém nas estatísticas',
-      message.id
-    );
-    return;
-  }
+  let rank = await userStatsDb.getData();
 
   let msg = `*Usuários mais ativos*\n\n`;
 
@@ -27,7 +14,7 @@ const func: Command = async ({ client, message }) => {
     return 1;
   });
 
-  rank = rank.slice(0, 10);
+  rank = rank.slice(0, 20);
 
   rank.forEach((user, index) => {
     let m: string;
