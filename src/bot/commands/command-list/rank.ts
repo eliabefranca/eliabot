@@ -29,7 +29,9 @@ const func: Command = async ({ client, message }) => {
       m = '🎖️';
     }
 
-    msg += `${w}${m} ${index + 1} - ${user.name}${w} (${user.commands} comando${
+    let { name, commands } = user;
+    name = name ?? '<sem nome/>';
+    msg += `${w}${m} ${index + 1} - ${name}${w} (${commands} comando${
       user.commands > 1 ? 's' : ''
     }) \n`;
   });
