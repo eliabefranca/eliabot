@@ -1,4 +1,5 @@
 import { Command, CommandData, CommandType } from '@command-protocols';
+import { getUserIdFromMessage } from 'src/bot/utils/get-user-id-from-message';
 import { outputErrorMessage } from '../../utils/output-error-message';
 
 const func: Command = async ({ client, message, value }) => {
@@ -34,15 +35,7 @@ const func: Command = async ({ client, message, value }) => {
     return;
   }
 
-  let userId = '';
-
-  if (value) {
-    userId = value?.trim().replace('@', '').replace('+', '') + '@c.us';
-  }
-
-  if (message.quotedMsg) {
-    userId = message.quotedMsg.sender.id;
-  }
+  let userId = getUserIdFromMessage(message, value);
 
   const success = await client
     .removeParticipant(message.chat.id as any, userId as any)
