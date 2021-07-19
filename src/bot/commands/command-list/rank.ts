@@ -41,7 +41,7 @@ const stats: CommandData = {
   command: '.rank',
   func,
   category: CommandType.BOT_STATISTICS,
-  description: 'Exibe o ranking dos usuários que mais utilizam o bot no grupo.',
+  description: 'Exibe o ranking dos usuários que mais utilizam o bot.',
   hidden: false,
   onlyForGroups: true,
 };
