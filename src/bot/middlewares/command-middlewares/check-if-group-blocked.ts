@@ -1,4 +1,4 @@
-import { blockedGroupsDb } from '../../../database/json/db';
+import { blockedGroupsDb } from '@json-db';
 import { CommandMiddleware } from '../../bot';
 
 export const checkIfGroupBlocked: CommandMiddleware = async ({

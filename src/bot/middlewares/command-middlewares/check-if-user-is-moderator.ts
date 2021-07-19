@@ -1,4 +1,4 @@
-import { usersDb } from '../../../database/json/db';
+import { usersDb } from '@json-db';
 import { CommandMiddleware } from '../../bot';
 
 export const checkIfUserIsModerator: CommandMiddleware = async ({

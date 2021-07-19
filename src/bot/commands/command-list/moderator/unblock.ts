@@ -1,4 +1,4 @@
-import { blockedUsersDb } from '../../../../database/json/db';
+import { blockedUsersDb } from '@json-db';
 import { Command, CommandData, CommandType } from '@command-protocols';
 
 const func: Command = async ({ client, message, value }) => {

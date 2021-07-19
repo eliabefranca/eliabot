@@ -1,4 +1,4 @@
-import { blockedUsersDb, usersDb } from '../../../../database/json/db';
+import { blockedUsersDb, usersDb } from '@json-db';
 import { getTimeStamp } from '../../../../helpers/date';
 import { Command, CommandData, CommandType } from '@command-protocols';
 import { outputErrorMessage } from '../../../utils/output-error-message';

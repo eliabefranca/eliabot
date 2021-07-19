@@ -1,4 +1,4 @@
-import { groupsDb } from '../../database/json/db';
+import { groupsDb } from '@json-db';
 import { MessageEventHandler } from '../protocols/message-event-handler';
 
 export const updateGroup: MessageEventHandler = ({ message }) => {

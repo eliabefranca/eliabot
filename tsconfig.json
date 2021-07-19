@@ -18,7 +18,8 @@
     "baseUrl": ".",
     "paths": {
       "general-search-engine": ["src/types/general-search-engine.d.ts"],
-      "@command-protocols": ["src/bot/commands/protocols/index.ts"]
+      "@command-protocols": ["src/bot/commands/protocols/index.ts"],
+      "@json-db": ["src/database/json/db.ts"]
     },
 
     // "rootDirs": [],

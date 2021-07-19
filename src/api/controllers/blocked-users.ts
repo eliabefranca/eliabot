@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 
-import { blockedUsersDb } from '../../database/json/db';
+import { blockedUsersDb } from '@json-db';
 
 class BlockedUsersController {
   get(req: Request, res: Response) {

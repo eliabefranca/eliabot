@@ -1,4 +1,4 @@
-import { userStatsDb } from '../../../database/json/db';
+import { userStatsDb } from '@json-db';
 import { Command, CommandData, CommandType } from '@command-protocols';
 
 const func: Command = async ({ client, message }) => {

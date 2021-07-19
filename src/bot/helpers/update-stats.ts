@@ -1,4 +1,4 @@
-import { userStatsDb } from '../../database/json/db';
+import { userStatsDb } from '@json-db';
 import { MessageEventHandler } from '../protocols/message-event-handler';
 
 export const updateStats: MessageEventHandler = ({ message }) => {

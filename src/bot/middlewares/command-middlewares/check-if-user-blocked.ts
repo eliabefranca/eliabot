@@ -1,4 +1,4 @@
-import { blockedUsersDb } from '../../../database/json/db';
+import { blockedUsersDb } from '@json-db';
 import { CommandMiddleware } from '../../bot';
 
 export const checkIfUserBlocked: CommandMiddleware = async ({

@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 
-import { groupsDb } from '../../database/json/db';
+import { groupsDb } from '@json-db';
 
 class GroupController {
   get(req: Request, res: Response) {
