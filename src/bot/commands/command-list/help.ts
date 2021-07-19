@@ -3,7 +3,7 @@ import { Command, CommandData, CommandType } from '@command-protocols';
 
 const tableHeader = (str: string): string => {
   return `╔═════════════════
-║ 📂 ${str}
+║ ${str}
 ╠═════════════════`;
 };
 
@@ -15,13 +15,12 @@ const tableCell = (str: string): string => {
 
 const bottomSpacing = `\n`;
 
-const func: Command = async ({ client, message }) => {
-  const commandList = await getCommandList();
-  let utilsStr = tableHeader('Utilitários');
-  let funStr = tableHeader('Divertidos');
-  let mediaStr = tableHeader('Mídia');
-  let groupManageStr = tableHeader('Gerenciar Grupo');
-  let statsStr = tableHeader('Estatísticas');
+function buildMenuWithAllCommands(commandList: CommandData[]): string {
+  let utilsStr = tableHeader('🧰 Utilitários');
+  let funStr = tableHeader('🤡 Divertidos');
+  let mediaStr = tableHeader('🖼️ Mídia');
+  let groupManageStr = tableHeader('👮 Gerenciar Grupo');
+  let statsStr = tableHeader('📊 Estatísticas');
 
   const sm = '```';
 
@@ -58,17 +57,59 @@ const func: Command = async ({ client, message }) => {
   funStr += bottomSpacing;
   mediaStr += bottomSpacing;
 
-  let finalText = `${sm}${utilsStr}${groupManageStr}${funStr}${mediaStr}${sm}
+  const helpMenuItems = [utilsStr, groupManageStr, funStr, mediaStr, statsStr];
+
+  const finalText = `${sm}${helpMenuItems.join('')}${sm}
 
   Github: https://github.com/Eliabe45/eliabot`;
 
-  client.reply(message.from, finalText, message.id);
+  return finalText;
+}
+
+function BuildMenuWithAsingleCommand(command: CommandData): string {
+  const sm = '```';
+
+  const header = tableHeader(`🔗 ${command.command}`);
+  const detailetDescription = command.detailedDescription
+    ? `\n\n${command.detailedDescription}`
+    : '';
+  const body = tableCell(`${command.description}${detailetDescription}`);
+
+  const finalText = `${sm}${header}${body}${sm}
+
+  Github: https://github.com/Eliabe45/eliabot`;
+
+  return finalText;
+}
+
+const func: Command = async ({ client, message, value }) => {
+  const commandList = await getCommandList();
+
+  if (value) {
+    const possibleCommand = value.trim();
+    const command = commandList.filter(
+      (com) => com.command === possibleCommand
+    )[0];
+
+    if (command) {
+      client.reply(
+        message.from,
+        BuildMenuWithAsingleCommand(command),
+        message.id
+      );
+      return;
+    }
+  }
+
+  const helpMenu = buildMenuWithAllCommands(commandList);
+  client.reply(message.from, helpMenu, message.id);
 };
 
 const help: CommandData = {
   command: '.help',
   category: CommandType.UTILS,
-  description: 'Exibe a lista de comandos',
+  description:
+    'Exibe a lista de comandos. Você pode usar .help [comando] para ver mais detalhes de um determinado comando.\nEx.: .help .fala',
   func,
 };
 
