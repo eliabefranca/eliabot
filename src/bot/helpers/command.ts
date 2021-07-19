@@ -1,8 +1,8 @@
 import { Client, Message } from '@open-wa/wa-automate';
 import { getCommandList } from '../commands/command-list';
-import { CommandData } from '../commands/protocols/command';
+import { CommandData } from '../commands/protocols';
 
-export let commandList: CommandData[] = []
+export let commandList: CommandData[] = [];
 
 export const parseCommand = (query: string) => {
   const command = query.split(' ')[0].trim();

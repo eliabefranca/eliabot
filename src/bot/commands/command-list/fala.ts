@@ -1,7 +1,6 @@
-import {Command, CommandData} from '../protocols/command';
 import * as googleTTS from 'google-tts-api';
-import {CommandType} from "../protocols/commandType";
-import {outputErrorMessage} from "../../utils/output-error-message";
+import { Command, CommandData, CommandType } from '../protocols';
+import { outputErrorMessage } from '../../utils/output-error-message';
 
 const supportedLanguages = [
   'af-ZA',
@@ -63,7 +62,11 @@ const func: Command = async (params) => {
   let waitMessageSent = false;
 
   if (!value) {
-    await outputErrorMessage(client, message, 'Tem que mandar um texto para eu imitar, pô')
+    await outputErrorMessage(
+      client,
+      message,
+      'Tem que mandar um texto para eu imitar, pô'
+    );
     return;
   }
 

@@ -1,9 +1,7 @@
-import {getNumberFromContactId} from '../../../helpers/get-number-from-contact-id';
-import {Command, CommandData} from '../protocols/command';
-import {CommandType} from "../protocols/commandType";
-import {getImage} from "../../utils/get-image";
-import {getRandom} from "../../../helpers/get-random";
-
+import { getNumberFromContactId } from '../../../helpers/get-number-from-contact-id';
+import { Command, CommandData, CommandType } from '../protocols';
+import { getImage } from '../../utils/get-image';
+import { getRandom } from '../../../helpers/get-random';
 
 const imageDataURI = require('image-data-uri');
 

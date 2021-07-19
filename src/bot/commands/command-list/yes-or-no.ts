@@ -1,6 +1,5 @@
-import {Command, CommandData} from '../protocols/command';
-import {CommandType} from "../protocols/commandType";
-import {getRandom} from "../../../helpers/get-random";
+import { Command, CommandData, CommandType } from '../protocols';
+import { getRandom } from '../../../helpers/get-random';
 
 const func: Command = async (params) => {
   const { client, message } = params;

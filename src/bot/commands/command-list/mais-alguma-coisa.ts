@@ -1,14 +1,17 @@
-import {getNumberFromContactId} from '../../../helpers/get-number-from-contact-id';
-import {Command, CommandData} from '../protocols/command';
-import {CommandType} from "../protocols/commandType";
-import {outputErrorMessage} from "../../utils/output-error-message";
-import {getRandom} from "../../../helpers/get-random";
+import { getNumberFromContactId } from '../../../helpers/get-number-from-contact-id';
+import { Command, CommandData, CommandType } from '../protocols';
+import { outputErrorMessage } from '../../utils/output-error-message';
+import { getRandom } from '../../../helpers/get-random';
 
 const func: Command = async ({ message, client, value }) => {
   const adjective = value?.trim();
 
   if (!adjective) {
-    await outputErrorMessage(client, message, 'Você precisa me enviar um adjetivo')
+    await outputErrorMessage(
+      client,
+      message,
+      'Você precisa me enviar um adjetivo'
+    );
     return;
   }
 

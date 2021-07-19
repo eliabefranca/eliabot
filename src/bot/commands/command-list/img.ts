@@ -1,8 +1,6 @@
-import axios from 'axios';
-import {Command, CommandData} from '../protocols/command';
-import {outputErrorMessage} from "../../utils/output-error-message";
-import {CommandType} from "../protocols/commandType";
-import {getImage} from "../../utils/get-image";
+import { Command, CommandData, CommandType } from '../protocols';
+import { getImage } from '../../utils/get-image';
+import { outputErrorMessage } from '../../utils/output-error-message';
 
 const imageDataURI = require('image-data-uri');
 
@@ -10,7 +8,11 @@ const func: Command = async (params) => {
   const { value, client, message } = params;
 
   if (!value) {
-    await outputErrorMessage(client, message, 'Cê precisa enviar o nome da imagem, bocó!');
+    await outputErrorMessage(
+      client,
+      message,
+      'Cê precisa enviar o nome da imagem, bocó!'
+    );
     return;
   }
 
@@ -21,15 +23,27 @@ const func: Command = async (params) => {
     });
 
   if (imgUrl === 'cant resolve') {
-    await outputErrorMessage(client, message, 'Não foi possível carregar a imagem do servidor de origem');
+    await outputErrorMessage(
+      client,
+      message,
+      'Não foi possível carregar a imagem do servidor de origem'
+    );
     return;
   } else if (imgUrl === 'not found') {
-    await outputErrorMessage(client, message, 'Não encontrei nenhum resultado, tente alterar o index');
+    await outputErrorMessage(
+      client,
+      message,
+      'Não encontrei nenhum resultado, tente alterar o index'
+    );
     return;
   }
 
   if (!imgUrl) {
-    await outputErrorMessage(client, message, `Não encontrei nenhum resultado de imagem para "${value}"`);
+    await outputErrorMessage(
+      client,
+      message,
+      `Não encontrei nenhum resultado de imagem para "${value}"`
+    );
     return;
   }
 

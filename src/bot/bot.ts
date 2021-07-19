@@ -6,7 +6,7 @@ import {
   NotificationLanguage,
 } from '@open-wa/wa-automate';
 import { getCommandData, handleCommand } from './helpers/command';
-import { CommandData } from './commands/protocols/command';
+import { CommandData } from './commands/protocols';
 import { updateUser } from './helpers/update-user';
 import { updateStats } from './helpers/update-stats';
 import { updateGroup } from './helpers/update-group';

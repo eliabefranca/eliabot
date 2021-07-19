@@ -1,6 +1,5 @@
-import {getCommandList} from '.';
-import {Command, CommandData} from '../protocols/command';
-import {CommandType} from "../protocols/commandType";
+import { getCommandList } from '.';
+import { Command, CommandData, CommandType } from '../protocols';
 
 const tableHeader = (str: string): string => {
   return `╔═════════════════
@@ -25,7 +24,6 @@ const func: Command = async ({ client, message }) => {
   let statsStr = tableHeader('Estatísticas');
 
   const sm = '```';
-  const ita = '_';
 
   const availableCommands = commandList.filter((command) => !command.hidden);
 

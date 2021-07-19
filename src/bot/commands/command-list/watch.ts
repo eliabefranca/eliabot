@@ -1,7 +1,5 @@
-import {Command, CommandData} from '../protocols/command';
-import {outputErrorMessage} from "../../utils/output-error-message";
-import {CommandType} from "../protocols/commandType";
-
+import { Command, CommandData, CommandType } from '../protocols';
+import { outputErrorMessage } from '../../utils/output-error-message';
 const yts = require('yt-search');
 
 const func: Command = async (params) => {
@@ -10,7 +8,11 @@ const func: Command = async (params) => {
   const videos = await yts(value).catch(() => false);
 
   if (!videos || !videos.all || !videos.all[0]) {
-    await outputErrorMessage(client, message, 'Não foi possível encontrar o vídeo [' + value + ']');
+    await outputErrorMessage(
+      client,
+      message,
+      'Não foi possível encontrar o vídeo [' + value + ']'
+    );
     return;
   }
 

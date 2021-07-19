@@ -1,12 +1,15 @@
-import {blockedUsersDb, usersDb} from '../../../../database/json/db';
-import {getTimeStamp} from '../../../../helpers/date';
-import {Command, CommandData} from '../../protocols/command';
-import {CommandType} from "../../protocols/commandType";
-import {outputErrorMessage} from "../../../utils/output-error-message";
+import { blockedUsersDb, usersDb } from '../../../../database/json/db';
+import { getTimeStamp } from '../../../../helpers/date';
+import { Command, CommandData, CommandType } from '../../protocols';
+import { outputErrorMessage } from '../../../utils/output-error-message';
 
 const func: Command = async ({ client, message, value }) => {
   if (!value) {
-    await outputErrorMessage(client, message, 'Você precisa marcar o usuário ou me enviar o número.');
+    await outputErrorMessage(
+      client,
+      message,
+      'Você precisa marcar o usuário ou me enviar o número.'
+    );
     return;
   }
 
@@ -14,7 +17,11 @@ const func: Command = async ({ client, message, value }) => {
   const user = await usersDb.getFirst({ id: userId });
 
   if (user && (user.role === 'admin' || user.role === 'moderator')) {
-    await outputErrorMessage(client, message, 'Não é possível bloquear administradores e moderadores.') 
+    await outputErrorMessage(
+      client,
+      message,
+      'Não é possível bloquear administradores e moderadores.'
+    );
     return;
   }
 

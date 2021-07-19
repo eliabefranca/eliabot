@@ -1,6 +1,5 @@
-import {usersDb} from '../../../../database/json/db';
-import {Command, CommandData} from '../../protocols/command';
-import {CommandType} from "../../protocols/commandType";
+import { usersDb } from '../../../../database/json/db';
+import { Command, CommandData, CommandType } from '../../protocols';
 
 const func: Command = async ({ client, message, value }) => {
   if (!value) {

@@ -1,7 +1,6 @@
-import {getNumberFromContactId} from '../../../helpers/get-number-from-contact-id';
-import {Command, CommandData} from '../protocols/command';
-import {CommandType} from "../protocols/commandType";
-import {getRandom} from "../../../helpers/get-random";
+import { getNumberFromContactId } from '../../../helpers/get-number-from-contact-id';
+import { Command, CommandData, CommandType } from '../protocols';
+import { getRandom } from '../../../helpers/get-random';
 
 const func: Command = async ({ client, message }) => {
   let groupMembers = await client.getGroupMembers(message.chat.id as any);

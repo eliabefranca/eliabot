@@ -1,13 +1,16 @@
-import {Command, CommandData} from '../protocols/command';
 import * as googleTTS from 'google-tts-api';
-import {CommandType} from "../protocols/commandType";
-import {outputErrorMessage} from "../../utils/output-error-message";
+import { Command, CommandData, CommandType } from '../protocols';
+import { outputErrorMessage } from '../../utils/output-error-message';
 
 const func: Command = async ({ client, message, value }) => {
   const { quotedMsg } = message;
 
   if (!quotedMsg) {
-    await outputErrorMessage(client, message, 'Você precisa responder a mensagem que deseja que eu imite.');
+    await outputErrorMessage(
+      client,
+      message,
+      'Você precisa responder a mensagem que deseja que eu imite.'
+    );
     return;
   }
 

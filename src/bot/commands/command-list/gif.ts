@@ -1,8 +1,7 @@
-import {Command, CommandData} from '../protocols/command';
 import giphyApi from 'giphy-api';
-import {CommandType} from "../protocols/commandType";
-import {outputErrorMessage} from "../../utils/output-error-message";
-import {getRandomInterval} from "../../utils/get-random-interval";
+import { Command, CommandData, CommandType } from '../protocols';
+import { outputErrorMessage } from '../../utils/output-error-message';
+import { getRandomInterval } from '../../utils/get-random-interval';
 
 const giphy = giphyApi();
 
@@ -49,7 +48,11 @@ const func: Command = async (params) => {
   const { value, client, message } = params;
 
   if (!value) {
-    await outputErrorMessage(client, message, 'Cê precisa enviar o nome do gif, bocó!');
+    await outputErrorMessage(
+      client,
+      message,
+      'Cê precisa enviar o nome do gif, bocó!'
+    );
     return;
   }
 
@@ -60,15 +63,27 @@ const func: Command = async (params) => {
     });
 
   if (gifUrl === 'cant resolve') {
-    await outputErrorMessage(client, message, 'Não foi possível carregar o gif do servidor de origem');
+    await outputErrorMessage(
+      client,
+      message,
+      'Não foi possível carregar o gif do servidor de origem'
+    );
     return;
   } else if (gifUrl === 'not found') {
-    await outputErrorMessage(client, message, 'Não encontrei nenhum resultado, tente alterar o index');
+    await outputErrorMessage(
+      client,
+      message,
+      'Não encontrei nenhum resultado, tente alterar o index'
+    );
     return;
   }
 
   if (!gifUrl) {
-    await outputErrorMessage(client, message, `Não encontrei nenhum resultado de gif para "${value}"`);
+    await outputErrorMessage(
+      client,
+      message,
+      `Não encontrei nenhum resultado de gif para "${value}"`
+    );
     return;
   }
 

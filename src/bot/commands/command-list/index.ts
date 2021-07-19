@@ -1,6 +1,6 @@
 import fg from 'fast-glob';
 import path from 'path';
-import { CommandData } from '../protocols/command';
+import { CommandData } from '../protocols';
 
 function getFiles(subDirectory?: string): string {
   if (subDirectory) {

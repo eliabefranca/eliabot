@@ -1,11 +1,14 @@
-import {Command, CommandData} from '../protocols/command';
-import {CommandType} from "../protocols/commandType";
-import {outputErrorMessage} from "../../utils/output-error-message";
+import { Command, CommandData, CommandType } from '../protocols';
+import { outputErrorMessage } from '../../utils/output-error-message';
 
 const func: Command = async ({ client, message, value }) => {
   const groupsThatIamAdmin = await client.iAmAdmin();
   if (!groupsThatIamAdmin.includes(message.chat.id as any)) {
-    await outputErrorMessage(client, message, 'Eu não sou administrador desse grupo.');
+    await outputErrorMessage(
+      client,
+      message,
+      'Eu não sou administrador desse grupo.'
+    );
     return;
   }
 
@@ -14,12 +17,16 @@ const func: Command = async ({ client, message, value }) => {
       (participant.id as any) === message.sender.id && participant.isAdmin
   );
   if (!senderIsAdmin) {
-    await outputErrorMessage(client, message, 'Você não é um administrador') 
+    await outputErrorMessage(client, message, 'Você não é um administrador');
     return;
   }
 
   if (!value && !message.quotedMsg) {
-    await outputErrorMessage(client, message, 'Você precisa me enviar o número.') 
+    await outputErrorMessage(
+      client,
+      message,
+      'Você precisa me enviar o número.'
+    );
     return;
   }
 

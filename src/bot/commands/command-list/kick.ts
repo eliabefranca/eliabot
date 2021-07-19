@@ -1,11 +1,14 @@
-import {Command, CommandData} from '../protocols/command';
-import {CommandType} from "../protocols/commandType";
-import {outputErrorMessage} from "../../utils/output-error-message";
+import { Command, CommandData, CommandType } from '../protocols';
+import { outputErrorMessage } from '../../utils/output-error-message';
 
 const func: Command = async ({ client, message, value }) => {
   const groupsThatIamAdmin = await client.iAmAdmin();
   if (!groupsThatIamAdmin.includes(message.chat.id as any)) {
-    await outputErrorMessage(client, message, 'Eu não sou administrador deste grupo.');
+    await outputErrorMessage(
+      client,
+      message,
+      'Eu não sou administrador deste grupo.'
+    );
     return;
   }
 
@@ -14,12 +17,20 @@ const func: Command = async ({ client, message, value }) => {
       (participant.id as any) === message.sender.id && participant.isAdmin
   );
   if (!senderIsAdmin) {
-    await outputErrorMessage(client, message, 'Você precisa marcar o usuário ou me enviar o número.');
+    await outputErrorMessage(
+      client,
+      message,
+      'Você precisa marcar o usuário ou me enviar o número.'
+    );
     return;
   }
 
   if (!value && !message.quotedMsg) {
-    await outputErrorMessage(client, message, 'Você precisa marcar o usuário ou me enviar o número.');
+    await outputErrorMessage(
+      client,
+      message,
+      'Você precisa marcar o usuário ou me enviar o número.'
+    );
     return;
   }
 
@@ -38,7 +49,11 @@ const func: Command = async ({ client, message, value }) => {
     .catch(() => false);
 
   if (!success) {
-    await outputErrorMessage(client, message, 'Não foi possível remover este membro, verifique o número fornecido ou se ele é dono do grupo.')
+    await outputErrorMessage(
+      client,
+      message,
+      'Não foi possível remover este membro, verifique o número fornecido ou se ele é dono do grupo.'
+    );
     return;
   }
 

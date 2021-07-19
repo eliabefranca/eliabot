@@ -1,6 +1,5 @@
 import { userStatsDb } from '../../../database/json/db';
-import { Command, CommandData } from '../protocols/command';
-import { CommandType } from '../protocols/commandType';
+import { Command, CommandData, CommandType } from '../protocols';
 
 const func: Command = async ({ client, message }) => {
   let rank = await userStatsDb.getData();

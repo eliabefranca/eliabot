@@ -1,9 +1,8 @@
-import {Command, CommandData} from '../protocols/command';
-import {getRandomContactNumber} from "../../utils/get-random-contact-number";
-import {CommandType} from "../protocols/commandType";
+import { Command, CommandData, CommandType } from '../protocols';
+import { getRandomContactNumber } from '../../utils/get-random-contact-number';
 
 const func: Command = async ({ message, client, value }) => {
-  const contactNumber = getRandomContactNumber(client, message)
+  const contactNumber = getRandomContactNumber(client, message);
 
   await client.sendTextWithMentions(
     message.from,

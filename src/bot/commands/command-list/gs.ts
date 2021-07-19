@@ -2,10 +2,9 @@ import path from 'path';
 import gse, { SearchResultItem } from 'general-search-engine';
 import { printSite } from 'site-print/dist/index.js';
 
-import { Command, CommandData } from '../protocols/command';
+import { Command, CommandData, CommandType } from '../protocols';
 import { CONFIG } from '../../../../config';
-import {CommandType} from "../protocols/commandType";
-import {outputErrorMessage} from "../../utils/output-error-message";
+import { outputErrorMessage } from '../../utils/output-error-message';
 
 function getIndexAndTextFromQuery(query: string): {
   index: number;
@@ -26,11 +25,19 @@ function getIndexAndTextFromQuery(query: string): {
 
 const func: Command = async ({ value, client, message }) => {
   if (!value) {
-    await outputErrorMessage(client, message, 'Você precisa me enviar a pesquisa')
+    await outputErrorMessage(
+      client,
+      message,
+      'Você precisa me enviar a pesquisa'
+    );
     return;
   }
 
-  await client.reply(message.from, 'Um momento, já estou procurando.', message.id);
+  await client.reply(
+    message.from,
+    'Um momento, já estou procurando.',
+    message.id
+  );
 
   const { index, text } = getIndexAndTextFromQuery(value);
 
@@ -42,7 +49,11 @@ const func: Command = async ({ value, client, message }) => {
   const resultItem = result?.[index];
 
   if (!resultItem) {
-    await outputErrorMessage(client, message, 'Não encontrei nenhum resultado para a sua pesquisa, verifique o index ou o termo digitado')
+    await outputErrorMessage(
+      client,
+      message,
+      'Não encontrei nenhum resultado para a sua pesquisa, verifique o index ou o termo digitado'
+    );
     return;
   }
 
