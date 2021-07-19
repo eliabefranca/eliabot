@@ -1,5 +1,5 @@
 import { usersDb } from '../../database/json/db';
-import { getNumberFromContactId } from '../../helpers/get-number-from-contact-id';
+import { getNumberFromContactId } from '../utils/get-number-from-contact-id';
 import { MessageEventHandler } from '../protocols/message-event-handler';
 
 export const updateUser: MessageEventHandler = ({ message }) => {

@@ -1,4 +1,4 @@
-import { getNumberFromContactId } from '../../../helpers/get-number-from-contact-id';
+import { getNumberFromContactId } from '../../utils/get-number-from-contact-id';
 import { Command, CommandData, CommandType } from '../protocols';
 import { getImage } from '../../utils/get-image';
 import { getRandom } from '../../../helpers/get-random';
