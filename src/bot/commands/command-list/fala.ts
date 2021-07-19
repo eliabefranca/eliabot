@@ -147,9 +147,10 @@ const fala: CommandData = {
   func,
   command: '.fala',
   description:
-    'Transforma um texto digitado em áudio do zap.\nVocê pode informar o código do idioma com # ex: .fala hello #enus ou #en-US',
+    'Transforma um texto digitado em áudio do zap.\nVocê pode informar o código do idioma com "#codigo_idioma" ex: .fala hello #enus ou #en-US',
   onlyForGroups: false,
   category: CommandType.FUNNY,
+  detailedDescription: `Idiomas disponíveis:\n${supportedLanguages.join('\n')}`,
 };
 
 export default fala;

@@ -17,6 +17,7 @@ export interface CommandData {
   onlyForGroups?: boolean;
   allowedUsers?: string | string[]; // TODO: add roles
   hidden?: boolean;
+  detailedDescription?: string;
 }
 
 export interface CommandParams {

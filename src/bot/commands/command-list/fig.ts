@@ -57,6 +57,8 @@ const search: CommandData = {
   func,
   category: CommandType.UTILS,
   description: 'Cria uma figurinha a partir de uma imagem',
+  detailedDescription:
+    'Parâmetros opcionais:\ncircle: a figurinha vem redonda, ex.: .fig circle',
 };
 
 export default search;
