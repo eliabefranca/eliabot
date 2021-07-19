@@ -1,7 +1,7 @@
 {
   "verbose": true,
-  "exec": "yarn ts-node src/bot/index.ts",
-  "ext": "ts",
+  "exec": "node -r tsconfig-paths/register -r ts-node/register ./src/bot/index.ts",
+  "ext": "ts, js",
   "watch": "src/bot",
   "ignore": ["*.test.js", "*.spec.ts"]
 }
