@@ -5,6 +5,8 @@ logs
 .node-persist
 node_modules
 .build
+package-lock.json
+
 
 # managed by open-wa
 **.data.json
