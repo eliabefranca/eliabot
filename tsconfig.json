@@ -17,7 +17,8 @@
     /* Module Resolution Options */
     "baseUrl": ".",
     "paths": {
-      "general-search-engine": ["src/types/general-search-engine.d.ts"]
+      "general-search-engine": ["src/types/general-search-engine.d.ts"],
+      "@command-protocols": ["src/bot/commands/protocols/index.ts"]
     },
 
     // "rootDirs": [],

@@ -1,5 +1,5 @@
 import { decryptMedia, Message } from '@open-wa/wa-automate';
-import { Command, CommandData, CommandType } from '../protocols';
+import { Command, CommandData, CommandType } from '@command-protocols';
 
 const func: Command = async ({ value, client, message }) => {
   let mediaMsg: Message = message;

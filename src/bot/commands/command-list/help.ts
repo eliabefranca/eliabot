@@ -1,5 +1,5 @@
 import { getCommandList } from '.';
-import { Command, CommandData, CommandType } from '../protocols';
+import { Command, CommandData, CommandType } from '@command-protocols';
 
 const tableHeader = (str: string): string => {
   return `╔═════════════════

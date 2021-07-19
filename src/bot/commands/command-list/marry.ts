@@ -1,5 +1,5 @@
 import { getNumberFromContactId } from '../../utils/get-number-from-contact-id';
-import { Command, CommandData, CommandType } from '../protocols';
+import { Command, CommandData, CommandType } from '@command-protocols';
 import { getImage } from '../../utils/get-image';
 import { getRandom } from '../../../helpers/get-random';
 

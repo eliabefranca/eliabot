@@ -1,5 +1,5 @@
 import * as googleTTS from 'google-tts-api';
-import { Command, CommandData, CommandType } from '../protocols';
+import { Command, CommandData, CommandType } from '@command-protocols';
 import { outputErrorMessage } from '../../utils/output-error-message';
 
 const func: Command = async ({ client, message, value }) => {

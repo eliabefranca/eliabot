@@ -1,4 +1,4 @@
-import { Command, CommandData, CommandType } from '../protocols';
+import { Command, CommandData, CommandType } from '@command-protocols';
 import { getRandom } from '../../../helpers/get-random';
 
 const func: Command = async (params) => {

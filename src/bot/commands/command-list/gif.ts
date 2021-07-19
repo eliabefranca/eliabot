@@ -1,5 +1,5 @@
 import giphyApi from 'giphy-api';
-import { Command, CommandData, CommandType } from '../protocols';
+import { Command, CommandData, CommandType } from '@command-protocols';
 import { outputErrorMessage } from '../../utils/output-error-message';
 import { getRandomInterval } from '../../utils/get-random-interval';
 

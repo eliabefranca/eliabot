@@ -1,4 +1,4 @@
-import { Command, CommandData, CommandType } from '../protocols';
+import { Command, CommandData, CommandType } from '@command-protocols';
 import { validPerson } from '../../utils/valid-person';
 
 const MAX_SIZE = 30;

@@ -1,6 +1,6 @@
 import { blockedUsersDb, usersDb } from '../../../../database/json/db';
 import { getTimeStamp } from '../../../../helpers/date';
-import { Command, CommandData, CommandType } from '../../protocols';
+import { Command, CommandData, CommandType } from '@command-protocols';
 import { outputErrorMessage } from '../../../utils/output-error-message';
 
 const func: Command = async ({ client, message, value }) => {

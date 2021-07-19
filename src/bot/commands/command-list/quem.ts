@@ -1,4 +1,4 @@
-import { Command, CommandData, CommandType } from '../protocols';
+import { Command, CommandData, CommandType } from '@command-protocols';
 import { getRandomContactNumber } from '../../utils/get-random-contact-number';
 
 const func: Command = async ({ message, client, value }) => {
