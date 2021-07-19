@@ -1,6 +1,6 @@
 import path from 'path';
 import gse, { SearchResultItem } from 'general-search-engine';
-import { printSite } from 'site-print/dist/index.js';
+import { printSite } from 'site-print';
 
 import { Command, CommandData, CommandType } from '@command-protocols';
 import { CONFIG } from '../../../../config';
