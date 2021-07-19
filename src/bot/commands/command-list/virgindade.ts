@@ -5,10 +5,10 @@ import {CommandType} from "../protocols/commandType";
 const func: Command = async ({client, message}) => {
   const contactNumber = await getRandomContactNumber(client, message);
   const text = `Filha : Mãe Quero Perder A Virgindade 😨
-                Mãe : Com Quem ? 👀
-                Filha : Com o @${contactNumber}
-                Mãe : Você Tá Louca Quer Perde A Virgindade Ou A Capacidade de Andar😨💔
-                taporra 🥴💥`
+Mãe : Com Quem ? 👀
+Filha : Com o @${contactNumber}
+Mãe : Você Tá Louca Quer Perde A Virgindade Ou A Capacidade de Andar😨💔
+taporra 🥴💥`
   await client.sendTextWithMentions(
     message.from,
     text,
