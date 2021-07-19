@@ -11,7 +11,10 @@ export const checkIfUserIsAdmin: CommandMiddleware = async ({
     return true;
   }
 
-  if (commandData.allowedUsers.includes('admin')) {
+  if (
+    commandData.allowedUsers.length === 1 &&
+    commandData.allowedUsers.includes('admin')
+  ) {
     const user = usersDb.getFirst({ id: message.sender.id });
 
     if (user?.role === 'admin') {
