@@ -7,6 +7,18 @@ const tableHeader = (str: string): string => {
 ╠═════════════════`;
 };
 
+const closingTableHeader = (str: string): string => {
+  return `╔═════════════════
+║ ${str}
+╚═════════════════`;
+};
+
+const straightTableCell = (str: string): string => {
+  return `
+║ ${str}
+╚═════════════════`;
+};
+
 const tableCell = (str: string): string => {
   return `
 ╠ ${str}
@@ -16,11 +28,11 @@ const tableCell = (str: string): string => {
 const bottomSpacing = `\n`;
 
 function buildMenuWithAllCommands(commandList: CommandData[]): string {
-  let utilsStr = tableHeader('🧰 Utilitários');
-  let funStr = tableHeader('🤡 Divertidos');
-  let mediaStr = tableHeader('🖼️ Mídia');
-  let groupManageStr = tableHeader('👮 Gerenciar Grupo');
-  let statsStr = tableHeader('📊 Estatísticas');
+  let utilsStr = tableHeader('🧰 UTILITÁRIOS');
+  let funStr = tableHeader('🤡 DIVERTIDOS');
+  let mediaStr = tableHeader('🖼️ MÍDIA');
+  let groupManageStr = tableHeader('👮 GERENCIAR GRUPO');
+  let statsStr = tableHeader('📊 ESTATÍSTICAS');
 
   const sm = '```';
 
@@ -59,7 +71,11 @@ function buildMenuWithAllCommands(commandList: CommandData[]): string {
 
   const helpMenuItems = [utilsStr, groupManageStr, funStr, mediaStr, statsStr];
 
-  const finalText = `${sm}${helpMenuItems.join('')}${sm}
+  const finalText = `${sm}🤖 Oi,
+
+Você pode digitar ".help .nomecomando" para ver melhor o que eu posso fazer com ele.
+
+${helpMenuItems.join('\n')}${sm}
 
   Github: https://github.com/Eliabe45/eliabot`;
 
@@ -69,11 +85,14 @@ function buildMenuWithAllCommands(commandList: CommandData[]): string {
 function BuildMenuWithAsingleCommand(command: CommandData): string {
   const sm = '```';
 
-  const header = tableHeader(`🔗 ${command.command}`);
-  const detailetDescription = command.detailedDescription
-    ? `\n\n${command.detailedDescription}`
-    : '';
-  const body = tableCell(`${command.description}${detailetDescription}`);
+  const header = closingTableHeader(`🔗 ${command.command}`);
+  const { detailedDescription } = command;
+  const bodyContent = !detailedDescription
+    ? command.description
+    : `${command.description}
+
+${detailedDescription}`;
+  const body = straightTableCell(bodyContent);
 
   const finalText = `${sm}${header}${body}${sm}
 
