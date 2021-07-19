@@ -1,5 +1,6 @@
-import { decryptMedia, Message } from '@open-wa/wa-automate';
-import { Command, CommandData } from '../protocols/command';
+import {decryptMedia, Message} from '@open-wa/wa-automate';
+import {Command, CommandData} from '../protocols/command';
+import {CommandType} from "../protocols/commandType";
 
 const func: Command = async ({ value, client, message }) => {
   let mediaMsg: Message = message;
@@ -55,7 +56,7 @@ const func: Command = async ({ value, client, message }) => {
 const search: CommandData = {
   command: '.fig',
   func,
-  category: 'utils',
+  category: CommandType.UTILS,
   description: 'Cria uma figurinha a partir de uma imagem',
 };
 

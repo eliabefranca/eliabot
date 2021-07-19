@@ -1,14 +1,12 @@
-import { Command, CommandData } from '../protocols/command';
+import {Command, CommandData} from '../protocols/command';
+import {CommandType} from "../protocols/commandType";
+import {outputErrorMessage} from "../../utils/output-error-message";
 
 const func: Command = async ({ client, message, value }) => {
   const { quotedMsg } = message;
 
   if (!quotedMsg) {
-    await client.reply(
-      message.from,
-      'Você precisa responder a mensagem que deseja que eu imite.',
-      message.id
-    );
+    await outputErrorMessage(client, message, 'Você precisa responder a mensagem que deseja que eu imite.') 
     return;
   }
 
@@ -16,7 +14,7 @@ const func: Command = async ({ client, message, value }) => {
   let txt = quotedMsg.isMedia ? caption : body;
 
   if (txt.trim() === '') {
-    await client.reply(message.from, 'A mensagem está vazia.', message.id);
+    await outputErrorMessage(client, message, 'A mensagem está vazia.') 
     return;
   }
 
@@ -34,7 +32,7 @@ const func: Command = async ({ client, message, value }) => {
 
 const imitar: CommandData = {
   func,
-  category: 'funny',
+  category: CommandType.FUNNY,
   command: '.imitar2',
   description: 'Imita uma mensagem.',
   onlyForGroups: true,

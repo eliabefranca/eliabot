@@ -1,19 +1,13 @@
-import { Command, CommandData } from '../protocols/command';
+import {Command, CommandData} from '../protocols/command';
+import {getRandomContactNumber} from "../../utils/get-random-contact-number";
+import {CommandType} from "../protocols/commandType";
 
 const func: Command = async ({ message, client, value }) => {
-  let groupMembers = await client.getGroupMembers(message.chat.id as any);
-
-  let filtered = groupMembers.filter((member) => {
-    return !member.isMe && member.id !== message.sender.id;
-  });
-
-  const firstMember = filtered[Math.floor(Math.random() * filtered.length)];
-
-  const contactNumber1 = firstMember.id.split('@')[0];
+  const contactNumber = getRandomContactNumber(client, message)
 
   await client.sendTextWithMentions(
     message.from,
-    `quem ${value}: 😶👉 @${contactNumber1}`,
+    `quem ${value}: 😶👉 @${contactNumber}`,
     message.id as any
   );
 };
@@ -21,7 +15,7 @@ const func: Command = async ({ message, client, value }) => {
 const quem: CommandData = {
   func,
   command: '.quem',
-  category: 'funny',
+  category: CommandType.FUNNY,
   description: 'Escolhe um membro aleatório do grupo como responsável',
   onlyForGroups: true,
 };

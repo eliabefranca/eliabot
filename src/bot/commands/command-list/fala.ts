@@ -1,5 +1,7 @@
-import { Command, CommandData } from '../protocols/command';
+import {Command, CommandData} from '../protocols/command';
 import * as googleTTS from 'google-tts-api';
+import {CommandType} from "../protocols/commandType";
+import {outputErrorMessage} from "../../utils/output-error-message";
 
 const supportedLanguages = [
   'af-ZA',
@@ -61,11 +63,7 @@ const func: Command = async (params) => {
   let waitMessageSent = false;
 
   if (!value) {
-    await client.reply(
-      message.from,
-      'Tem que mandar um texto para eu imitar, pô',
-      message.id
-    );
+    await outputErrorMessage(client, message, 'Tem que mandar um texto para eu imitar, pô')
     return;
   }
 
@@ -148,7 +146,7 @@ const fala: CommandData = {
   description:
     'Transforma um texto digitado em áudio do zap.\nVocê pode informar o código do idioma com # ex: .fala hello #enus ou #en-US',
   onlyForGroups: false,
-  category: 'funny',
+  category: CommandType.FUNNY,
 };
 
 export default fala;

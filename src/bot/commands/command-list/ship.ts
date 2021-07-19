@@ -1,5 +1,7 @@
-import { getNumberFromContactId } from '../../../helpers/get-number-from-contact-id';
-import { Command, CommandData } from '../protocols/command';
+import {getNumberFromContactId} from '../../../helpers/get-number-from-contact-id';
+import {Command, CommandData} from '../protocols/command';
+import {CommandType} from "../protocols/commandType";
+import {getRandom} from "../../../helpers/get-random";
 
 const func: Command = async ({ client, message }) => {
   let groupMembers = await client.getGroupMembers(message.chat.id as any);
@@ -8,13 +10,13 @@ const func: Command = async ({ client, message }) => {
     return !member.isMe;
   });
 
-  const firstMember = filtered[Math.floor(Math.random() * filtered.length)];
+  const firstMember = getRandom(filtered);
 
   filtered = filtered.filter((member) => {
     return member.id !== firstMember.id;
   });
 
-  const secondMember = filtered[Math.floor(Math.random() * filtered.length)];
+  const secondMember = getRandom(filtered);
 
   const contactNumber1 = getNumberFromContactId(firstMember.id);
   const contactNumber2 = getNumberFromContactId(secondMember.id);
@@ -27,7 +29,7 @@ const func: Command = async ({ client, message }) => {
 
 const ship: CommandData = {
   command: '.ship',
-  category: 'funny',
+  category: CommandType.FUNNY,
   description: 'Forma um casal aleatório no grupo',
   func,
   onlyForGroups: true,

@@ -1,8 +1,10 @@
-import { Client } from '@open-wa/wa-automate';
-import axios from 'axios';
-import { getNumberFromContactId } from '../../../helpers/get-number-from-contact-id';
-import { Command, CommandData } from '../protocols/command';
-const gis = require('g-i-s');
+import {getNumberFromContactId} from '../../../helpers/get-number-from-contact-id';
+import {Command, CommandData} from '../protocols/command';
+import {CommandType} from "../protocols/commandType";
+import {getImage} from "../../utils/get-image";
+import {getRandom} from "../../../helpers/get-random";
+
+
 const imageDataURI = require('image-data-uri');
 
 const names = [
@@ -81,50 +83,10 @@ const names = [
   'Nando Moura Anão',
 ];
 
-const getImage = async (term: string) => {
-  return new Promise((resolve, reject) => {
-    let index: number;
-    let text = term;
-
-    if (/#\d+$/.test(term)) {
-      text = term.split(/#\d+$/)[0].trim();
-
-      index = parseInt(term.match(/#\d+$/)?.[0].replace('#', '') as string);
-      index = index <= 0 ? index : index - 1;
-    }
-
-    if (text)
-      gis(text, async (error: any, results: any[]) => {
-        if (error || !results || !results[0]) {
-          reject(false);
-        }
-
-        try {
-          for (const image of results) {
-            const headers = await axios
-              .get(image.url)
-              .then((resp) => resp.headers)
-              .catch(() => false);
-
-            if (headers && headers['content-type'] !== 'text/html') {
-              resolve(image.url);
-              break;
-            }
-          }
-        } catch (e) {
-          resolve(false);
-        }
-      });
-  }).catch((error) => {
-    console.log(error);
-    return false;
-  });
-};
-
 const func: Command = async (params) => {
   const { value, client, message } = params;
 
-  const marriagePartner = names[Math.floor(Math.random() * names.length)];
+  const marriagePartner = getRandom(names);
 
   let groupMembers = await client.getGroupMembers(message.chat.id as any);
 
@@ -132,13 +94,13 @@ const func: Command = async (params) => {
     return !member.isMe;
   });
 
-  const member = filtered[Math.floor(Math.random() * filtered.length)];
+  const member = getRandom(filtered);
 
   const contactNumber = getNumberFromContactId(member.id);
 
   let imgUrl = await getImage(marriagePartner)
     .then((url) => url)
-    .catch((results) => {
+    .catch(() => {
       return false;
     });
 
@@ -156,7 +118,7 @@ const func: Command = async (params) => {
 
 const marry: CommandData = {
   command: '.marry',
-  category: 'funny',
+  category: CommandType.FUNNY,
   description:
     'Um casamento aleatorio entre um membro do grupo e um personagem de anime',
   func,

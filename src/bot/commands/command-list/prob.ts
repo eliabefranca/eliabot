@@ -1,14 +1,15 @@
-import { Command, CommandData } from '../protocols/command';
+import {Command, CommandData} from '../protocols/command';
+import {CommandType} from "../protocols/commandType";
+import {getRandomInterval} from "../../utils/get-random-interval";
 
 const func: Command = async ({ client, message, value }) => {
-  const prob = Math.floor(Math.random() * 101);
-
+  const prob = getRandomInterval(100);
   await client.reply(message.from, `${prob}%`, message.id);
 };
 
 const prob: CommandData = {
   command: '.prob',
-  category: 'funny',
+  category: CommandType.FUNNY,
   func,
   description: 'Calcula a probabilidade de alguma coisa',
 };

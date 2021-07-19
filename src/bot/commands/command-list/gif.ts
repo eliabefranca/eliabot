@@ -1,5 +1,8 @@
-import { Command, CommandData } from '../protocols/command';
+import {Command, CommandData} from '../protocols/command';
 import giphyApi from 'giphy-api';
+import {CommandType} from "../protocols/commandType";
+import {outputErrorMessage} from "../../utils/output-error-message";
+import {getRandomInterval} from "../../utils/get-random-interval";
 
 const giphy = giphyApi();
 
@@ -17,7 +20,7 @@ const getGif = async (term: string) => {
       index = index <= 0 ? index : index - 1;
     } else if (/#R$/i.test(term)) {
       text = term.split(/#R$/i)[0].trim();
-      index = Math.floor(Math.random() * RANDOM_POOL);
+      index = getRandomInterval(RANDOM_POOL - 1);
     }
 
     const fetchGif = (gif: giphyApi.GIFObject) => {
@@ -46,43 +49,26 @@ const func: Command = async (params) => {
   const { value, client, message } = params;
 
   if (!value) {
-    await client.reply(
-      message.from,
-      'Cê precisa enviar o nome do gif, bocó!',
-      message.id
-    );
+    await outputErrorMessage(client, message, 'Cê precisa enviar o nome do gif, bocó!');
     return;
   }
 
   let gifUrl = await getGif(value)
     .then((url) => url)
-    .catch((results) => {
-      // client.sendText(message.from, `--${JSON.stringify(results)}`);
+    .catch(() => {
       return false;
     });
 
   if (gifUrl === 'cant resolve') {
-    await client.reply(
-      message.from,
-      'Não foi possível carregar o gif do servidor de origem',
-      message.id
-    );
+    await outputErrorMessage(client, message, 'Não foi possível carregar o gif do servidor de origem');
     return;
   } else if (gifUrl === 'not found') {
-    await client.reply(
-      message.from,
-      'Não encontrei nenhum resultado, tente alterar o index',
-      message.id
-    );
+    await outputErrorMessage(client, message, 'Não encontrei nenhum resultado, tente alterar o index');
     return;
   }
 
   if (!gifUrl) {
-    await client.reply(
-      message.from,
-      `Não encontrei nenhum resultado de gif para "${value}"`,
-      message.id
-    );
+    await outputErrorMessage(client, message, `Não encontrei nenhum resultado de gif para "${value}"`);
     return;
   }
 
@@ -96,7 +82,7 @@ const func: Command = async (params) => {
 link: ${gifUrl}
     `
     )
-    .catch((err) =>
+    .catch(() =>
       client.reply(
         message.from,
         `Deu ruim aqui, peço perdão pelo vacilo`,
@@ -107,7 +93,7 @@ link: ${gifUrl}
 
 const searchGif: CommandData = {
   command: '.gif',
-  category: 'media',
+  category: CommandType.MEDIA,
   func,
   description:
     'Retorna um GIF a partir de um term. Você pode escolher a posição do resultado com "#N" onde N é a posição do gif. Utilizar a posição #R retornará um gif aleatório.',

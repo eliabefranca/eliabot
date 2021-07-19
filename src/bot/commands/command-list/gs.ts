@@ -4,6 +4,8 @@ import { printSite } from 'site-print/dist/index.js';
 
 import { Command, CommandData } from '../protocols/command';
 import { CONFIG } from '../../../../config';
+import {CommandType} from "../protocols/commandType";
+import {outputErrorMessage} from "../../utils/output-error-message";
 
 function getIndexAndTextFromQuery(query: string): {
   index: number;
@@ -24,11 +26,11 @@ function getIndexAndTextFromQuery(query: string): {
 
 const func: Command = async ({ value, client, message }) => {
   if (!value) {
-    client.reply(message.from, 'Você precisa me enviar a pesquisa', message.id);
+    await outputErrorMessage(client, message, 'Você precisa me enviar a pesquisa')
     return;
   }
 
-  client.reply(message.from, 'Um momento, já estou procurando.', message.id);
+  await client.reply(message.from, 'Um momento, já estou procurando.', message.id);
 
   const { index, text } = getIndexAndTextFromQuery(value);
 
@@ -40,11 +42,7 @@ const func: Command = async ({ value, client, message }) => {
   const resultItem = result?.[index];
 
   if (!resultItem) {
-    client.reply(
-      message.from,
-      'Não encontrei nenhum resultado para a sua pesquisa, verifique o index ou o termo digitado',
-      message.id
-    );
+    await outputErrorMessage(client, message, 'Não encontrei nenhum resultado para a sua pesquisa, verifique o index ou o termo digitado')
     return;
   }
 
@@ -55,7 +53,7 @@ const func: Command = async ({ value, client, message }) => {
 
   const url = decodeURIComponent(resultItem.link)
     .replace(/\?.*$/, '')
-    .replace(/\&.*$/, '');
+    .replace(/&.*$/, '');
 
   await printSite({
     url,
@@ -79,7 +77,7 @@ const func: Command = async ({ value, client, message }) => {
 
 const googleSearch: CommandData = {
   command: '.gs',
-  category: 'utils',
+  category: CommandType.UTILS,
   func,
   description:
     'Retorna a imagem de um resultado de uma pesquisa no google. Você pode usar a paginação com #N',

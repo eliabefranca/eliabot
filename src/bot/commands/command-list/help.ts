@@ -1,5 +1,6 @@
-import { getCommandList } from '.';
-import { Command, CommandData } from '../protocols/command';
+import {getCommandList} from '.';
+import {Command, CommandData} from '../protocols/command';
+import {CommandType} from "../protocols/commandType";
 
 const tableHeader = (str: string): string => {
   return `╔═════════════════
@@ -34,21 +35,21 @@ const func: Command = async ({ client, message }) => {
     }
 
     switch (command.category) {
-      case 'funny':
+      case CommandType.FUNNY:
         funStr += tableCell(`${command.command}\n${command.description}`);
         break;
-      case 'groupManagement':
+      case CommandType.GROUP_MANAGEMENT:
         groupManageStr += tableCell(
           `${command.command}\n${command.description}`
         );
         break;
-      case 'media':
+      case CommandType.MEDIA:
         mediaStr += tableCell(`${command.command}\n${command.description}`);
         break;
-      case 'utils':
+      case CommandType.UTILS:
         utilsStr += tableCell(`${command.command}\n${command.description}`);
         break;
-      case 'botStatistics':
+      case CommandType.BOT_STATISTICS:
         statsStr += tableCell(`${command.command}\n${command.description}`);
         break;
     }
@@ -68,7 +69,7 @@ const func: Command = async ({ client, message }) => {
 
 const help: CommandData = {
   command: '.help',
-  category: 'utils',
+  category: CommandType.UTILS,
   description: 'Exibe a lista de comandos',
   func,
 };
