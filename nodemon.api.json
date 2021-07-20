@@ -1,6 +1,6 @@
 {
   "verbose": true,
-  "exec": "yarn ts-node src/api/index.ts",
+  "exec": "node -r tsconfig-paths/register -r ts-node/register ./src/api/index.ts",
   "ext": "ts",
   "watch": "src/api",
   "ignore": ["*.test.js", "*.spec.ts"]
