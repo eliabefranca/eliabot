@@ -7,23 +7,27 @@ export const checkIfUserIsAdmin: CommandMiddleware = async ({
   message,
   query,
 }): Promise<boolean> => {
-  if (!commandData.allowedUsers) {
+  const { allowedUsers } = commandData;
+
+  if (!allowedUsers) {
     return true;
   }
 
-  if (
-    commandData.allowedUsers.length === 1 &&
-    commandData.allowedUsers.includes('admin')
-  ) {
-    const user = usersDb.getFirst({ id: message.sender.id });
+  const user = usersDb.getFirst({ id: message.sender.id });
 
+  const commandOnlyForAdmins =
+    typeof allowedUsers === 'string'
+      ? allowedUsers === 'admin'
+      : allowedUsers.includes('admin');
+
+  if (commandOnlyForAdmins) {
     if (user?.role === 'admin') {
       return true;
     }
 
-    await client.reply(
+    client.reply(
       message.from,
-      'Este comando é apenas para administradores.',
+      'Este comando é apenas para administradores do bot.',
       message.id
     );
     return false;
