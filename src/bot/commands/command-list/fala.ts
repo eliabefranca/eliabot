@@ -176,12 +176,18 @@ const fala: CommandData = {
   func,
   command: '.fala',
   description:
-    'Transforma um texto digitado em áudio do zap.\nVocê pode informar o código do idioma com "#codigo_idioma" ex: .fala hello #enus ou #en-US',
+    "Transforma um texto digitado ou uma mensagem respondida em áudio do zap.\nInforme o código do idioma depois do caractere '#' para o áudio vir em outra língua.",
   onlyForGroups: false,
   category: CommandType.FUNNY,
-  detailedDescription: `Idiomas disponíveis:\n\n${supportedLanguages.join(
-    '\n'
-  )}`,
+  detailedDescription: `Você pode enviar o código em vários formatos:
+Em minúsculo e sem hífen - ex: #enus
+Só prefixo - ex: #en
+Só o sufixo - ex:  #us
+Por exemplo, qualquer código da lista [#en, #us, #enus, #en-US'] vai retornar um áudio em inglês.
+  
+Se houver um sufixo repetido, ou igual a um prefixo será enviado o primeiro padrão encontrado, priorizando o sufixo primeiro e seguindo a ordem da lista de idiomas abaixo.
+
+Idiomas disponíveis:\n\n${supportedLanguages.join('\n')}`,
 };
 
 export default fala;
