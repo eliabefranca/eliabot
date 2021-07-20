@@ -1,5 +1,4 @@
 import fs from 'fs';
-import { CONFIG } from '../../../config';
 import { IFileReader } from '../protocols/file-reader';
 
 export class FileReader implements IFileReader {

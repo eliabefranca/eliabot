@@ -15,8 +15,8 @@ export class JsonDb<T extends Schema> {
     this.path = storagePath;
     this.fileReader = fileReader;
 
-    fileReader.createFileIfNotExist(this.path);
     fileReader.createFolderIfNotExist(CONFIG.dbFolder);
+    fileReader.createFileIfNotExist(this.path);
     this.init();
   }
 
