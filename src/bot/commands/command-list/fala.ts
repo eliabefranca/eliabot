@@ -1,6 +1,7 @@
 import * as googleTTS from 'google-tts-api';
 import { Command, CommandData, CommandType } from '@command-protocols';
 import { outputErrorMessage } from '../../utils/output-error-message';
+import { getTextFromValueOrQuoted } from 'src/bot/utils/get-text-from-message-or-quoted';
 
 const supportedLanguages = [
   'af-ZA',
@@ -55,24 +56,21 @@ const supportedLanguages = [
   'uk-UA',
   'vi-VN',
 ];
-const func: Command = async (params) => {
-  const { value, client, message } = params;
 
-  let lang = 'pt-BR';
-  let waitMessageSent = false;
-
-  if (!value) {
-    await outputErrorMessage(
-      client,
-      message,
-      'Tem que mandar um texto para eu imitar, pô'
-    );
-    return;
-  }
-
+interface MappedLangAndText {
+  lang: string | null;
+  text: string | null | 'wrongFormat';
+}
+function getLangCodeAndTextFromQuery(
+  query: string | undefined
+): MappedLangAndText {
   const getLangRegex = /#([a-z]{2,3}|[a-z]{4,5}|[a-z]{2,3}-[a-z]{2})$/i;
-  if (getLangRegex.test(value)) {
-    let langCode = (value.match(getLangRegex) as RegExpMatchArray)[0]
+
+  let lang = null;
+  let text = query && query.trim() ? query : null;
+
+  if (text && getLangRegex.test(text)) {
+    let langCode = (text.match(getLangRegex) as RegExpMatchArray)[0]
       .replace('#', '')
       .replace('-', '');
 
@@ -98,26 +96,57 @@ const func: Command = async (params) => {
     const langCodeIsValid = typeof targetLangCode === 'string';
     if (langCodeIsValid) {
       lang = targetLangCode;
-    } else {
-      await client.reply(
-        message.from,
-        'O código informado não é válido, o áudio será enviado em português 🇧🇷. Aguarde...',
-        message.id
-      );
-      waitMessageSent = true;
     }
   }
 
-  if (!waitMessageSent) {
+  text = typeof text === 'string' ? text.replace(getLangRegex, '') : null;
+
+  return {
+    lang,
+    text,
+  };
+}
+
+const func: Command = async ({ value, client, message }) => {
+  let lang = 'pt-BR';
+
+  let { lang: langCode, text } = getLangCodeAndTextFromQuery(value);
+
+  text = !text ? getTextFromValueOrQuoted(message, text) : text;
+
+  if (!text) {
+    outputErrorMessage(
+      client,
+      message,
+      'Tem que mandar um texto para eu imitar, pô'
+    );
+    return;
+  }
+
+  if (text.length > 200) {
+    client.reply(
+      message.from,
+      'A sua mensagem ultrapassou 200 caracteres, infelizmente vou ter que cortar um pedaço dela 😞✂️',
+      message.id
+    );
+    text = text.slice(0, 200);
+  }
+
+  if (langCode === 'wrongFormat') {
+    client.reply(
+      message.from,
+      'O código informado não é válido, o áudio será enviado em português 🇧🇷. Aguarde...',
+      message.id
+    );
+  } else {
+    lang = langCode !== null ? langCode : lang;
     await client.reply(
       message.from,
       'Estou procurando o áudio 🧐🔎, aguarde.',
       message.id
     );
-    waitMessageSent = true;
   }
 
-  const text = value.replace(getLangRegex, '');
   let audioUrl: string = '';
   try {
     audioUrl = googleTTS.getAudioUrl(text, {
