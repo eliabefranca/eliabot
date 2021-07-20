@@ -110,7 +110,7 @@ function User() {
                 <CardImg
                   src={user.profilePic || '/assets/img/user.png'}
                   alt={user.name}
-                  style={{ maxHeight: '50vh', width: 'auto' }}
+                  style={{ maxHeight: '35vh', width: 'auto' }}
                 ></CardImg>
               </div>
               <CardBody>
