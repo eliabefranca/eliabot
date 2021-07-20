@@ -64,8 +64,7 @@ interface MappedLangAndText {
 function getLangCodeAndTextFromQuery(
   query: string | undefined
 ): MappedLangAndText {
-  const getLangRegex = /#([a-z]{2,3}|[a-z]{4,5}|[a-z]{2,3}-[a-z]{2})$/i;
-
+  const getLangRegex = /#([a-z]{2,3}-[a-z]{2}|[a-z]{2,5})/gi;
   let lang = null;
   let text = query && query.trim() ? query : null;
 
@@ -109,6 +108,12 @@ function getLangCodeAndTextFromQuery(
 
 const func: Command = async ({ value, client, message }) => {
   let lang = 'pt-BR';
+  let slow = false;
+
+  const slowRegex = /#slow/gi;
+  if (value && slowRegex.test(value)) {
+    slow = true;
+  }
 
   let { lang: langCode, text } = getLangCodeAndTextFromQuery(value);
 
@@ -152,6 +157,7 @@ const func: Command = async ({ value, client, message }) => {
     audioUrl = googleTTS.getAudioUrl(text, {
       lang,
       host: 'https://translate.google.com',
+      slow,
     });
   } catch (error) {
     client.reply(
