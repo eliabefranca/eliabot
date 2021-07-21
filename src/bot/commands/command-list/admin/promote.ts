@@ -49,7 +49,8 @@ const func: Command = async ({ client, message, value }) => {
 
 const promote: CommandData = {
   func,
-  description: '',
+  description:
+    'Comando apenas para administradores do sistema. Promove um usuário a moderador do Eliabot.',
   category: CommandType.BOT_ADMINISTRATION,
   command: '.promote',
   allowedUsers: 'admin',
