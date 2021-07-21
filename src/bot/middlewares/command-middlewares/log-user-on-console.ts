@@ -1,6 +1,6 @@
 import { CommandMiddleware } from '../../bot';
 
-export const loUserOnConsole: CommandMiddleware = async ({
+export const logUserOnConsole: CommandMiddleware = async ({
   commandData,
   client,
   message,
