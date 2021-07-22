@@ -62,9 +62,7 @@ const func: Command = async ({ value, client, message }) => {
     `${message.sender.id}.png`
   );
 
-  const url = decodeURIComponent(resultItem.link)
-    .replace(/\?.*$/, '')
-    .replace(/&.*$/, '');
+  const url = decodeURIComponent(resultItem.link);
 
   await printSite({
     url,

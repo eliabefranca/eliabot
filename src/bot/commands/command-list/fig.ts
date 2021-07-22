@@ -4,8 +4,6 @@ import { Command, CommandData, CommandType } from '@command-protocols';
 const func: Command = async ({ value, client, message }) => {
   let mediaMsg: Message = message;
 
-  console.log('Creating sticker for ' + message.sender.pushname);
-
   const quotedMessage = message.quotedMsg;
   if (quotedMessage) {
     mediaMsg = quotedMessage;
