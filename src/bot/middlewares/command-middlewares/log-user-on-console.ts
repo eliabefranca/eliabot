@@ -1,3 +1,4 @@
+import { getTimeStamp } from 'src/helpers/date';
 import { CommandMiddleware } from '../../bot';
 
 export const logUserOnConsole: CommandMiddleware = async ({
@@ -7,7 +8,9 @@ export const logUserOnConsole: CommandMiddleware = async ({
   query,
 }): Promise<boolean> => {
   console.log(
-    `Running command  ${commandData.command} for ${message.sender.pushname}`
+    `${getTimeStamp()}: Running command ${commandData.command} for ${
+      message.sender.pushname
+    }`
   );
 
   return true;
