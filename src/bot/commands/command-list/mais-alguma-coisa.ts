@@ -27,7 +27,7 @@ const func: Command = async ({ message, client, value }) => {
 };
 
 const maisAlgumaCoisa: CommandData = {
-  command: '.mais',
+  command: ['.mais'],
   category: CommandType.FUNNY,
   description: 'Escolhe um membro aleatório do grupo. Requer um adjetivo',
   onlyForGroups: true,

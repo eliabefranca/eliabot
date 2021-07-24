@@ -7,7 +7,7 @@ const func: Command = async ({ client, message, value }) => {
 };
 
 const prob: CommandData = {
-  command: '.prob',
+  command: ['.prob'],
   category: CommandType.FUNNY,
   func,
   description: 'Calcula a probabilidade de alguma coisa',

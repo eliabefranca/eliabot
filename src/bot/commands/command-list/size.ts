@@ -42,7 +42,7 @@ const func: Command = async ({ client, message, value }) => {
 };
 
 const size: CommandData = {
-  command: '.size',
+  command: ['.size'],
   category: CommandType.FUNNY,
   description: 'Descubra o tamanho do piupiu de alguém',
   func,

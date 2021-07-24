@@ -85,7 +85,7 @@ const func: Command = async ({ value, client, message }) => {
 };
 
 const googleSearch: CommandData = {
-  command: '.gs',
+  command: ['.gs'], 
   category: CommandType.UTILS,
   func,
   description:

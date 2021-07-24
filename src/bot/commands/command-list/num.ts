@@ -21,7 +21,7 @@ const func: Command = async ({ message, client, value }) => {
 
 const num: CommandData = {
   func,
-  command: '.num',
+  command: ['.num'],
   category: CommandType.UTILS,
   description:
     'Retorna o número de uma pessoa a partir de uma mensagem ou uma marcação',

@@ -13,7 +13,7 @@ const func: Command = async ({ message, client, value }) => {
 
 const quem: CommandData = {
   func,
-  command: '.quem',
+  command: ['.quem'],
   category: CommandType.FUNNY,
   description: 'Escolhe um membro aleatório do grupo como responsável',
   onlyForGroups: true,

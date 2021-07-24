@@ -12,7 +12,7 @@ taporra 🥴💥`;
 };
 
 const virgindade: CommandData = {
-  command: '.virgindade',
+  command: ['.virgindade'],
   category: CommandType.FUNNY,
   func,
   description: 'Descubra 😳',

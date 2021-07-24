@@ -180,7 +180,7 @@ const func: Command = async ({ value, client, message }) => {
 
 const fala: CommandData = {
   func,
-  command: '.fala',
+  command: ['.fala', '.say'],
   description:
     "Transforma um texto digitado ou uma mensagem respondida em áudio do zap.\nInforme o código do idioma depois do caractere '#' para o áudio vir em outra língua.",
   onlyForGroups: false,
