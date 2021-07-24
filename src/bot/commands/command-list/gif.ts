@@ -107,7 +107,7 @@ link: ${gifUrl}
 };
 
 const searchGif: CommandData = {
-  command: '.gif',
+  command: ['.gif'],
   category: CommandType.MEDIA,
   func,
   description:

@@ -54,7 +54,7 @@ const func: Command = async ({ client, message, value }) => {
 };
 
 const prob: CommandData = {
-  command: '.kick',
+  command: ['.kick'],
   category: CommandType.GROUP_MANAGEMENT,
   func,
   description: 'Expulsa um membro do grupo',

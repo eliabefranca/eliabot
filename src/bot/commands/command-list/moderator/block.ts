@@ -50,7 +50,7 @@ const block: CommandData = {
   func,
   description: '',
   category: CommandType.BOT_ADMINISTRATION,
-  command: '.block',
+  command: ['.block'],
   allowedUsers: ['admin', 'moderator'],
   hidden: true,
 };

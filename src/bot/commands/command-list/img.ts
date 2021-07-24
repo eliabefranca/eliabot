@@ -62,7 +62,7 @@ link: ${imgUrl}
 };
 
 const searchImage: CommandData = {
-  command: '.img',
+  command: ['.img'],
   category: CommandType.MEDIA,
   func,
   description: 'Retorna uma imagem a partir de um texto ou palavra.',

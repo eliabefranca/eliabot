@@ -37,7 +37,7 @@ const block: CommandData = {
   func,
   description: '',
   category: CommandType.BOT_ADMINISTRATION,
-  command: '.unblock',
+  command: ['.unblock'],
   allowedUsers: ['admin', 'moderator'],
   hidden: true,
 };

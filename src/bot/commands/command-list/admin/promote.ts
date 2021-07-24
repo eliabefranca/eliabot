@@ -52,7 +52,7 @@ const promote: CommandData = {
   description:
     'Comando apenas para administradores do sistema. Promove um usuário a moderador do Eliabot.',
   category: CommandType.BOT_ADMINISTRATION,
-  command: '.promote',
+  command: ['.unmoderator'],
   allowedUsers: 'admin',
   hidden: true,
 };

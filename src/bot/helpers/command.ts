@@ -20,7 +20,7 @@ function getCommand(
   let commandToBeExecuted = null;
 
   commandList.forEach((com) => {
-    if (com.command === command) {
+    if (com.command.includes(command)) {
       commandToBeExecuted = com;
     }
   });
