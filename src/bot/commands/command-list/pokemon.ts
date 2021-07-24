@@ -47,7 +47,7 @@ const func: Command = async (params) => {
 };
 
 const searchPokemon: CommandData = {
-  command: '.pokemon',
+  command: ['.pokemon'],
   category: CommandType.MEDIA,
   func,
   description: 'Retorna um pokemon.',
