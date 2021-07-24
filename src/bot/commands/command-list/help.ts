@@ -85,7 +85,7 @@ Você pode digitar ".help .nomecomando" para ver melhor o que eu posso fazer com
 
 ${helpMenuItems.join('\n')}${sm}
 
-  Github: https://github.com/Eliabe45/eliabot`;
+  Github: https://github.com/eliabefranca/eliabot`;
 
   return finalText;
 }
@@ -104,7 +104,7 @@ ${detailedDescription}`;
 
   const finalText = `${sm}${header}${body}${sm}
 
-  Github: https://github.com/Eliabe45/eliabot`;
+  Github: https://github.com/eliabefranca/eliabot`;
 
   return finalText;
 }
