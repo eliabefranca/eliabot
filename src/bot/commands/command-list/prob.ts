@@ -11,6 +11,8 @@ const prob: CommandData = {
   category: CommandType.FUNNY,
   func,
   description: 'Calcula a probabilidade de alguma coisa',
+  allowInGroups: true,
+  allowInPrivate: true,
 };
 
 export default prob;

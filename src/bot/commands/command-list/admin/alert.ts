@@ -25,6 +25,8 @@ const alert: CommandData = {
   category: CommandType.BOT_ADMINISTRATION,
   command: ['.alert', '.al'],
   allowedUsers: 'admin',
+  allowInGroups: true,
+  allowInPrivate: true,
 };
 
 export default alert;

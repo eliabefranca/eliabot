@@ -23,6 +23,8 @@ const viewWindow: CommandData = {
   category: CommandType.BOT_ADMINISTRATION,
   command: ['.viewwindow', '.vw'],
   allowedUsers: 'admin',
+  allowInGroups: true,
+  allowInPrivate: true,
 };
 
 export default viewWindow;

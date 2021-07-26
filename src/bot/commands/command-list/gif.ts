@@ -112,6 +112,9 @@ const searchGif: CommandData = {
   func,
   description:
     'Retorna um GIF a partir de um term. Você pode escolher a posição do resultado com "#N" onde N é a posição do gif. Utilizar a posição #R retornará um gif aleatório.',
+
+  allowInGroups: true,
+  allowInPrivate: true,
 };
 
 export default searchGif;

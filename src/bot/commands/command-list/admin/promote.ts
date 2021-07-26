@@ -55,6 +55,8 @@ const promote: CommandData = {
   command: ['.promote'],
   allowedUsers: 'admin',
   hidden: true,
+  allowInGroups: true,
+  allowInPrivate: true,
 };
 
 export default promote;

@@ -38,7 +38,8 @@ const imitar: CommandData = {
   category: CommandType.FUNNY,
   command: ['.imitar2'],
   description: 'Imita uma mensagem.',
-  onlyForGroups: true,
+  allowInGroups: true,
+  allowInPrivate: false,
 };
 
 export default imitar;

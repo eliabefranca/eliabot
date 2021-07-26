@@ -16,7 +16,8 @@ const quem: CommandData = {
   command: ['.quem'],
   category: CommandType.FUNNY,
   description: 'Escolhe um membro aleatório do grupo como responsável',
-  onlyForGroups: true,
+  allowInGroups: true,
+  allowInPrivate: false,
 };
 
 export default quem;

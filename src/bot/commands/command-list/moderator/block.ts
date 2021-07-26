@@ -53,6 +53,8 @@ const block: CommandData = {
   command: ['.block'],
   allowedUsers: ['admin', 'moderator'],
   hidden: true,
+  allowInGroups: true,
+  allowInPrivate: true,
 };
 
 export default block;

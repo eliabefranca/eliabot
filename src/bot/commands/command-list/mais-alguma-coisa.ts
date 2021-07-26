@@ -30,8 +30,9 @@ const maisAlgumaCoisa: CommandData = {
   command: ['.mais'],
   category: CommandType.FUNNY,
   description: 'Escolhe um membro aleatório do grupo. Requer um adjetivo',
-  onlyForGroups: true,
   func,
+  allowInGroups: true,
+  allowInPrivate: false,
 };
 
 export default maisAlgumaCoisa;

@@ -13,6 +13,8 @@ const yesOrNo: CommandData = {
   category: CommandType.FUNNY,
   description: 'Responde sim, não ou talvez',
   func,
+  allowInGroups: true,
+  allowInPrivate: true,
 };
 
 export default yesOrNo;

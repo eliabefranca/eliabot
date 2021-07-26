@@ -36,8 +36,8 @@ const uol: CommandData = {
   category: CommandType.UTILS,
   description: 'Retorna uma lista de notícias do site https://www.uol.com.br/',
   func,
-  onlyForGroups: false,
-  hidden: false,
+  allowInGroups: false,
+  allowInPrivate: true,
 };
 
 export default uol;

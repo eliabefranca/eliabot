@@ -46,8 +46,8 @@ const size: CommandData = {
   category: CommandType.FUNNY,
   description: 'Descubra o tamanho do piupiu de alguém',
   func,
-  onlyForGroups: true,
-  // hidden: true,
+  allowInGroups: true,
+  allowInPrivate: false,
 };
 
 export default size;

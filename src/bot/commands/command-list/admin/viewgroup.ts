@@ -41,6 +41,8 @@ const viewGroup: CommandData = {
   category: CommandType.BOT_ADMINISTRATION,
   command: ['.viewgroup', '.vg'],
   allowedUsers: 'admin',
+  allowInGroups: true,
+  allowInPrivate: true,
 };
 
 export default viewGroup;

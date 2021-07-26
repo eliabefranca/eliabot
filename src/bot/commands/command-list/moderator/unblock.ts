@@ -40,6 +40,8 @@ const block: CommandData = {
   command: ['.unblock'],
   allowedUsers: ['admin', 'moderator'],
   hidden: true,
+  allowInGroups: true,
+  allowInPrivate: true,
 };
 
 export default block;

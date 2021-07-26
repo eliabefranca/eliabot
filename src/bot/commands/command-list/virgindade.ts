@@ -16,7 +16,8 @@ const virgindade: CommandData = {
   category: CommandType.FUNNY,
   func,
   description: 'Descubra 😳',
-  onlyForGroups: true,
+  allowInGroups: true,
+  allowInPrivate: false,
 };
 
 export default virgindade;

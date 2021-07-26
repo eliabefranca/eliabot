@@ -58,8 +58,9 @@ const prob: CommandData = {
   category: CommandType.GROUP_MANAGEMENT,
   func,
   description: 'Expulsa um membro do grupo',
-  onlyForGroups: true,
   hidden: false,
+  allowInGroups: true,
+  allowInPrivate: false,
 };
 
 export default prob;

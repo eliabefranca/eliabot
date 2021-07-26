@@ -31,7 +31,8 @@ const ship: CommandData = {
   category: CommandType.FUNNY,
   description: 'Forma um casal aleatório no grupo',
   func,
-  onlyForGroups: true,
+  allowInGroups: true,
+  allowInPrivate: false,
 };
 
 export default ship;

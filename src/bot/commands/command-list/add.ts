@@ -61,8 +61,9 @@ const prob: CommandData = {
   category: CommandType.GROUP_MANAGEMENT,
   func,
   description: 'Adiciona um membro ao grupo',
-  onlyForGroups: true,
   hidden: false,
+  allowInGroups: true,
+  allowInPrivate: false,
 };
 
 export default prob;

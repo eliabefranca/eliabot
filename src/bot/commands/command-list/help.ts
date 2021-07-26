@@ -141,6 +141,8 @@ const help: CommandData = {
   description:
     'Exibe a lista de comandos. Você pode usar .help [comando] para ver mais detalhes de um determinado comando.\nEx.: .help .fala',
   func,
+  allowInGroups: true,
+  allowInPrivate: true,
 };
 
 export default help;

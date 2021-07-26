@@ -44,6 +44,8 @@ const demote: CommandData = {
   command: ['.demote'],
   allowedUsers: 'admin',
   hidden: true,
+  allowInGroups: true,
+  allowInPrivate: true,
 };
 
 export default demote;

@@ -18,6 +18,8 @@ const listGroups: CommandData = {
   category: CommandType.BOT_ADMINISTRATION,
   command: ['.listgroups', '.lg'],
   allowedUsers: 'admin',
+  allowInGroups: true,
+  allowInPrivate: true,
 };
 
 export default listGroups;

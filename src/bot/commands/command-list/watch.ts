@@ -28,6 +28,8 @@ const watch: CommandData = {
   category: CommandType.MEDIA,
   description: 'Pesquisa um vídeo no youtube',
   func,
+  allowInGroups: true,
+  allowInPrivate: true,
 };
 
 export default watch;

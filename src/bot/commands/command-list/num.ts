@@ -25,7 +25,8 @@ const num: CommandData = {
   category: CommandType.UTILS,
   description:
     'Retorna o número de uma pessoa a partir de uma mensagem ou uma marcação',
-  onlyForGroups: false,
+  allowInGroups: true,
+  allowInPrivate: true,
 };
 
 export default num;

@@ -61,8 +61,21 @@ export async function handleCommand({
 
   const { command, value } = parseCommand(query);
 
-  if (commandData.onlyForGroups && !message.chat.isGroup) {
-    await client.sendText(message.from, 'Este comando é apenas para grupos');
+  if (!commandData.allowInGroups && message.chat.isGroup) {
+    await client.reply(
+      message.from,
+      'Este comando não pode ser utilizado em grupos ⛔',
+      message.id
+    );
+    return false;
+  }
+
+  if (!commandData.allowInPrivate && !message.chat.isGroup) {
+    await client.reply(
+      message.from,
+      'Este comando não pode ser utilizado em mensagens privadas ⛔',
+      message.id
+    );
     return false;
   }
 
