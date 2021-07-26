@@ -1,5 +1,5 @@
 import { Command, CommandData, CommandType } from '@command-protocols';
-import { CONFIG } from 'config';
+import { getContactName } from 'src/bot/helpers/get-contact-name';
 import { outputErrorMessage } from 'src/bot/utils/output-error-message';
 
 const func: Command = async ({ client, message, value }) => {
@@ -21,10 +21,16 @@ const func: Command = async ({ client, message, value }) => {
   }
 
   const { participants } = targetGroup.groupMetadata;
-  msg += `Grupo ${targetGroup.name} - ${targetGroup.id}\n\n`;
-  participants.forEach((participant) => {
-    msg += `*${participant.id}*\n`;
-  });
+  msg += `${targetGroup.name} - ${targetGroup.id}\n\n\nParticipantes:\n\n`;
+  for (const participant of participants) {
+    const contact = await client.getContact(participant.id._serialized);
+    if (!contact || contact.isMe) {
+      continue;
+    }
+
+    const name = getContactName(contact);
+    msg += `*${name}* - ${participant.id.user}\n\n`;
+  }
 
   client.reply(message.from, msg, message.id);
 };
@@ -33,7 +39,7 @@ const viewGroup: CommandData = {
   func,
   description: 'Mostra o chat do grupo informado',
   category: CommandType.BOT_ADMINISTRATION,
-  command: ['.viewGroup', '.vg'],
+  command: ['.viewgroup', '.vg'],
   allowedUsers: 'admin',
 };
 
