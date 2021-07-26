@@ -41,7 +41,7 @@ const demote: CommandData = {
   func,
   description: '',
   category: CommandType.BOT_ADMINISTRATION,
-  command: ['.moderator'],
+  command: ['.demote'],
   allowedUsers: 'admin',
   hidden: true,
 };
