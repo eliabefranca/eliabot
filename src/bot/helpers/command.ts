@@ -6,7 +6,7 @@ import { CommandData } from '../commands/protocols';
 export let commandList: CommandData[] = [];
 
 export const parseCommand = (query: string) => {
-  const formattedQuery = query.replace(/^\. /, '.').replace(/^(\/|!|#)/, '.');
+  const formattedQuery = query.replace(/^\. /, '.').replace(/^(,|\/|!|#)/, '.');
   const command = formattedQuery.split(' ')[0].trim();
   const value = formattedQuery.replace(command, '').trim();
   return {
