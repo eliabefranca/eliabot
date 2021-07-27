@@ -20,8 +20,10 @@ function getCommand(
 ): CommandData | null {
   let commandToBeExecuted = null;
 
+  let formattedCommand = command.replace(/^\. /, '.');
+
   commandList.forEach((com) => {
-    if (com.command.includes(command)) {
+    if (com.command.includes(formattedCommand)) {
       commandToBeExecuted = com;
     }
   });
