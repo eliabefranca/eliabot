@@ -1,3 +1,4 @@
+import { usersDb } from '@json-db';
 import { Client, Message } from '@open-wa/wa-automate';
 import { getCommandList } from '../commands/command-list';
 import { CommandData } from '../commands/protocols';
@@ -59,9 +60,12 @@ export async function handleCommand({
     return false;
   }
 
-  const { command, value } = parseCommand(query);
+  const { value } = parseCommand(query);
 
-  if (!commandData.allowInGroups && message.chat.isGroup) {
+  const senderIsAdmin =
+    usersDb.getFirst({ id: message.sender.id })?.role === 'admin';
+
+  if (!commandData.allowInGroups && message.chat.isGroup && !senderIsAdmin) {
     await client.reply(
       message.from,
       'Este comando não pode ser utilizado em grupos ⛔',
@@ -70,7 +74,7 @@ export async function handleCommand({
     return false;
   }
 
-  if (!commandData.allowInPrivate && !message.chat.isGroup) {
+  if (!commandData.allowInPrivate && !message.chat.isGroup && !senderIsAdmin) {
     await client.reply(
       message.from,
       'Este comando não pode ser utilizado em mensagens privadas ⛔',
