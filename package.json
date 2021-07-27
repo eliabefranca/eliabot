@@ -10,6 +10,7 @@
     "express": "^4.17.1",
     "g-i-s": "^2.1.6",
     "general-search-engine": "^1.4.0",
+    "get-news": "^1.1.21",
     "giphy-api": "^2.0.2",
     "google-tts-api": "^2.0.2",
     "image-data-uri": "^2.0.1",
@@ -35,7 +36,7 @@
     "typescript": "^4.3.5"
   },
   "scripts": {
-    "start:bot": "ts-node src/index",
+    "start:bot": "node -r tsconfig-paths/register -r ts-node/register ./src/bot/index.ts",
     "start:panel": "cd src/panel && yarn start",
     "start:api": "ts-node src/api/index",
     "dev:bot": "nodemon --config \"./nodemon.bot.json\"",

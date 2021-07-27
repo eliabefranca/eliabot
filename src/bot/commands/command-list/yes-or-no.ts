@@ -9,10 +9,12 @@ const func: Command = async (params) => {
 };
 
 const yesOrNo: CommandData = {
-  command: '.p',
+  command: ['.p'],
   category: CommandType.FUNNY,
   description: 'Responde sim, não ou talvez',
   func,
+  allowInGroups: true,
+  allowInPrivate: true,
 };
 
 export default yesOrNo;

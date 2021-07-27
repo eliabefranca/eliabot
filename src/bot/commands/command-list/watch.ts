@@ -24,10 +24,12 @@ const func: Command = async (params) => {
 };
 
 const watch: CommandData = {
-  command: '.watch',
+  command: ['.watch'],
   category: CommandType.MEDIA,
   description: 'Pesquisa um vídeo no youtube',
   func,
+  allowInGroups: true,
+  allowInPrivate: true,
 };
 
 export default watch;

@@ -42,7 +42,7 @@ export class Bot {
       logConsole: false,
       popup: false,
       qrTimeout: 0, //0 means it will wait forever for you to scan the qr code
-      restartOnCrash: false,
+      restartOnCrash: true,
       killProcessOnBrowserClose: true,
     });
 

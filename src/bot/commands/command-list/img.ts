@@ -62,12 +62,15 @@ link: ${imgUrl}
 };
 
 const searchImage: CommandData = {
-  command: '.img',
+  command: ['.img'],
   category: CommandType.MEDIA,
   func,
   description: 'Retorna uma imagem a partir de um texto ou palavra.',
   detailedDescription:
     'Você pode escolher a posição do resultado com "#N" onde N é a posição da imagem.\nEx.: .img cachorro #3 -> Retorna o terceiro resultado da pesquisa',
+
+  allowInGroups: true,
+  allowInPrivate: true,
 };
 
 export default searchImage;

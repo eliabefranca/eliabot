@@ -4,6 +4,7 @@ import {
   checkIfUserIsAdmin,
   checkIfUserBlocked,
   checkIfUserIsModerator,
+  logUserOnConsole,
 } from './command-middlewares';
 
 const commandMidlewares = [
@@ -11,6 +12,7 @@ const commandMidlewares = [
   checkIfUserIsAdmin,
   checkIfUserBlocked,
   checkIfUserIsModerator,
+  logUserOnConsole,
 ];
 
 export function setupMiddlewares(bot: Bot) {

@@ -51,12 +51,14 @@ const func: Command = async ({ value, client, message }) => {
 };
 
 const search: CommandData = {
-  command: '.fig',
+  command: ['.fig'],
   func,
   category: CommandType.UTILS,
   description: 'Cria uma figurinha a partir de uma imagem',
   detailedDescription:
     'Parâmetros opcionais:\ncircle: a figurinha vem redonda, ex.: .fig circle',
+  allowInGroups: true,
+  allowInPrivate: true,
 };
 
 export default search;

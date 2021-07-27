@@ -1,3 +1,4 @@
+import { usersDb } from '@json-db';
 import { Client, Message } from '@open-wa/wa-automate';
 import { getCommandList } from '../commands/command-list';
 import { CommandData } from '../commands/protocols';
@@ -5,8 +6,9 @@ import { CommandData } from '../commands/protocols';
 export let commandList: CommandData[] = [];
 
 export const parseCommand = (query: string) => {
-  const command = query.split(' ')[0].trim();
-  const value = query.replace(command, '').trim();
+  const formattedQuery = query.replace(/^\. /, '.').replace(/^(,|\/|!|#)/, '.');
+  const command = formattedQuery.split(' ')[0].trim();
+  const value = formattedQuery.replace(command, '').trim();
   return {
     command: command.toLowerCase(),
     value: value.replace(/"/gi, ''),
@@ -20,7 +22,7 @@ function getCommand(
   let commandToBeExecuted = null;
 
   commandList.forEach((com) => {
-    if (com.command === command) {
+    if (com.command.includes(command)) {
       commandToBeExecuted = com;
     }
   });
@@ -59,10 +61,26 @@ export async function handleCommand({
     return false;
   }
 
-  const { command, value } = parseCommand(query);
+  const { value } = parseCommand(query);
 
-  if (commandData.onlyForGroups && !message.chat.isGroup) {
-    await client.sendText(message.from, 'Este comando é apenas para grupos');
+  const senderIsAdmin =
+    usersDb.getFirst({ id: message.sender.id })?.role === 'admin';
+
+  if (!commandData.allowInGroups && message.chat.isGroup && !senderIsAdmin) {
+    await client.reply(
+      message.from,
+      'Este comando não pode ser utilizado em grupos ⛔',
+      message.id
+    );
+    return false;
+  }
+
+  if (!commandData.allowInPrivate && !message.chat.isGroup && !senderIsAdmin) {
+    await client.reply(
+      message.from,
+      'Este comando não pode ser utilizado em mensagens privadas ⛔',
+      message.id
+    );
     return false;
   }
 

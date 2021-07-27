@@ -27,11 +27,12 @@ const func: Command = async ({ client, message }) => {
 };
 
 const ship: CommandData = {
-  command: '.ship',
+  command: ['.ship'],
   category: CommandType.FUNNY,
   description: 'Forma um casal aleatório no grupo',
   func,
-  onlyForGroups: true,
+  allowInGroups: true,
+  allowInPrivate: false,
 };
 
 export default ship;

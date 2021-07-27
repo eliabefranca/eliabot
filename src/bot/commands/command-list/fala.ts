@@ -180,10 +180,9 @@ const func: Command = async ({ value, client, message }) => {
 
 const fala: CommandData = {
   func,
-  command: '.fala',
+  command: ['.fala', '.say'],
   description:
     "Transforma um texto digitado ou uma mensagem respondida em áudio do zap.\nInforme o código do idioma depois do caractere '#' para o áudio vir em outra língua.",
-  onlyForGroups: false,
   category: CommandType.FUNNY,
   detailedDescription: `Você pode enviar o código em vários formatos:
 Em minúsculo e sem hífen - ex: #enus
@@ -194,6 +193,8 @@ Por exemplo, qualquer código da lista [#en, #us, #enus, #en-US'] vai retornar u
 Se houver um sufixo repetido, ou igual a um prefixo será enviado o primeiro padrão encontrado, priorizando o sufixo primeiro e seguindo a ordem da lista de idiomas abaixo.
 
 Idiomas disponíveis:\n\n${supportedLanguages.join('\n')}`,
+  allowInGroups: true,
+  allowInPrivate: true,
 };
 
 export default fala;

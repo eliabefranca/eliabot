@@ -57,12 +57,13 @@ const func: Command = async ({ client, message, value }) => {
 };
 
 const prob: CommandData = {
-  command: '.add',
+  command: ['.add'],
   category: CommandType.GROUP_MANAGEMENT,
   func,
   description: 'Adiciona um membro ao grupo',
-  onlyForGroups: true,
   hidden: false,
+  allowInGroups: true,
+  allowInPrivate: false,
 };
 
 export default prob;

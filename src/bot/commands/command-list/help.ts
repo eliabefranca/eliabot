@@ -45,21 +45,29 @@ function buildMenuWithAllCommands(commandList: CommandData[]): string {
 
     switch (command.category) {
       case CommandType.FUNNY:
-        funStr += tableCell(`${command.command}\n${command.description}`);
+        funStr += tableCell(
+          `${command.command.join(' | ')}\n${command.description}`
+        );
         break;
       case CommandType.GROUP_MANAGEMENT:
         groupManageStr += tableCell(
-          `${command.command}\n${command.description}`
+          `${command.command.join(' | ')}\n${command.description}`
         );
         break;
       case CommandType.MEDIA:
-        mediaStr += tableCell(`${command.command}\n${command.description}`);
+        mediaStr += tableCell(
+          `${command.command.join(' | ')}\n${command.description}`
+        );
         break;
       case CommandType.UTILS:
-        utilsStr += tableCell(`${command.command}\n${command.description}`);
+        utilsStr += tableCell(
+          `${command.command.join(' | ')}\n${command.description}`
+        );
         break;
       case CommandType.BOT_STATISTICS:
-        statsStr += tableCell(`${command.command}\n${command.description}`);
+        statsStr += tableCell(
+          `${command.command.join(' | ')}\n${command.description}`
+        );
         break;
     }
   });
@@ -77,7 +85,7 @@ Você pode digitar ".help .nomecomando" para ver melhor o que eu posso fazer com
 
 ${helpMenuItems.join('\n')}${sm}
 
-  Github: https://github.com/Eliabe45/eliabot`;
+  Github: https://github.com/eliabefranca/eliabot`;
 
   return finalText;
 }
@@ -85,7 +93,7 @@ ${helpMenuItems.join('\n')}${sm}
 function BuildMenuWithAsingleCommand(command: CommandData): string {
   const sm = '```';
 
-  const header = closingTableHeader(`🔗 ${command.command}`);
+  const header = closingTableHeader(`🔗 ${command.command.join(' | ')}`);
   const { detailedDescription } = command;
   const bodyContent = !detailedDescription
     ? command.description
@@ -96,7 +104,7 @@ ${detailedDescription}`;
 
   const finalText = `${sm}${header}${body}${sm}
 
-  Github: https://github.com/Eliabe45/eliabot`;
+  Github: https://github.com/eliabefranca/eliabot`;
 
   return finalText;
 }
@@ -105,9 +113,12 @@ const func: Command = async ({ client, message, value }) => {
   const commandList = await getCommandList();
 
   if (value) {
-    const possibleCommand = value.trim();
-    const command = commandList.filter(
-      (com) => com.command === possibleCommand
+    let possibleCommand = value.trim();
+    if (possibleCommand.charAt(0) !== '.') {
+      possibleCommand = `.${possibleCommand}`;
+    }
+    const command = commandList.filter((com) =>
+      com.command.includes(possibleCommand)
     )[0];
 
     if (command) {
@@ -125,11 +136,13 @@ const func: Command = async ({ client, message, value }) => {
 };
 
 const help: CommandData = {
-  command: '.help',
+  command: ['.help', '.h', '.ajuda'],
   category: CommandType.UTILS,
   description:
     'Exibe a lista de comandos. Você pode usar .help [comando] para ver mais detalhes de um determinado comando.\nEx.: .help .fala',
   func,
+  allowInGroups: true,
+  allowInPrivate: true,
 };
 
 export default help;

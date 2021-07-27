@@ -115,12 +115,13 @@ const func: Command = async (params) => {
 };
 
 const marry: CommandData = {
-  command: '.marry',
+  command: ['.marry'],
   category: CommandType.FUNNY,
   description:
     'Um casamento aleatorio entre um membro do grupo e um personagem de anime',
   func,
-  onlyForGroups: true,
+  allowInGroups: true,
+  allowInPrivate: false,
 };
 
 export default marry;

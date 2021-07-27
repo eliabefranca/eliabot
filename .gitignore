@@ -12,7 +12,8 @@ package-lock.json
 **.data.json
 **.node-persist**
 # end managed by open-wa
-files/images/*.png
+files/images/*
+files/screenshots/*
 
 # IDE's
 .idea

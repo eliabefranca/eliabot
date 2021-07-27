@@ -10,11 +10,12 @@ export enum CommandType {
 }
 
 export interface CommandData {
-  command: string;
+  command: string[];
   description: string;
   func: Command;
   category: CommandType;
-  onlyForGroups?: boolean;
+  allowInGroups: boolean;
+  allowInPrivate: boolean;
   allowedUsers?: string | string[]; // TODO: add roles
   hidden?: boolean;
   detailedDescription?: string;

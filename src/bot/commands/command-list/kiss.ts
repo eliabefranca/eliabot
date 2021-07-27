@@ -29,12 +29,12 @@ const func: Command = async ({ client, message, value }) => {
 };
 
 const kiss: CommandData = {
-  command: '.kiss',
+  command: ['.kiss'],
   category: CommandType.FUNNY,
   description: 'Mande um beijo para alguém do grupo',
   func,
-  onlyForGroups: true,
-  // hidden: true,
+  allowInGroups: true,
+  allowInPrivate: false,
 };
 
 export default kiss;
