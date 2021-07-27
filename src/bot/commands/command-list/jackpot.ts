@@ -32,7 +32,7 @@ const jackpot: CommandData = {
   func,
   allowInGroups: false,
   allowInPrivate: true,
-  hidden: true,
+  hidden: false,
 };
 
 export default jackpot;
