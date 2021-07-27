@@ -2,7 +2,7 @@ import { Command, CommandData, CommandType } from '@command-protocols';
 import { outputErrorMessage } from 'src/bot/utils/output-error-message';
 import { getRandom } from '../../../helpers/get-random';
 
-const papers = '🖐,✋,🤚,🖖,paper,papel';
+const papers = '🖐️,🖐,✋,🤚,🖖,paper,papel';
 const rocks = '🤜,rock,pedra,👊,🤛';
 const scissors = '✂️,tesoura,scissors,✌️';
 
@@ -78,17 +78,21 @@ const func: Command = async ({ client, message, value }) => {
   if (results[playerHand].wins === computerHand) {
     client.reply(
       message.from,
-      `${formattedHands[computerHand]}!\n${formattedHands[playerHand]} ganha de ${formattedHands[computerHand]},infelizmente eu perdi 😞`,
+      `🤖${formattedHands[computerHand]}!\n\n${formattedHands[playerHand]} ganha de ${formattedHands[computerHand]}, infelizmente eu perdi 😞`,
       message.id
     );
   } else if (results[playerHand].loses === computerHand) {
     client.reply(
       message.from,
-      `${formattedHands[computerHand]}!\n${formattedHands[computerHand]} ganha de ${formattedHands[playerHand]}, acho que eu ganhei 😜`,
+      `🤖${formattedHands[computerHand]}!\n\n${formattedHands[computerHand]} ganha de ${formattedHands[playerHand]}, acho que eu ganhei 😜`,
       message.id
     );
   } else {
-    client.reply(message.from, 'Aí deu empate, meu patrão 😐', message.id);
+    client.reply(
+      message.from,
+      `🤖${formattedHands[computerHand]}!\n\nAí deu empate, meu patrão 😐`,
+      message.id
+    );
   }
 };
 
