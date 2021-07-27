@@ -6,8 +6,9 @@ import { CommandData } from '../commands/protocols';
 export let commandList: CommandData[] = [];
 
 export const parseCommand = (query: string) => {
-  const command = query.split(' ')[0].trim();
-  const value = query.replace(command, '').trim();
+  const formattedQuery = query.replace(/^\. /, '.').replace(/^(\/|!|#)/, '.');
+  const command = formattedQuery.split(' ')[0].trim();
+  const value = formattedQuery.replace(command, '').trim();
   return {
     command: command.toLowerCase(),
     value: value.replace(/"/gi, ''),
@@ -20,10 +21,8 @@ function getCommand(
 ): CommandData | null {
   let commandToBeExecuted = null;
 
-  let formattedCommand = command.replace(/^\. /, '.');
-
   commandList.forEach((com) => {
-    if (com.command.includes(formattedCommand)) {
+    if (com.command.includes(command)) {
       commandToBeExecuted = com;
     }
   });
