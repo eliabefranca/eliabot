@@ -3,7 +3,7 @@ import { outputErrorMessage } from 'src/bot/utils/output-error-message';
 import { getRandom } from '../../../helpers/get-random';
 
 const papers = '🖐️,🖐,✋,🤚,🖖,paper,papel';
-const rocks = '🤜,rock,pedra,👊,🤛';
+const rocks = '🤜,rock,pedra,👊,🤛,🪨,🪦';
 const scissors = '✂️,tesoura,scissors,✌️';
 
 type Hands = 'paper' | 'rock' | 'scissors';
