@@ -28,7 +28,7 @@ const func: Command = async ({ client, message, value }) => {
 const jackpot: CommandData = {
   command: ['.jackpot'],
   category: CommandType.FUNNY,
-  description: 'Jog',
+  description: 'Joguinho de cassino 🎰',
   func,
   allowInGroups: false,
   allowInPrivate: true,
