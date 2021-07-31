@@ -24,7 +24,7 @@
     "@types/giphy-api": "^2.0.3",
     "@types/jest": "^26.0.24",
     "@types/lodash": "^4.14.171",
-    "@types/node": "^16.3.0",
+    "@types/node": "^16.4.8",
     "babel-jest": "^27.0.6",
     "fast-glob": "^3.2.7",
     "jest": "^27.0.6",
