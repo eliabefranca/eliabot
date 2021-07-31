@@ -2,6 +2,7 @@ import { blockedUsersDb, usersDb } from '@json-db';
 import { getTimeStamp } from '@utils';
 import { Command, CommandData, CommandType } from '@command-protocols';
 import { outputErrorMessage } from '@bot-utils/output-error-message';
+import { getUserIdFromMessage } from '@bot-utils/get-user-id-from-message';
 
 const func: Command = async ({ client, message, value }) => {
   if (!value) {
@@ -13,7 +14,7 @@ const func: Command = async ({ client, message, value }) => {
     return;
   }
 
-  const userId = value?.trim().replace('@', '').replace('+', '') + '@c.us';
+  const userId = getUserIdFromMessage(message, value);
   const user = await usersDb.getFirst({ id: userId });
 
   if (user && (user.role === 'admin' || user.role === 'moderator')) {

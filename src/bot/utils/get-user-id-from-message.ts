@@ -7,7 +7,13 @@ export function getUserIdFromMessage(
   let userId = '';
 
   if (value) {
-    userId = value?.trim().replace('@', '').replace('+', '') + '@c.us';
+    userId =
+      value
+        ?.trim()
+        .replace('@', '')
+        .replace(/ /g, '')
+        .replace('-', '')
+        .replace('+', '') + '@c.us';
   }
 
   if (message.quotedMsg) {
