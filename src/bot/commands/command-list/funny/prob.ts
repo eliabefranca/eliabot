@@ -1,5 +1,5 @@
 import { Command, CommandData, CommandType } from '@command-protocols';
-import { getRandomInterval } from '../../utils/get-random-interval';
+import { getRandomInterval } from '@utils';
 
 const func: Command = async ({ client, message, value }) => {
   const prob = getRandomInterval(100);
