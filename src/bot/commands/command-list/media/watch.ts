@@ -1,5 +1,5 @@
 import { Command, CommandData, CommandType } from '@command-protocols';
-import { outputErrorMessage } from '../../utils/output-error-message';
+import { outputErrorMessage } from '@bot-utils/output-error-message';
 const yts = require('yt-search');
 
 const func: Command = async (params) => {

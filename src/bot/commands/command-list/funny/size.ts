@@ -1,5 +1,5 @@
 import { Command, CommandData, CommandType } from '@command-protocols';
-import { validPerson } from '../../utils/valid-person';
+import { validPerson } from '@bot-utils';
 
 const MAX_SIZE = 30;
 const MIN_SIZE = 1;

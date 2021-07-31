@@ -1,5 +1,5 @@
 import { Command, CommandData, CommandType } from '@command-protocols';
-import { getRandomContactNumber } from '../../utils/get-random-contact-number';
+import { getRandomContactNumber } from '@bot-utils';
 
 const func: Command = async ({ client, message }) => {
   const contactNumber = await getRandomContactNumber(client, message);

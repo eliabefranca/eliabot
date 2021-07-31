@@ -1,7 +1,6 @@
-import { getNumberFromContactId } from '../../utils/get-number-from-contact-id';
 import { Command, CommandData, CommandType } from '@command-protocols';
-import { validPerson } from '../../utils/valid-person';
-import { getRandom } from '../../../helpers/get-random';
+import { validPerson, getNumberFromContactId } from '@bot-utils';
+import { getRandom } from '@utils';
 
 const func: Command = async ({ client, message, value }) => {
   const kissedPerson = await validPerson(

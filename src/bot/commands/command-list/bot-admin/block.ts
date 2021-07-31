@@ -1,7 +1,7 @@
 import { blockedUsersDb, usersDb } from '@json-db';
-import { getTimeStamp } from '../../../../helpers/date';
+import { getTimeStamp } from '@utils';
 import { Command, CommandData, CommandType } from '@command-protocols';
-import { outputErrorMessage } from '../../../utils/output-error-message';
+import { outputErrorMessage } from '@bot-utils/output-error-message';
 
 const func: Command = async ({ client, message, value }) => {
   if (!value) {

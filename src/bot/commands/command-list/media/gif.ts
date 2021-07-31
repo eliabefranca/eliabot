@@ -1,7 +1,7 @@
 import giphyApi from 'giphy-api';
 import { Command, CommandData, CommandType } from '@command-protocols';
-import { outputErrorMessage } from '../../utils/output-error-message';
-import { getRandomInterval } from '../../utils/get-random-interval';
+import { outputErrorMessage } from '@bot-utils/output-error-message';
+import { getRandomInterval } from '@utils';
 
 const giphy = giphyApi();
 

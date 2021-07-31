@@ -1,6 +1,6 @@
 import { Command, CommandData, CommandType } from '@command-protocols';
-import { outputErrorMessage } from 'src/bot/utils/output-error-message';
-import { getRandom } from '../../../helpers/get-random';
+import { outputErrorMessage } from '@bot-utils';
+import { getRandom } from '@utils';
 
 const papers = '🖐️,🖐,✋,🤚,🖖,paper,papel';
 const rocks = '🤜,rock,pedra,👊,🤛,🪨,🪦';

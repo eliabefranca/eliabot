@@ -1,6 +1,5 @@
 import { Command, CommandData, CommandType } from '@command-protocols';
-import { getUserIdFromMessage } from 'src/bot/utils/get-user-id-from-message';
-import { outputErrorMessage } from '../../utils/output-error-message';
+import { outputErrorMessage } from '@bot-utils';
 
 const func: Command = async ({ client, message, value }) => {
   const groupsThatIamAdmin = await client.iAmAdmin();
@@ -8,7 +7,7 @@ const func: Command = async ({ client, message, value }) => {
     await outputErrorMessage(
       client,
       message,
-      'Eu não sou administrador deste grupo.'
+      'Eu não sou administrador desse grupo.'
     );
     return;
   }
@@ -18,11 +17,7 @@ const func: Command = async ({ client, message, value }) => {
       (participant.id as any) === message.sender.id && participant.isAdmin
   );
   if (!senderIsAdmin) {
-    await outputErrorMessage(
-      client,
-      message,
-      'Você precisa marcar o usuário ou me enviar o número.'
-    );
+    await outputErrorMessage(client, message, 'Você não é um administrador');
     return;
   }
 
@@ -30,34 +25,42 @@ const func: Command = async ({ client, message, value }) => {
     await outputErrorMessage(
       client,
       message,
-      'Você precisa marcar o usuário ou me enviar o número.'
+      'Você precisa me enviar o número.'
     );
     return;
   }
 
-  let userId = getUserIdFromMessage(message, value);
+  const userId =
+    value
+      ?.trim()
+      .replace('@', '')
+      .replace('+', '')
+      .replace(/\(/gi, '')
+      .replace(/\)/gi, '')
+      .replace(/-/gi, '')
+      .replace(/ /gi, '') + '@c.us';
 
   const success = await client
-    .removeParticipant(message.chat.id as any, userId as any)
+    .addParticipant(message.chat.id as any, userId as any)
     .catch(() => false);
 
   if (!success) {
-    await outputErrorMessage(
-      client,
-      message,
-      'Não foi possível remover este membro, verifique o número fornecido ou se ele é dono do grupo.'
+    await client.reply(
+      message.from,
+      'Não foi possível adicionar o membro, verifique o número fornecido.',
+      message.id
     );
     return;
   }
 
-  await client.reply(message.from, 'Membro removido com sucesso', message.id);
+  await client.reply(message.from, 'Membro adicionado com sucesso', message.id);
 };
 
 const prob: CommandData = {
-  command: ['.kick'],
+  command: ['.add'],
   category: CommandType.GROUP_MANAGEMENT,
   func,
-  description: 'Expulsa um membro do grupo',
+  description: 'Adiciona um membro ao grupo',
   hidden: false,
   allowInGroups: true,
   allowInPrivate: false,

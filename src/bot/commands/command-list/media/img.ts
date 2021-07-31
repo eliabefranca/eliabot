@@ -1,6 +1,6 @@
 import { Command, CommandData, CommandType } from '@command-protocols';
-import { getImage } from '../../utils/get-image';
-import { outputErrorMessage } from '../../utils/output-error-message';
+import { getImage } from '@utils';
+import { outputErrorMessage } from '@bot-utils/output-error-message';
 
 const imageDataURI = require('image-data-uri');
 

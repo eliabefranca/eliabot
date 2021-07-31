@@ -1,6 +1,6 @@
 import * as googleTTS from 'google-tts-api';
 import { Command, CommandData, CommandType } from '@command-protocols';
-import { outputErrorMessage } from '../../utils/output-error-message';
+import { outputErrorMessage } from '@bot-utils/output-error-message';
 import { getTextFromValueOrQuoted } from 'src/bot/utils/get-text-from-message-or-quoted';
 
 const supportedLanguages = [

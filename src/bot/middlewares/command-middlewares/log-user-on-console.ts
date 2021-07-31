@@ -1,4 +1,4 @@
-import { getTimeStamp } from 'src/helpers/date';
+import { getTimeStamp } from 'src/utils/date';
 import { CommandMiddleware } from '../../bot';
 
 export const logUserOnConsole: CommandMiddleware = async ({

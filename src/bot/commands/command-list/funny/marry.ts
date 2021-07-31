@@ -1,7 +1,6 @@
-import { getNumberFromContactId } from '../../utils/get-number-from-contact-id';
+import { getNumberFromContactId } from '@bot-utils';
 import { Command, CommandData, CommandType } from '@command-protocols';
-import { getImage } from '../../utils/get-image';
-import { getRandom } from '../../../helpers/get-random';
+import { getRandom, getImage } from '@utils';
 
 const imageDataURI = require('image-data-uri');
 

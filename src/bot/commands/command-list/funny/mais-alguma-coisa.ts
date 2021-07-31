@@ -1,7 +1,6 @@
-import { getNumberFromContactId } from '../../utils/get-number-from-contact-id';
 import { Command, CommandData, CommandType } from '@command-protocols';
-import { outputErrorMessage } from '../../utils/output-error-message';
-import { getRandom } from '../../../helpers/get-random';
+import { outputErrorMessage, getNumberFromContactId } from '@bot-utils';
+import { getRandom } from '@utils';
 
 const func: Command = async ({ message, client, value }) => {
   const adjective = value?.trim();

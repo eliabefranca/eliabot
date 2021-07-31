@@ -3,8 +3,8 @@ import gse, { SearchResultItem } from 'general-search-engine';
 import { printSite } from 'site-print';
 
 import { Command, CommandData, CommandType } from '@command-protocols';
-import { CONFIG } from '../../../../config';
-import { outputErrorMessage } from '../../utils/output-error-message';
+import { CONFIG } from '../../../../../config';
+import { outputErrorMessage } from '@bot-utils/output-error-message';
 
 function getIndexAndTextFromQuery(query: string): {
   index: number;
