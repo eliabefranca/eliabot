@@ -20,7 +20,7 @@ export const checkIfUserIsModerator: CommandMiddleware = async ({
 
     await client.reply(
       message.from,
-      'Este comando é apenas para moderadores e administradores.',
+      'Este comando é apenas para moderadores e administradores do bot.',
       message.id
     );
     return false;
