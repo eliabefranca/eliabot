@@ -1,5 +1,5 @@
 import { usersDb } from '@json-db';
-import { getNumberFromContactId } from '../utils/get-number-from-contact-id';
+import { getNumberFromContactId } from '@bot-utils';
 import { MessageEventHandler } from '../protocols/message-event-handler';
 import { getContactName } from './get-contact-name';
 

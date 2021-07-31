@@ -1,4 +1,4 @@
-import { getNumberFromContactId } from '../../utils/get-number-from-contact-id';
+import { getNumberFromContactId } from '@bot-utils';
 import { Command, CommandData, CommandType } from '@command-protocols';
 import { getRandom } from '@utils';
 
