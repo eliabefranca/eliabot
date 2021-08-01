@@ -89,7 +89,7 @@ const googleSearch: CommandData = {
   category: CommandType.UTILS,
   func,
   description:
-    'Retorna a imagem de um resultado de uma pesquisa no google. Você pode usar a paginação com #N',
+    '(beta) - Retorna a imagem de um resultado de uma pesquisa no google. Você pode usar a paginação com #N',
 
   allowInGroups: true,
   allowInPrivate: true,
