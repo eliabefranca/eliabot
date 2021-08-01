@@ -1,5 +1,6 @@
 import { blockedUsersDb } from '@json-db';
 import { Command, CommandData, CommandType } from '@command-protocols';
+import { getUserIdFromMessage } from '@bot-utils/get-user-id-from-message';
 
 const func: Command = async ({ client, message, value }) => {
   if (!value) {
@@ -11,7 +12,7 @@ const func: Command = async ({ client, message, value }) => {
     return;
   }
 
-  const userId = value?.trim().replace('@', '').replace('+', '') + '@c.us';
+  const userId = getUserIdFromMessage(message, value);
   const blockedUser = blockedUsersDb.getFirst({ userId: userId });
 
   if (blockedUser) {
