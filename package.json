@@ -16,7 +16,7 @@
     "image-data-uri": "^2.0.1",
     "lodash": "^4.17.21",
     "mime-types": "^2.1.31",
-    "site-print": "^1.0.3",
+    "site-print": "https://github.com/eliabefranca/site-print",
     "yt-search": "^2.9.0"
   },
   "devDependencies": {

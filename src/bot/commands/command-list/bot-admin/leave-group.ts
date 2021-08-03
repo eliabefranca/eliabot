@@ -20,9 +20,9 @@ const func: Command = async ({ client, message, value }) => {
 
 const alert: CommandData = {
   func,
-  description: 'Envia uma mensagem para todos os chats abertos no bot.',
+  description: 'Abandona um grupo',
   category: CommandType.BOT_ADMINISTRATION,
-  command: ['.alert', '.al'],
+  command: ['.lvg', '.leave'],
   allowedUsers: 'admin',
   allowInGroups: true,
   allowInPrivate: true,

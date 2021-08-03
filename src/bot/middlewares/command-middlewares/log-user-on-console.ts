@@ -10,7 +10,7 @@ export const logUserOnConsole: CommandMiddleware = async ({
   console.log(
     `${getTimeStamp()}: Running command ${commandData.command} for ${
       message.sender.pushname
-    }`
+    }| message: ${query}`
   );
 
   return true;

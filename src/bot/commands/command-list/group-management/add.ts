@@ -1,5 +1,5 @@
 import { Command, CommandData, CommandType } from '@command-protocols';
-import { outputErrorMessage } from '@bot-utils';
+import { getUserIdFromMessage, outputErrorMessage } from '@bot-utils';
 
 const func: Command = async ({ client, message, value }) => {
   const groupsThatIamAdmin = await client.iAmAdmin();
@@ -7,7 +7,7 @@ const func: Command = async ({ client, message, value }) => {
     await outputErrorMessage(
       client,
       message,
-      'Eu não sou administrador desse grupo.'
+      'Eu não sou administrador deste grupo.'
     );
     return;
   }
@@ -30,15 +30,7 @@ const func: Command = async ({ client, message, value }) => {
     return;
   }
 
-  const userId =
-    value
-      ?.trim()
-      .replace('@', '')
-      .replace('+', '')
-      .replace(/\(/gi, '')
-      .replace(/\)/gi, '')
-      .replace(/-/gi, '')
-      .replace(/ /gi, '') + '@c.us';
+  const userId = getUserIdFromMessage(message, value);
 
   const success = await client
     .addParticipant(message.chat.id as any, userId as any)
