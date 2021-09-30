@@ -1,21 +1,37 @@
 import { Command, CommandData, CommandType } from '@command-protocols';
+import { getGroupByIdOrName } from 'src/bot/helpers/get-group-by-id-or-name';
 import { outputErrorMessage } from 'src/bot/utils/output-error-message';
 
 const func: Command = async ({ client, message, value }) => {
-  if (!value?.trim()) {
+  if (!value) {
     outputErrorMessage(
       client,
       message,
-      'Envie a mensagem que deseja transmitir.'
+      'Você precisa enviar o id ou o nome do grupo.'
     );
     return;
   }
 
-  const chatIds = await client.getAllChatIds();
+  const targetGroup = await getGroupByIdOrName(client, value);
 
-  for (const chatId of chatIds) {
-    client.sendText(chatId, `[Mensagem de Transmissão]\n\n${value}`);
+  if (!targetGroup) {
+    outputErrorMessage(client, message, 'Nenhum grupo encontrado.');
+    return;
   }
+
+  client
+    .leaveGroup(targetGroup.id as any)
+    .then(() => {
+      client.reply(
+        message.from,
+        'Sucesso, não estou mais nesse grupo.',
+        message.id
+      );
+    })
+    .catch((error) => {
+      console.log(error);
+      client.reply(message.from, 'Não foi possível sair do grupo.', message.id);
+    });
 };
 
 const alert: CommandData = {

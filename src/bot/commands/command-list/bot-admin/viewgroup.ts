@@ -1,5 +1,6 @@
 import { Command, CommandData, CommandType } from '@command-protocols';
 import { getContactName } from 'src/bot/helpers/get-contact-name';
+import { getGroupByIdOrName } from 'src/bot/helpers/get-group-by-id-or-name';
 import { outputErrorMessage } from 'src/bot/utils/output-error-message';
 
 const func: Command = async ({ client, message, value }) => {
@@ -10,10 +11,7 @@ const func: Command = async ({ client, message, value }) => {
     return;
   }
 
-  const groups = await client.getAllGroups();
-  const targetGroup = groups.filter(
-    (group) => group.id === value || group.name === value
-  )[0];
+  const targetGroup = await getGroupByIdOrName(client, value);
 
   if (!targetGroup) {
     outputErrorMessage(client, message, 'Nenhum grupo encontrado.');
