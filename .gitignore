@@ -7,14 +7,15 @@ logs
 node_modules
 .build
 package-lock.json
-
-
 # managed by open-wa
 **.data.json
 **.node-persist**
 # end managed by open-wa
 files/images/*
 files/screenshots/*
-
 # IDE's
 .idea
+
+# managed by open-wa
+**_IGNORE_**
+# end managed by open-wa

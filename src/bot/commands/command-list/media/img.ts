@@ -6,12 +6,11 @@ const imageDataURI = require('image-data-uri');
 
 const func: Command = async (params) => {
   const { value, client, message } = params;
-
   if (!value) {
     await outputErrorMessage(
       client,
       message,
-      'Cê precisa enviar o nome da imagem, bocó!'
+      'Você precisa me enviar uma imagem 🖼️'
     );
     return;
   }
@@ -19,7 +18,7 @@ const func: Command = async (params) => {
   let imgUrl = await getImage(value)
     .then((url) => url)
     .catch(() => {
-      return false;
+      return null;
     });
 
   if (imgUrl === 'cant resolve') {
@@ -29,7 +28,7 @@ const func: Command = async (params) => {
       'Não foi possível carregar a imagem do servidor de origem'
     );
     return;
-  } else if (imgUrl === 'not found') {
+  } else if (imgUrl === 'not found' || imgUrl === null) {
     await outputErrorMessage(
       client,
       message,
@@ -67,7 +66,7 @@ const searchImage: CommandData = {
   func,
   description: 'Retorna uma imagem a partir de um texto ou palavra.',
   detailedDescription:
-    'Você pode escolher a posição do resultado com "#N" onde N é a posição da imagem.\nEx.: .img cachorro #3 -> Retorna o terceiro resultado da pesquisa',
+    'Você pode escolher a posição do resultado com "#N" onde N é a posição da imagem.\nEx.: .img cachorro #3 -> Retorna o terceiro resultado da pesquisa para a palavra "cachorro"',
 
   allowInGroups: true,
   allowInPrivate: true,
