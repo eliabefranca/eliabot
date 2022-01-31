@@ -2,6 +2,7 @@ api-keys.ts
 ELIABOT.data.json
 db/*.json
 yarn*.*
+.env
 logs
 .node-persist
 node_modules

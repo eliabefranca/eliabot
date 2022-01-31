@@ -1,11 +1,8 @@
-import path from 'path';
-import gse, { SearchResultItem } from 'general-search-engine';
-import { printSite } from 'site-print';
-
 import { Command, CommandData, CommandType } from '@command-protocols';
-import { CONFIG } from '../../../../../config';
 import { outputErrorMessage } from '@bot-utils/output-error-message';
+import { getSiteImage } from '@bot-utils/get-site-image';
 
+// TODO: move this to a util file
 function getIndexAndTextFromQuery(query: string): {
   index: number;
   text: string;
@@ -39,46 +36,16 @@ const func: Command = async ({ value, client, message }) => {
     message.id
   );
 
-  const { index, text } = getIndexAndTextFromQuery(value);
-
-  const result = (await new gse.search()
-    .setType('search')
-    .setQuery(text)
-    .run()) as SearchResultItem[];
-
-  const resultItem = result?.[index];
-
-  if (!resultItem) {
-    await outputErrorMessage(
-      client,
-      message,
-      'Não encontrei nenhum resultado para a sua pesquisa, verifique o index ou o termo digitado'
-    );
-    return;
-  }
-
-  const imgPath = path.join(
-    CONFIG.imageDownloadsFolder,
-    `${message.sender.id}.png`
+  const siteImage = await getSiteImage(
+    encodeURI(`https://google.com/search?q=${value}`)
   );
-
-  const url = decodeURIComponent(resultItem.link);
-
-  await printSite({
-    url,
-    defaultViewport: { width: 500, height: 2500 },
-    mobile: true,
-    fullPage: false,
-    path: imgPath,
-    captureBeyondViewport: false,
-  });
 
   await client.sendImage(
     message.from,
-    imgPath,
+    siteImage,
     'result.png',
     `Ta na mão.
-  link: ${url}
+  link: ${siteImage}
       `,
     message.id
   );
@@ -89,7 +56,7 @@ const googleSearch: CommandData = {
   category: CommandType.UTILS,
   func,
   description:
-    '(beta) - Retorna a imagem de um resultado de uma pesquisa no google. Você pode usar a paginação com #N',
+    '(beta) - Retorna a imagem de um resultado de uma pesquisa no google.',
 
   allowInGroups: true,
   allowInPrivate: true,
