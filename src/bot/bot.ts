@@ -67,15 +67,25 @@ export class Bot {
     client: Client
   ): Promise<void> {
     let query = message.body;
+
     if (message.isMedia) {
       query = message.caption ?? '';
     }
 
-    if (typeof query !== 'string') {
+    const commandData = await getCommandData(query);
+
+    if (commandData === null && message.quotedMsg && message.quotedMsg.fromMe) {
+      const newQuery = `.c ${query}`;
+
+      handleCommand({
+        query: newQuery,
+        message,
+        client,
+        commandData: (await getCommandData(newQuery))!,
+      });
       return;
     }
 
-    const commandData = await getCommandData(query);
     if (commandData === null) {
       return;
     }

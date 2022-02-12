@@ -8,6 +8,7 @@ import { User } from '../models/user';
 import { Group } from '../models/groups';
 import { UserStats } from '../models/user-stats';
 import { CONFIG } from '../../../config';
+import { WordleSession } from '../models/wordle-session';
 
 const dbFolder = path.join(CONFIG.dbFolder);
 const usersDbJson = path.join(dbFolder, 'users.json');
@@ -15,6 +16,12 @@ const groupsDbJson = path.join(dbFolder, 'groups.json');
 const blockedUsersDbJson = path.join(dbFolder, 'blocked-users.json');
 const blockedGroupsDbJson = path.join(dbFolder, 'blocked-groups.json');
 const userStatsDbJson = path.join(dbFolder, 'user-stats.json');
+const wordleSessionDbJson = path.join(dbFolder, 'wordle.json');
+
+export const wordleDb = new JsonDb<WordleSession>(
+  wordleSessionDbJson,
+  new FileReader(wordleSessionDbJson)
+);
 
 export const usersDb = new JsonDb<User>(
   usersDbJson,
