@@ -28,13 +28,24 @@ export const getCommandList = async (): Promise<CommandData[]> => {
     const folderFiles = fg
       .sync(getFiles(folder))
       .filter((file) => !/index\..s$/.test(file));
+
     commandFiles = [...commandFiles, ...folderFiles];
+
+    let folderFolders = fs.readdirSync(path.join(__dirname, folder));
+    folderFolders = folderFolders
+      .map((file) => path.join(__dirname, folder, file))
+      .filter((file) => fs.statSync(file).isDirectory())
+      .map((file) => `${file}/index.ts`);
+
+    commandFiles = [...commandFiles, ...folderFiles, ...folderFolders];
   }
 
   for (const commandFile of commandFiles) {
-    const commandData: CommandData | undefined = (
-      await import(`${commandFile}`)
-    ).default;
+    const importPath = commandFile.includes('.ts')
+      ? commandFile
+      : `${commandFile}/index.ts`;
+    const commandData: CommandData | undefined = (await import(importPath))
+      .default;
 
     if (commandData) {
       commands.push(commandData);
