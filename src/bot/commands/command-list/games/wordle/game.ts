@@ -99,8 +99,10 @@ export class WordleGame {
       return {
         gameImage,
         message: `Parabéns, você ganhou!\nVocê já jogou ${
-          totalWins + totalLosses
-        } vezes, ganhou ${totalWins} vezes e perdeu ${totalLosses} vezes.`,
+          this.session!.totalWins + this.session!.totalLosses
+        } vezes, ganhou ${this.session!.totalWins} e perdeu ${
+          this.session!.totalLosses
+        }.`,
       };
     } else if (currentGame.tries >= this.MAX_TRIES) {
       const returnData = {

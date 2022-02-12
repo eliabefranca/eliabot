@@ -78,7 +78,7 @@ export class Bot {
       // TODO: organize this
       // check if quoted message is from me and starts with a #c (where c is the command)
       // if so, the user can reply with message that will be the param to the command #c
-      if (message.quotedMsg.caption.indexOf('#') === 0) {
+      if (message.quotedMsg.caption?.indexOf('#') === 0) {
         query = message.quotedMsg.caption;
         commandData = await getCommandData(query);
 

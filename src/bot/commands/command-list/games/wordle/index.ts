@@ -4,7 +4,7 @@ import { WordleGame } from './game';
 
 const func: Command = async ({ client, message, value }) => {
   const game = new WordleGame(message.sender.id);
-  const word = value!;
+  const word = value!.toLowerCase().trim();
   const { gameImage, message: caption } = await game.play(word);
 
   await client.sendImage(
@@ -17,13 +17,13 @@ const func: Command = async ({ client, message, value }) => {
 };
 
 const prob: CommandData = {
-  command: ['.w'],
-  category: CommandType.FUNNY,
+  command: ['.w', '.wordle'],
+  category: CommandType.GAMES,
   func,
-  description: 'Jogo wordle',
+  description:
+    'Jogo de palavras, você pode apenas responder a mensagem com o seu palpite',
   allowInGroups: true,
   allowInPrivate: true,
-  hidden: true,
 };
 
 export default prob;
