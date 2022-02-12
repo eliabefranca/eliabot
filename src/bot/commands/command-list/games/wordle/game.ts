@@ -49,7 +49,7 @@ export class WordleGame {
     const words = fs.readFileSync(path.join(__dirname, 'words.txt'));
     const wordsArray = words.toString().split('\n');
     const randomWord = getRandom(wordsArray);
-    return randomWord;
+    return randomWord.replace('\r', '');
   }
 
   private async startNewGame(): Promise<void> {
@@ -74,23 +74,23 @@ export class WordleGame {
     this.session!.currentGame.tries += 1;
     this.session!.currentGame.guessedWords.push(word);
 
-    if (word.length < 5) {
+    if (!/^([A-Z]|[àáâãäåçèéêëìíîïðòóôõöùúûüýÿ])+$/i.test(word)) {
       this.session!.currentGame.tries -= 1;
       this.session!.currentGame.guessedWords.pop();
       return {
         gameImage: await this.getImage(),
-        message: `${word} não é uma palavra válida pois tem menos que 5 caracteres.`,
+        message: `${word} não é uma palavra válida.\nLetras inválidas: ${currentGame.guessedLetters.join(
+          ', '
+        )}`,
       };
-    } else if (
-      word
-        .split('')
-        .some((letter) => currentGame.guessedLetters.includes(letter))
-    ) {
+    } else if (word.length !== 5) {
       this.session!.currentGame.tries -= 1;
       this.session!.currentGame.guessedWords.pop();
       return {
         gameImage: await this.getImage(),
-        message: `${word} não é uma palavra válida pois possui uma letra que você já escreveu.`,
+        message: `${word} não é uma palavra válida pois não tem 5 caracteres.\nLetras inválidas: ${currentGame.guessedLetters.join(
+          ', '
+        )}`,
       };
     } else if (currentGame.word === word) {
       const gameImage = await this.getImage();
@@ -135,13 +135,12 @@ export class WordleGame {
     const {
       guessedWords,
       word: wordToBeGuessed,
-      guessedLetters,
       tries,
     } = this.session!.currentGame;
 
     const payload = [];
     for (let word of guessedWords) {
-      const wordData = [];
+      let wordData: { letter: string; color: string }[] = [];
 
       for (let i = 0; i < word.length; i++) {
         const letter = word[i];
@@ -155,8 +154,21 @@ export class WordleGame {
         } else if (wordToBeGuessed.includes(letter)) {
           letterInfo.color = 'yellow';
         }
+
         wordData.push(letterInfo);
       }
+
+      wordData = wordData.map((letter) => {
+        if (
+          letter.color === 'yellow' &&
+          wordData.some(
+            (l) => l.letter === letter.letter && l.color === 'green'
+          )
+        ) {
+          letter.color = 'black';
+        }
+        return letter;
+      });
 
       payload.push(wordData);
     }
