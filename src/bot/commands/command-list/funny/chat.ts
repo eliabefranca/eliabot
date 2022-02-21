@@ -24,13 +24,13 @@ const func: Command = async ({ client, message, value }) => {
       presence_penalty: 0.6,
       stop: [' Human:', ' AI:'],
     })
-    .then((res) => res.data)
+    .then((res: any) => res.data)
     .catch(() => null);
 
   const reply = response?.choices?.[0]?.text;
 
   if (!reply) {
-    outputErrorMessage(client, message, 'Não consigo te responder 🙄');
+    // outputErrorMessage(client, message, 'Não consigo te responder 🙄');
     return;
   }
 
