@@ -44,6 +44,7 @@ export class Bot {
       qrTimeout: 0, //0 means it will wait forever for you to scan the qr code
       restartOnCrash: true,
       killProcessOnBrowserClose: true,
+      multiDevice: true,
     });
 
     this.setWaEvents();
