@@ -10,7 +10,6 @@ const openai = new OpenAIApi(configuration);
 
 const func: Command = async ({ client, message, value }) => {
   if (!value) {
-    outputErrorMessage(client, message, 'Você precisa falar alguma coisa 😠');
     return;
   }
 
