@@ -1,6 +1,7 @@
 import { Command, CommandData, CommandType } from '@command-protocols';
 import axios from 'axios';
 import { outputErrorMessage } from '../../utils/output-error-message';
+import { getRandomInterval } from '../../utils/get-random-interval';
 
 const imageDataURI = require('image-data-uri');
 
@@ -15,7 +16,7 @@ const func: Command = async (params) => {
   const response = await axios
     .get(
       'https://pokeapi.co/api/v2/pokemon/' +
-        (pokemonQuery ? pokemonQuery : Math.floor(Math.random() * 898) + 1)
+        (pokemonQuery ? pokemonQuery : getRandomInterval(1, 898))
     )
     .then((response) => {
       if (response.status === 200) {
@@ -33,9 +34,9 @@ const func: Command = async (params) => {
     return;
   }
 
-  let pokemonName = (await response.species.name) as string;
-  let imageName = (await response.sprites.front_default) as string;
-  let dataUri = await imageDataURI.encodeFromURL(imageName);
+  const pokemonName = (await response.species.name) as string;
+  const imageName = (await response.sprites.front_default) as string;
+  const dataUri = await imageDataURI.encodeFromURL(imageName);
 
   await client.sendImage(
     message.from,
@@ -46,7 +47,7 @@ const func: Command = async (params) => {
   );
 };
 
-const searchPokemon: CommandData = {
+const pokemon: CommandData = {
   command: ['.pokemon'],
   category: CommandType.MEDIA,
   func,
@@ -55,4 +56,4 @@ const searchPokemon: CommandData = {
     'Você pode escolher o numero da Pokedex com "#N" onde N é o número do pokemon .\nEx.: .po  #4 -> Retorna charmander',
 };
 
-export default searchPokemon;
+export default pokemon;
