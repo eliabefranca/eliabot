@@ -1,7 +1,7 @@
 import { Command, CommandData, CommandType } from '@command-protocols';
 import axios from 'axios';
-import { outputErrorMessage } from '../../utils/output-error-message';
-import { getRandomInterval } from '../../utils/get-random-interval';
+import { outputErrorMessage } from '../../../utils/output-error-message';
+import { getRandomInterval } from '@utils';
 
 const imageDataURI = require('image-data-uri');
 
@@ -48,12 +48,14 @@ const func: Command = async (params) => {
 };
 
 const pokemon: CommandData = {
-  command: ['.pokemon'],
+  command: ['.pokemon','.pk'],
   category: CommandType.MEDIA,
   func,
   description: 'Retorna um pokemon.',
   detailedDescription:
     'Você pode escolher o numero da Pokedex com "#N" onde N é o número do pokemon .\nEx.: .po  #4 -> Retorna charmander',
+  allowInGroups: true,
+  allowInPrivate: true,
 };
 
 export default pokemon;
