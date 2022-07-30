@@ -6,7 +6,7 @@ export const updateStats: MessageEventHandler = ({ message }) => {
   const userStats = userStatsDb.getFirst({ id });
 
   if (userStats) {
-    userStatsDb.update({ id }, { commands: userStats.commands + 1 });
+    userStatsDb.update({ id }, { name, commands: userStats.commands + 1 });
   } else {
     userStatsDb.save({
       id,

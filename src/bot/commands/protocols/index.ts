@@ -7,6 +7,7 @@ export enum CommandType {
   MEDIA = 'media',
   BOT_STATISTICS = 'botStatistics',
   BOT_ADMINISTRATION = 'botAdministration',
+  GAMES = 'games',
 }
 
 export interface CommandData {

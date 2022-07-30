@@ -18,7 +18,9 @@ export const checkIfUserIsAdmin: CommandMiddleware = async ({
   const commandOnlyForAdmins =
     typeof allowedUsers === 'string'
       ? allowedUsers === 'admin'
-      : allowedUsers.includes('admin');
+      : allowedUsers instanceof Array &&
+        allowedUsers.length === 1 &&
+        allowedUsers.includes('admin');
 
   if (commandOnlyForAdmins) {
     if (user?.role === 'admin') {

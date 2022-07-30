@@ -44,6 +44,7 @@ export class Bot {
       qrTimeout: 0, //0 means it will wait forever for you to scan the qr code
       restartOnCrash: true,
       killProcessOnBrowserClose: true,
+      multiDevice: true,
     });
 
     this.setWaEvents();
@@ -67,15 +68,43 @@ export class Bot {
     client: Client
   ): Promise<void> {
     let query = message.body;
+
     if (message.isMedia) {
       query = message.caption ?? '';
     }
 
-    if (typeof query !== 'string') {
+    let commandData = await getCommandData(query);
+
+    if (commandData === null && message.quotedMsg && message.quotedMsg.fromMe) {
+      // TODO: organize this
+      // check if quoted message is from me and starts with a #c (where c is the command)
+      // if so, the user can reply with message that will be the param to the command #c
+      if (message.quotedMsg.caption?.indexOf('#') === 0) {
+        query = message.quotedMsg.caption;
+        commandData = await getCommandData(query);
+
+        if (commandData) {
+          await handleCommand({
+            commandData,
+            query: `${commandData.command[0]} ${message.body}`,
+            client,
+            message,
+          });
+          return;
+        }
+      }
+
+      const newQuery = `.c ${query}`;
+
+      handleCommand({
+        query: newQuery,
+        message,
+        client,
+        commandData: (await getCommandData(newQuery))!,
+      });
       return;
     }
 
-    const commandData = await getCommandData(query);
     if (commandData === null) {
       return;
     }

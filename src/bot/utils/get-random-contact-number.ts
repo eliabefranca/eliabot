@@ -1,7 +1,10 @@
-import {Client, Message} from "@open-wa/wa-automate";
-import {getRandom} from "../../helpers/get-random";
+import { Client, Message } from '@open-wa/wa-automate';
+import { getRandom } from 'src/utils';
 
-export const getRandomContactNumber = async (client: Client, message: Message) => {
+export const getRandomContactNumber = async (
+  client: Client,
+  message: Message
+) => {
   let groupMembers = await client.getGroupMembers(message.chat.id as any);
 
   let filtered = groupMembers.filter((member) => {
@@ -11,4 +14,4 @@ export const getRandomContactNumber = async (client: Client, message: Message) =
   const firstMember = getRandom(filtered);
 
   return firstMember.id.split('@')[0];
-}
+};
