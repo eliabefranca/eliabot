@@ -18,6 +18,7 @@
     "image-data-uri": "^2.0.1",
     "lodash": "^4.17.21",
     "mime-types": "^2.1.31",
+    "twitter-url-direct": "^1.0.1",
     "node-html-to-image": "^3.2.3",
     "openai": "^2.0.2",
     "site-print": "https://github.com/eliabefranca/site-print",
