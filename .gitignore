@@ -13,6 +13,7 @@ package-lock.json
 **.node-persist**
 # end managed by open-wa
 files/images/*
+files/videos/*
 files/screenshots/*
 # IDE's
 .idea
