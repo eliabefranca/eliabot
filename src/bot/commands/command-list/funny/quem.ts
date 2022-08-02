@@ -6,8 +6,7 @@ const func: Command = async ({ message, client, value }) => {
 
   await client.sendTextWithMentions(
     message.from,
-    `quem ${value}: 😶👉 @${contactNumber}`,
-    message.id as any
+    `quem ${value}: 😶👉 @${contactNumber}`
   );
 };
 
