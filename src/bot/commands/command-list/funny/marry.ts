@@ -1,6 +1,6 @@
-import { getNumberFromContactId } from '@bot-utils';
 import { Command, CommandData, CommandType } from '@command-protocols';
 import { getRandom, getImage } from '@utils';
+import { getRandomContactNumber } from '@bot-utils';
 
 const imageDataURI = require('image-data-uri');
 
@@ -58,20 +58,11 @@ const names = [
   'Nando Moura Anão',
 ];
 
-const func: Command = async (params) => {
-  const { value, client, message } = params;
+const func: Command = async ({ message, client, value }) => {
 
   const marriagePartner = getRandom(names);
 
-  let groupMembers = await client.getGroupMembers(message.chat.id as any);
-
-  let filtered = groupMembers.filter((member) => {
-    return !member.isMe;
-  });
-
-  const member = getRandom(filtered);
-
-  const contactNumber = getNumberFromContactId(member.id);
+  const contactNumber = await getRandomContactNumber(client, message, false);
 
   let imgUrl = await getImage(marriagePartner)
     .then((url) => url)
