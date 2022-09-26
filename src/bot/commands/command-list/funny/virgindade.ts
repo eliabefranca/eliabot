@@ -8,7 +8,7 @@ Mãe : Com Quem ? 👀
 Filha : Com o @${contactNumber}
 Mãe : Você Tá Louca Quer Perde A Virgindade Ou A Capacidade de Andar😨💔
 taporra 🥴💥`;
-  await client.sendTextWithMentions(message.from, text, message.id as any);
+  await client.sendTextWithMentions(message.from, text);
 };
 
 const virgindade: CommandData = {

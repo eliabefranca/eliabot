@@ -29,9 +29,11 @@ const func: Command = async (params) => {
 };
 
 const twittar: CommandData = {
-  command: '.twittar',
+  command: ['.twittar'],
   category: CommandType.MEDIA,
   description: 'Baixa o vídeo do tweet enviado.',
+  allowInGroups: true, 
+  allowInPrivate: true,
   func,
 };
 

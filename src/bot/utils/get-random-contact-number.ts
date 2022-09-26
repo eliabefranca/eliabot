@@ -3,12 +3,17 @@ import { getRandom } from 'src/utils';
 
 export const getRandomContactNumber = async (
   client: Client,
-  message: Message
+  message: Message,
+  filterSender: boolean = true
 ) => {
   let groupMembers = await client.getGroupMembers(message.chat.id as any);
 
   let filtered = groupMembers.filter((member) => {
-    return !member.isMe && member.id !== message.sender.id;
+    if(filterSender === false){
+      return !member.isMe
+    } else {
+      return !member.isMe && member.id !== message.sender.id;
+    }
   });
 
   const firstMember = getRandom(filtered);

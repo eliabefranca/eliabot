@@ -1,4 +1,4 @@
-import { blockedUsersDb, usersDb } from '@json-db';
+import { blockedUsersDb, usersDb, userStatsDb } from '@json-db';
 import { getTimeStamp } from '@utils';
 import { Command, CommandData, CommandType } from '@command-protocols';
 import { outputErrorMessage } from '@bot-utils/output-error-message';
@@ -43,8 +43,26 @@ const func: Command = async ({ client, message, value }) => {
     message.from,
     'Usuário bloqueado com sucesso.',
     message.id
+  );  
+
+  const rank = await userStatsDb.getFirst({ id: userId });
+
+  if (!rank) {
+    outputErrorMessage(
+      client,
+      message,
+      'O usuário informado não está no ranking.'
+    );
+    return;
+  }
+
+  userStatsDb.update(rank, { ...rank, commands: 0 });
+
+  client.reply(
+    message.from,
+    'Os status para o usuário foram resetados.',
+    message.id
   );
-  return;
 };
 
 const block: CommandData = {
