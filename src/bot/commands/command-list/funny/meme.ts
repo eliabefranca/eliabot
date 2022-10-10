@@ -41,7 +41,7 @@ type RedditResponse = [RedditPost, RedditPost];
 
 const func: Command = async ({ client, message, value }) => {
   const post = await axios
-    .get<RedditResponse>('https://www.reddit.com/r/MemesBrasil/random.json')
+    .get<RedditResponse>('https://www.reddit.com/r/memes_br/random.json')
     .then((response) => response.data)
     .catch((error) => {
       console.log(`\nError!\nresponse status code: ${error.response.status}`);
