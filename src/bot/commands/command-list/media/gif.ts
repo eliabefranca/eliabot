@@ -3,7 +3,7 @@ import { Command, CommandData, CommandType } from '@command-protocols';
 import { outputErrorMessage } from '@bot-utils/output-error-message';
 import { getRandomInterval } from '@utils';
 
-const giphy = giphyApi();
+const giphy = giphyApi(process.env.GIPHY_API_KEY);
 
 const getGif = async (term: string) => {
   return new Promise((resolve, reject) => {
@@ -90,12 +90,9 @@ const func: Command = async (params) => {
   const gifName = gifUrl as string;
 
   await client
-    .sendGiphy(
+    .sendGiphyAsSticker(
       message.from,
-      gifName,
-      `Ta na mão.
-link: ${gifUrl}
-    `
+      gifName
     )
     .catch(() =>
       client.reply(
