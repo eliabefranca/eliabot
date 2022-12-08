@@ -1,7 +1,0 @@
-{
-  "verbose": true,
-  "exec": "node -r tsconfig-paths/register -r ts-node/register ./src/api/index.ts",
-  "ext": "ts",
-  "watch": "src/api",
-  "ignore": ["*.test.js", "*.spec.ts"]
-}
