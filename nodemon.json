@@ -3,5 +3,8 @@
   "exec": "node -r tsconfig-paths/register -r ts-node/register ./src/index.ts",
   "ext": "ts, js",
   "watch": "src",
-  "ignore": ["*.test.js", "*.spec.ts"]
+  "ignore": ["*.test.js", "*.spec.ts"],
+  "env": {
+    "NODE_ENV": "development"
+  }
 }

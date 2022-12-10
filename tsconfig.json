@@ -1,8 +1,8 @@
 {
-  "exclude": ["src/panel/**/*", "**/*.spec.ts"],
+  "exclude": ["legacy", "**/*.spec.ts"],
   "compilerOptions": {
     /* Visit https://aka.ms/tsconfig.json to read more about this file */
-    "rootDirs": ["./src/bot", "./src/api"],
+    "rootDirs": ["src"],
 
     /* Basic Options */
     "target": "es5",

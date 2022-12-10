@@ -2,12 +2,14 @@
   "name": "eliabot",
   "version": "1.0.0",
   "description": "Nodejs Whatsapp Bot",
-  "main": "dist/index.js",
+  "main": ".build/src/index.js",
   "repository": "https://github.com/eliabefranca/eliabot",
   "author": "eliabe <eliabe.fc@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "dev": "nodemon"
+    "dev": "nodemon",
+    "build": "rm -rf .build && tsc && mv jsconfig.json .build",
+    "start": "NODE_ENV=production NODE_PATH=.build node -r tsconfig-paths/register .build/src/index.js"
   },
   "dependencies": {
     "@adiwajshing/baileys": "^4.4.0",
