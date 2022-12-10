@@ -1,5 +1,6 @@
 node_modules
 baileys_auth_info
+.build
 
 *.db
 *.db-journal
