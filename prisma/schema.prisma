@@ -1,0 +1,44 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Roles {
+  id   Int    @id @default(autoincrement())
+  name String
+  User User[]
+}
+
+model User {
+  id           String         @id @default(cuid())
+  name         String
+  number       String         @unique
+  role         Roles          @relation(fields: [rolesId], references: [id])
+  rolesId      Int
+  BlockedUsers BlockedUsers[]
+}
+
+model Group {
+  id            String          @id @default(cuid())
+  name          String
+  BlockedGroups BlockedGroups[]
+}
+
+model BlockedUsers {
+  id     Int    @id @default(autoincrement())
+  user   User   @relation(fields: [userId], references: [id])
+  userId String
+}
+
+model BlockedGroups {
+  id      Int    @id @default(autoincrement())
+  group   Group  @relation(fields: [groupId], references: [id])
+  groupId String
+}

@@ -1,6 +1,7 @@
 import axios from 'axios';
 const gis = require('g-i-s');
-export const getImage = async (term: string) => {
+
+export const imageSearch = async (term: string) => {
   return new Promise((resolve, reject) => {
     let index: number;
     let text = term;
