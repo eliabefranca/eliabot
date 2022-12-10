@@ -3,3 +3,6 @@ baileys_auth_info
 
 *.db
 *.db-journal
+package-lock.json
+yarn-error.log
+yarn.lock
