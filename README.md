@@ -9,6 +9,7 @@ Um bot para Whatsapp feito em Node.js.
   git clone https://github.com/eliabefranca/eliabot
   cd eliabot
   npm install
+  cp .env.example .env
 ```
 ## Executando
 
