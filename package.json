@@ -8,7 +8,7 @@
   "license": "MIT",
   "scripts": {
     "dev": "nodemon",
-    "build": "rm -rf .build && tsc && mv jsconfig.json .build",
+    "build": "rm -rf .build && tsc",
     "start": "NODE_ENV=production NODE_PATH=.build node -r tsconfig-paths/register .build/src/index.js"
   },
   "dependencies": {
