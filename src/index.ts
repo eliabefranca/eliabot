@@ -79,7 +79,7 @@ const startSock = async () => {
       }
 
       if (events.call) {
-        console.log('recv call event', events.call);
+        // console.log('recv call event', events.call);
       }
 
       // received a new message

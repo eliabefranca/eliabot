@@ -2,10 +2,18 @@ import { downloadMediaMessage } from '@adiwajshing/baileys';
 import * as WSF from 'wa-sticker-tew';
 import { logger } from 'src';
 import { Command, CommandData, CommandType } from 'src/types/command';
+import { getQuotedMessage } from 'src/helpers/getQuotedMessage';
 
-const func: Command = async ({ value, client, messageInfo }) => {
+const func: Command = async ({ value, client, messageInfo, fromQuoted }) => {
+  let messageToBeDownloaded = Object.assign({}, messageInfo);
+
+  if (fromQuoted) {
+    const message = getQuotedMessage(messageInfo);
+    messageToBeDownloaded = Object.assign({}, messageInfo, { message });
+  }
+
   const buffer = (await downloadMediaMessage(
-    messageInfo,
+    messageToBeDownloaded,
     'buffer',
     {},
     {
