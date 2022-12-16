@@ -26,6 +26,7 @@ export interface CommandParams {
   client: ReturnType<typeof makeWASocket>;
   messageInfo: proto.IWebMessageInfo;
   value?: string;
+  fromQuoted?: boolean;
 }
 
 export type Command = (params: CommandParams) => Promise<void>;

@@ -1,6 +1,7 @@
 import makeWASocket, { proto } from '@adiwajshing/baileys';
 import { getCommandList } from '../commands';
 import { CommandData, CommandParams } from '../types/command';
+import { getQuotedMessage } from './getQuotedMessage';
 
 export let commandList: CommandData[] = [];
 
@@ -48,19 +49,35 @@ export const getCommandData = async (
   return commandData;
 };
 
+function getTextFromMessage(message: proto.IMessage | undefined | null) {
+  if (!message) return '';
+
+  let text = '';
+
+  if (message?.conversation) {
+    text = message.conversation;
+  } else if (message?.imageMessage) {
+    text = message.imageMessage.caption ?? '';
+  } else if (message?.videoMessage) {
+    text = message.videoMessage.caption ?? '';
+  } else if (message?.extendedTextMessage) {
+    text = message.extendedTextMessage.text ?? '';
+  }
+
+  return text;
+}
+
 export async function handleCommand({
   client,
   messageInfo,
 }: CommandHandlerParams): Promise<boolean> {
-  let text = '';
-
-  if (messageInfo.message?.conversation) {
-    text = messageInfo.message.conversation;
-  } else if (messageInfo.message?.imageMessage) {
-    text = messageInfo.message.imageMessage.caption ?? '';
-  } else if (messageInfo.message?.videoMessage) {
-    text = messageInfo.message.videoMessage.caption ?? '';
+  let fromQuoted = false;
+  const quotedMessageInfo = getQuotedMessage(messageInfo);
+  if (quotedMessageInfo) {
+    fromQuoted = true;
   }
+
+  let text = getTextFromMessage(messageInfo.message);
 
   const commandData = await getCommandData(text);
 
@@ -77,6 +94,7 @@ export async function handleCommand({
       client,
       messageInfo,
       value,
+      fromQuoted,
     })
     .then(() => {
       success = true;
