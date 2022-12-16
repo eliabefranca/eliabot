@@ -1,9 +1,9 @@
 <h1 align="center">Eliabot</h1>
 
-## O que é
+## What is this?
 
-Um bot para Whatsapp feito em Node.js.
-## Instalando
+A Node.js Whatsapp bot
+## Installing
 
 ```bash
   git clone https://github.com/eliabefranca/eliabot
@@ -11,7 +11,7 @@ Um bot para Whatsapp feito em Node.js.
   npm install
   cp .env.example .env
 ```
-## Executando
+## Running
 
 ```bash
   npm run build
