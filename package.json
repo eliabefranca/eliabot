@@ -20,7 +20,6 @@
     "g-i-s": "^2.1.6",
     "google-tts-api": "^2.0.2",
     "node-fetch": "^3.3.0",
-    "prisma": "^4.7.1",
     "qrcode-terminal": "^0.12.0",
     "typescript": "^4.9.4",
     "wa-sticker-tew": "^2.3.6"
