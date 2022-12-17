@@ -1,5 +1,5 @@
 {
-  "exclude": ["legacy", "**/*.spec.ts"],
+  "exclude": ["coverage", "**/*.spec.ts"],
   "compilerOptions": {
     /* Visit https://aka.ms/tsconfig.json to read more about this file */
     "rootDirs": ["src"],
