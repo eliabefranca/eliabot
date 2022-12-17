@@ -77,7 +77,7 @@ async function parseBailesQuotedMessage(
 
   return {
     id: '', // todo: maybe we can get the name of the quoted message sender
-    chatId: quotedMessage.chat!.id as string,
+    chatId: quotedMessage.chat?.id as string,
     sender: {
       id: '', // todo: maybe we can get the name of the quoted message sender
       name: '', // todo: maybe we can get the name of the quoted message sender
