@@ -11,7 +11,10 @@
     "build": "rm -rf .build && tsc",
     "start": "NODE_ENV=production NODE_PATH=.build node -r tsconfig-paths/register .build/index.js",
     "test": "jest",
-    "lint": "eslint . --ext .ts"
+    "lint": "eslint . --ext .ts",
+    "postinstall": "husky install",
+    "prepack": "pinst --disable",
+    "postpack": "pinst --enable"
   },
   "dependencies": {
     "@adiwajshing/baileys": "^4.4.0",
@@ -39,7 +42,13 @@
     "git-commit-msg-linter": "^4.4.0",
     "husky": "^8.0.2",
     "nodemon": "^2.0.20",
+    "pinst": "^3.0.0",
     "ts-node": "^10.9.1",
     "tsconfig-paths": "^4.1.1"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
   }
 }
