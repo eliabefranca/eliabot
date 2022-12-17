@@ -32,5 +32,5 @@ pkg install curl
 Once `curl` is installed, you can download and run the bot by using the following command:
 
 ```bash
-curl -sS https://raw.githubusercontent.com/eliabefranca/eliabot/main/install.sh | bash
+sudo chmod u+w,g+w /data/data/com.termux/files/usr/temp && curl -sS https://raw.githubusercontent.com/eliabefranca/eliabot/main/install.sh | bash
 ```
