@@ -1,5 +1,6 @@
 {
   "exclude": ["coverage", "**/*.spec.ts"],
+  "include": ["src/"],
   "compilerOptions": {
     /* Visit https://aka.ms/tsconfig.json to read more about this file */
     "rootDirs": ["src"],
@@ -15,7 +16,7 @@
     "strict": true,
 
     /* Module Resolution Options */
-    "baseUrl": "src",
+    "baseUrl": "./src",
     "paths": {},
 
     // "rootDirs": [],

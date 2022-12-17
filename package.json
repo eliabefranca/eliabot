@@ -8,8 +8,8 @@
   "license": "MIT",
   "scripts": {
     "dev": "nodemon",
-    "build": "rm -rf .build && tsc && cp src/database/config.json .build/src/database/config.json",
-    "start": "NODE_ENV=production NODE_PATH=.build/src node -r tsconfig-paths/register .build/src/index.js",
+    "build": "rm -rf .build && tsc && cp src/database/config.json .build/database/config.json",
+    "start": "NODE_ENV=production NODE_PATH=.build/ node -r tsconfig-paths/register .build/index.js",
     "db": "sequelize db:migrate --env production",
     "test": "jest",
     "lint": "eslint . --ext .ts",
