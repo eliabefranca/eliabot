@@ -7,7 +7,9 @@ async function main() {
   await bot.start();
 
   bot.on<Message<any>>('message', async (message) => {
-    const { keyword, value } = await parseCommand(message.text);
+    const text = message.text || message.caption;
+
+    const { keyword, value } = await parseCommand(text ?? '');
     const command = bot.commands.find((command) =>
       command.keywords.includes(keyword)
     );
