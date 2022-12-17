@@ -9,7 +9,7 @@
   "scripts": {
     "dev": "nodemon",
     "build": "rm -rf .build && tsc",
-    "start": "NODE_ENV=production NODE_PATH=.build node -r tsconfig-paths/register .build/index.js",
+    "start": "NODE_ENV=production NODE_PATH=.build/src node -r tsconfig-paths/register .build/src/index.js",
     "test": "jest",
     "lint": "eslint . --ext .ts",
     "postinstall": "husky install",
