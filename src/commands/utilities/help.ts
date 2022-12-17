@@ -25,7 +25,7 @@ const tableCell = (str: string): string => {
 ╚═════════════════`;
 };
 
-const bottomSpacing = `\n`;
+const bottomSpacing = '\n';
 
 function buildMenuWithAllCommands(commandList: CommandData[]): string {
   let utilsStr = tableHeader('🧰 UTILITÁRIOS');
@@ -42,7 +42,7 @@ function buildMenuWithAllCommands(commandList: CommandData[]): string {
     if (command.hidden) {
       return;
     }
-
+    /* eslint-disable */
     switch (command.category) {
       case CommandType.FUNNY:
         funStr += tableCell(
@@ -70,6 +70,7 @@ function buildMenuWithAllCommands(commandList: CommandData[]): string {
         );
         break;
     }
+    /* eslint-enable */
   });
 
   utilsStr += bottomSpacing;

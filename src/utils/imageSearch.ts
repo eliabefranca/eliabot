@@ -29,7 +29,7 @@ export const imageSearch = async (term: string) => {
 
             if (
               !headers ||
-              headers['content-type' as keyof {}] === 'text/html'
+              headers['content-type' as keyof object] === 'text/html'
             ) {
               resolve('cant resolve');
             }

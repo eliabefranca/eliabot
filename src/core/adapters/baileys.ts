@@ -1,25 +1,19 @@
 import makeWASocket, {
-  AnyMessageContent,
-  delay,
-  DisconnectReason,
   fetchLatestBaileysVersion,
   MessageRetryMap,
   useMultiFileAuthState,
 } from '@adiwajshing/baileys';
 import mainLogger from '@adiwajshing/baileys/lib/Utils/logger';
-import { Boom } from '@hapi/boom';
 
 export const logger = mainLogger.child({});
 logger.level = 'trace';
-
-const doReplies = !process.argv.includes('--no-reply');
 
 // external map to store retry counts of messages when decryption/encryption fails
 // keep this out of the socket itself, so as to prevent a message decryption/encryption loop across socket restarts
 const msgRetryCounterMap: MessageRetryMap = {};
 
 export async function makeSock() {
-  const { state, saveCreds } = await useMultiFileAuthState('baileys_auth_info');
+  const { state } = await useMultiFileAuthState('baileys_auth_info');
   // fetch latest version of WA Web
   const { version, isLatest } = await fetchLatestBaileysVersion();
   console.log(`using WA v${version.join('.')}, isLatest: ${isLatest}`);

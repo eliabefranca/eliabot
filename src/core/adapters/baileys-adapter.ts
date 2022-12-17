@@ -77,7 +77,7 @@ async function parseBailesQuotedMessage(
 
   return {
     id: '', // todo: maybe we can get the name of the quoted message sender
-    chatId: quotedMessage.chat?.id!,
+    chatId: quotedMessage.chat!.id as string,
     sender: {
       id: '', // todo: maybe we can get the name of the quoted message sender
       name: '', // todo: maybe we can get the name of the quoted message sender
@@ -92,7 +92,7 @@ async function parseBaileysMessage(
   messageInfo: proto.IWebMessageInfo
 ): Promise<Message<proto.IWebMessageInfo>> {
   const type: Message<proto.IWebMessageInfo>['type'] = getMessageType(
-    messageInfo.message!
+    messageInfo.message
   );
 
   let text = messageInfo.message?.conversation ?? '';
@@ -133,7 +133,7 @@ export class BailesAdapter implements IClient {
   commands: CommandData[] = [];
 
   async sendMessage(params: ClientSendMessageParams): Promise<void> {
-    let baileysAditionalCfg: MiscMessageGenerationOptions = {};
+    const baileysAditionalCfg: MiscMessageGenerationOptions = {};
 
     if (params.quote) {
       baileysAditionalCfg.quoted = params.quote.originalDriverMessage;

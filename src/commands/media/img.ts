@@ -13,7 +13,7 @@ const handler: CommandHandler = async ({ value, client, message }) => {
     return;
   }
 
-  let imgUrl = await imageSearch(value)
+  const imgUrl = await imageSearch(value)
     .then((url) => url)
     .catch(() => {
       return null;

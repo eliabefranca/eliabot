@@ -1,7 +1,7 @@
 import { CommandData, CommandHandler, CommandType } from 'core/protocols';
 import { getRandomInterval } from '../../utils/random';
 
-const handler: CommandHandler = async ({ client, message, value }) => {
+const handler: CommandHandler = async ({ client, message }) => {
   const prob = getRandomInterval(100);
 
   await client.sendMessage({
