@@ -1,14 +1,16 @@
-import { Command, CommandData, CommandType } from 'src/types/command';
-import { imageSearch } from 'src/utils/imageSearch';
-import { outputErrorMessage } from 'src/helpers/outputErrorMessage';
+import { imageSearch } from 'utils/imageSearch';
+import { outputErrorMessage } from 'helpers/outputErrorMessage';
+import { CommandData, CommandHandler, CommandType } from 'core/protocols';
 
-const func: Command = async ({ value, client, messageInfo }) => {
+const handler: CommandHandler = async ({ value, client, message }) => {
+  const { chatId } = message;
+
   if (!value) {
-    await outputErrorMessage(
-      client,
-      messageInfo,
-      'Você precisa me enviar uma imagem 🖼️'
-    );
+    client.sendMessage({
+      chatId,
+      text: 'Você precisa fornecer um termo de pesquisa',
+      quote: message,
+    });
     return;
   }
 
@@ -19,41 +21,42 @@ const func: Command = async ({ value, client, messageInfo }) => {
     });
 
   if (imgUrl === 'cant resolve') {
-    await outputErrorMessage(
-      client,
-      messageInfo,
-      'Não foi possível carregar a imagem do servidor de origem'
-    );
+    client.sendMessage({
+      chatId,
+      text: 'Não foi possível carregar a imagem do servidor de origem',
+      quote: message,
+    });
     return;
   } else if (imgUrl === 'not found' || imgUrl === null) {
-    await outputErrorMessage(
-      client,
-      messageInfo,
-      'Não encontrei nenhum resultado, tente alterar o index'
-    );
+    client.sendMessage({
+      chatId,
+      text: 'Não encontrei nenhum resultado, tente alterar o index',
+      quote: message,
+    });
     return;
   }
 
   if (!imgUrl) {
-    await outputErrorMessage(
-      client,
-      messageInfo,
-      `Não encontrei nenhum resultado de imagem para "${value}"`
-    );
+    client.sendMessage({
+      chatId,
+      text: `Não encontrei nenhum resultado de imagem para "${value}"`,
+      quote: message,
+    });
     return;
   }
 
-  await client.sendMessage(
-    messageInfo.key.remoteJid!,
-    { image: { url: imgUrl as string }, caption: imgUrl as string },
-    { quoted: messageInfo }
-  );
+  client.sendMessage({
+    chatId,
+    image: { url: imgUrl as string },
+    caption: imgUrl as string,
+    quote: message,
+  });
 };
 
 const searchImage: CommandData = {
-  command: ['.img'],
+  keywords: ['.img'],
   category: CommandType.MEDIA,
-  func,
+  handler,
   description: 'Retorna uma imagem a partir de um texto ou palavra.',
   detailedDescription:
     'Você pode escolher a posição do resultado com "#N" onde N é a posição da imagem.\nEx.: .img cachorro #3 -> Retorna o terceiro resultado da pesquisa para a palavra "cachorro"',

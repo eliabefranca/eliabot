@@ -1,5 +1,5 @@
 import makeWASocket, { proto } from '@adiwajshing/baileys';
-import { getCommandList } from '../commands';
+import { getCommandList } from '../commands_old';
 import { CommandData, CommandParams } from '../types/command';
 import { getQuotedMessage } from './getQuotedMessage';
 

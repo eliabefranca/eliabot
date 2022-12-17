@@ -22,12 +22,15 @@ export const imageSearch = async (term: string) => {
         if (index) {
           const image = results[index];
           if (image) {
-            const headers = await axios
+            const headers: any = await axios
               .get(image.url)
               .then((resp) => resp.headers)
               .catch(() => false);
 
-            if (!headers || headers['content-type'] === 'text/html') {
+            if (
+              !headers ||
+              headers['content-type' as keyof {}] === 'text/html'
+            ) {
               resolve('cant resolve');
             }
             resolve(image.url);
@@ -38,7 +41,7 @@ export const imageSearch = async (term: string) => {
 
         try {
           for (const image of results) {
-            const headers = await axios
+            const headers: any = await axios
               .get(image.url)
               .then((resp) => resp.headers)
               .catch(() => false);

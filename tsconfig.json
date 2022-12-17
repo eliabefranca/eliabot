@@ -15,7 +15,7 @@
     "strict": true,
 
     /* Module Resolution Options */
-    "baseUrl": ".",
+    "baseUrl": "src",
     "paths": {},
 
     // "rootDirs": [],

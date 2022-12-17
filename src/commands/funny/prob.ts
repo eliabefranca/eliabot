@@ -1,19 +1,20 @@
-import { Command, CommandData, CommandType } from '../../types/command';
+import { CommandData, CommandHandler, CommandType } from 'core/protocols';
 import { getRandomInterval } from '../../utils/random';
 
-const func: Command = async ({ client, messageInfo, value }) => {
+const handler: CommandHandler = async ({ client, message, value }) => {
   const prob = getRandomInterval(100);
-  await client.sendMessage(
-    messageInfo.key.remoteJid!,
-    { text: `${prob}%` },
-    { quoted: messageInfo }
-  );
+
+  await client.sendMessage({
+    chatId: message.chatId,
+    text: `${prob}%`,
+    quote: message,
+  });
 };
 
 const prob: CommandData = {
-  command: ['.prob'],
+  keywords: ['.prob'],
   category: CommandType.FUNNY,
-  func,
+  handler,
   description: 'Calcula a probabilidade de alguma coisa',
   allowInGroups: true,
   allowInPrivate: true,

@@ -1,7 +1,7 @@
 import fg from 'fast-glob';
 import fs from 'fs';
 import path from 'path';
-import { CommandData } from 'src/types/command';
+import { CommandData } from 'core/protocols';
 
 const extension = process.env.NODE_ENV === 'production' ? 'js' : 'ts';
 

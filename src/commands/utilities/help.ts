@@ -1,5 +1,5 @@
+import { CommandData, CommandHandler, CommandType } from 'core/protocols';
 import { getCommandList } from '..';
-import { Command, CommandData, CommandType } from 'src/types/command';
 
 const tableHeader = (str: string): string => {
   return `╔═════════════════
@@ -46,27 +46,27 @@ function buildMenuWithAllCommands(commandList: CommandData[]): string {
     switch (command.category) {
       case CommandType.FUNNY:
         funStr += tableCell(
-          `${command.command.join(' | ')}\n${command.description}`
+          `${command.keywords.join(' | ')}\n${command.description}`
         );
         break;
       case CommandType.GROUP_MANAGEMENT:
         groupManageStr += tableCell(
-          `${command.command.join(' | ')}\n${command.description}`
+          `${command.keywords.join(' | ')}\n${command.description}`
         );
         break;
       case CommandType.MEDIA:
         mediaStr += tableCell(
-          `${command.command.join(' | ')}\n${command.description}`
+          `${command.keywords.join(' | ')}\n${command.description}`
         );
         break;
       case CommandType.UTILS:
         utilsStr += tableCell(
-          `${command.command.join(' | ')}\n${command.description}`
+          `${command.keywords.join(' | ')}\n${command.description}`
         );
         break;
       case CommandType.BOT_STATISTICS:
         statsStr += tableCell(
-          `${command.command.join(' | ')}\n${command.description}`
+          `${command.keywords.join(' | ')}\n${command.description}`
         );
         break;
     }
@@ -93,7 +93,7 @@ ${helpMenuItems.join('\n')}${sm}
 function buildMenuWithAsingleCommand(command: CommandData): string {
   const sm = '```';
 
-  const header = closingTableHeader(`🔗 ${command.command.join(' | ')}`);
+  const header = closingTableHeader(`🔗 ${command.keywords.join(' | ')}`);
   const { detailedDescription } = command;
   const bodyContent = !detailedDescription
     ? command.description
@@ -109,7 +109,7 @@ ${detailedDescription}`;
   return finalText;
 }
 
-const func: Command = async ({ client, messageInfo, value }) => {
+const handler: CommandHandler = async ({ client, message, value }) => {
   const commandList = await getCommandList();
 
   if (value) {
@@ -118,33 +118,34 @@ const func: Command = async ({ client, messageInfo, value }) => {
       possibleCommand = `.${possibleCommand}`;
     }
     const command = commandList.filter((com) =>
-      com.command.includes(possibleCommand)
+      com.keywords.includes(possibleCommand)
     )[0];
 
     if (command) {
-      client.sendMessage(
-        messageInfo.key.remoteJid!,
-        { text: buildMenuWithAsingleCommand(command) },
-        { quoted: messageInfo }
-      );
+      client.sendMessage({
+        chatId: message.chatId,
+        text: buildMenuWithAsingleCommand(command),
+        quote: message,
+        originalDriverMessage: message.originalDriverMessage,
+      });
       return;
     }
   }
 
-  const helpMenu = buildMenuWithAllCommands(commandList);
-  client.sendMessage(
-    messageInfo.key.remoteJid!,
-    { text: helpMenu },
-    { quoted: messageInfo }
-  );
+  client.sendMessage({
+    chatId: message.chatId,
+    text: buildMenuWithAllCommands(commandList),
+    quote: message,
+    originalDriverMessage: message.originalDriverMessage,
+  });
 };
 
 const help: CommandData = {
-  command: ['.help', '.h', '.ajuda'],
+  keywords: ['.help', '.h', '.ajuda'],
   category: CommandType.UTILS,
   description:
     'Exibe a lista de comandos. Você pode usar .help [comando] para ver mais detalhes de um determinado comando.\nEx.: .help .fala',
-  func,
+  handler,
   allowInGroups: true,
   allowInPrivate: true,
 };

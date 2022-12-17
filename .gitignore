@@ -1,8 +1,9 @@
 node_modules
 baileys_auth_info
 .build
-.env
+coverage
 
+.env
 *.db
 *.db-journal
 package-lock.json

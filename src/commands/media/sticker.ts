@@ -1,30 +1,23 @@
-import { downloadMediaMessage } from '@adiwajshing/baileys';
+import { CommandData, CommandHandler, CommandType } from 'core/protocols';
 import * as WSF from 'wa-sticker-tew';
-import { logger } from 'src';
-import { Command, CommandData, CommandType } from 'src/types/command';
-import { getQuotedMessage } from 'src/helpers/getQuotedMessage';
 
-const func: Command = async ({ value, client, messageInfo, fromQuoted }) => {
-  let messageToBeDownloaded = Object.assign({}, messageInfo);
+const handler: CommandHandler = async ({ client, message }) => {
+  let image = message.image;
 
-  if (fromQuoted) {
-    const message = getQuotedMessage(messageInfo);
-    messageToBeDownloaded = Object.assign({}, messageInfo, { message });
+  if (message.type === 'reply') {
+    image = message.quoted?.image;
   }
 
-  const buffer = (await downloadMediaMessage(
-    messageToBeDownloaded,
-    'buffer',
-    {},
-    {
-      logger,
-      // pass this so that baileys can request a reupload of media
-      // that has been deleted
-      reuploadRequest: client.updateMediaMessage,
-    }
-  )) as Buffer;
+  if (!image) {
+    await client.sendMessage({
+      chatId: message.chatId,
+      text: 'Você precisa enviar uma imagem ou responder uma imagem',
+      quote: message,
+    });
+    return;
+  }
 
-  const sticker = new WSF.Sticker(buffer, {
+  const sticker = new WSF.Sticker(image, {
     pack: 'eliabot',
     author: 'eliabot',
     quality: 100,
@@ -32,16 +25,16 @@ const func: Command = async ({ value, client, messageInfo, fromQuoted }) => {
   await sticker.build();
   const sticBuffer = await sticker.get();
 
-  client.sendMessage(
-    messageInfo.key.remoteJid!,
-    { sticker: sticBuffer },
-    { quoted: messageInfo }
-  );
+  client.sendMessage({
+    chatId: message.chatId,
+    sticker: sticBuffer,
+    quote: message,
+  });
 };
 
 const search: CommandData = {
-  command: ['.fig', '.sticker', '.figurinha'],
-  func,
+  keywords: ['.fig', '.sticker', '.figurinha'],
+  handler,
   category: CommandType.MEDIA,
   description: 'Cria uma figurinha a partir de uma imagem',
   detailedDescription: '',
