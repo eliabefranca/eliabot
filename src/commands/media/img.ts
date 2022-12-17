@@ -1,5 +1,4 @@
 import { imageSearch } from 'utils/imageSearch';
-import { outputErrorMessage } from 'helpers/outputErrorMessage';
 import { CommandData, CommandHandler, CommandType } from 'core/protocols';
 
 const handler: CommandHandler = async ({ value, client, message }) => {
