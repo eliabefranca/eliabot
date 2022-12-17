@@ -19,6 +19,7 @@ export interface Message<T> {
   text: string;
   caption?: string | null;
   image?: Buffer;
+  video?: Buffer;
   quoted?: Message<T>;
   originalDriverMessage?: T;
 }

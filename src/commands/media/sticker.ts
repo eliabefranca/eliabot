@@ -1,14 +1,18 @@
 import { CommandData, CommandHandler, CommandType } from 'core/protocols';
-import * as WSF from 'wa-sticker-tew';
+import { createSticker } from 'wa-sticker';
+import { unlinkSync, writeFileSync } from 'fs';
+import path from 'path';
 
 const handler: CommandHandler = async ({ client, message }) => {
   let image = message.image;
+  let video = message.video;
 
   if (message.type === 'reply') {
     image = message.quoted?.image;
+    video = message.quoted?.video;
   }
 
-  if (!image) {
+  if (!image && !video) {
     await client.sendMessage({
       chatId: message.chatId,
       text: 'Você precisa enviar uma imagem ou responder uma imagem',
@@ -17,17 +21,35 @@ const handler: CommandHandler = async ({ client, message }) => {
     return;
   }
 
-  const sticker = new WSF.Sticker(image, {
-    pack: 'eliabot',
-    author: 'eliabot',
+  let extension = '.mp4';
+  if (image) {
+    extension = '.png';
+  }
+  const filePath = path.join(
+    __dirname,
+    '..',
+    '..',
+    '..',
+    'temp',
+    `${message.sender.id}.${extension}`
+  );
+  const fileToBeCreated = (image ?? video) as Buffer;
+  await writeFileSync(filePath, fileToBeCreated);
+
+  const sticker = await createSticker([filePath], {
     quality: 100,
+    crop: false,
+    metadata: {
+      publisher: 'eliabot',
+      packname: 'eliabot',
+    },
   });
-  await sticker.build();
-  const sticBuffer = await sticker.get();
+
+  unlinkSync(filePath);
 
   client.sendMessage({
     chatId: message.chatId,
-    sticker: sticBuffer,
+    sticker,
     quote: message,
   });
 };

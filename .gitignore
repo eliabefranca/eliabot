@@ -2,6 +2,7 @@ node_modules
 baileys_auth_info
 .build
 coverage
+temp
 
 .env
 *.db

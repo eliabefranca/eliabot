@@ -46,7 +46,7 @@ function getMessageType(
   return type;
 }
 
-async function imageFromMessage(
+async function imageOrVideoFromMessage(
   messageInfo: proto.IWebMessageInfo
 ): Promise<Buffer | undefined> {
   return (await downloadMediaMessage(
@@ -70,21 +70,29 @@ async function parseBailesQuotedMessage(
 
   let image;
   if (type === 'image') {
-    image = await imageFromMessage(
+    image = await imageOrVideoFromMessage(
+      Object.assign({}, messageInfo, { message: quotedMessage })
+    );
+  }
+
+  let video;
+  if (type === 'video') {
+    video = await imageOrVideoFromMessage(
       Object.assign({}, messageInfo, { message: quotedMessage })
     );
   }
 
   return {
     id: '', // todo: maybe we can get the name of the quoted message sender
-    chatId: quotedMessage.chat?.id as string,
+    chatId: quotedMessage?.chat?.id as string,
     sender: {
       id: '', // todo: maybe we can get the name of the quoted message sender
       name: '', // todo: maybe we can get the name of the quoted message sender
     },
-    text: quotedMessage.conversation!,
+    text: quotedMessage?.conversation ?? '',
     type,
     image,
+    video,
   };
 }
 
@@ -110,14 +118,19 @@ async function parseBaileysMessage(
   const caption = messageInfo.message?.imageMessage?.caption;
 
   if (type === 'image') {
-    image = await imageFromMessage(messageInfo);
+    image = await imageOrVideoFromMessage(messageInfo);
+  }
+
+  let video;
+  if (type === 'video') {
+    video = await imageOrVideoFromMessage(messageInfo);
   }
 
   return {
     id: messageInfo.key.id!,
     chatId: messageInfo.key.remoteJid!,
     sender: {
-      id: messageInfo.key.participant!,
+      id: messageInfo.key.participant || messageInfo.key.remoteJid!,
       name: messageInfo.pushName!,
     },
     text,
@@ -126,6 +139,7 @@ async function parseBaileysMessage(
     originalDriverMessage: messageInfo,
     image,
     caption,
+    video,
   };
 }
 
