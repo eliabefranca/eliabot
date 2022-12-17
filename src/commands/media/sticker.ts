@@ -15,7 +15,7 @@ const handler: CommandHandler = async ({ client, message }) => {
   if (!image && !video) {
     await client.sendMessage({
       chatId: message.chatId,
-      text: 'Você precisa enviar uma imagem ou responder uma imagem',
+      text: 'Você precisa enviar ou responder uma imagem',
       quote: message,
     });
     return;
