@@ -4,6 +4,7 @@ baileys_auth_info
 coverage
 temp
 
+:memory:
 .env
 *.db
 *.db-journal

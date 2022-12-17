@@ -1,6 +1,7 @@
 import { Message } from 'core/protocols';
 import { parseCommand } from 'core/functions/parseCommand';
 import { bot } from './core';
+import { UserCreationAttributes, UserModel } from 'database/models/user/user';
 
 async function main() {
   await bot.start();
@@ -18,6 +19,13 @@ async function main() {
         value: value,
       });
     }
+
+    const user: UserCreationAttributes = {
+      id: message.sender.id,
+      name: message.sender.name,
+      number: message.sender?.number ?? message.sender.id,
+    };
+    await UserModel.findOrCreate({ where: { id: user.id }, defaults: user });
   });
 }
 

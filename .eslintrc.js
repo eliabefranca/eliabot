@@ -4,6 +4,7 @@ module.exports = {
     es2021: true,
   },
   extends: ['eslint:recommended', 'plugin:@typescript-eslint/recommended'],
+  ignorePatterns: ['.*.*', '*.json'],
   overrides: [],
   parser: '@typescript-eslint/parser',
   parserOptions: {
@@ -19,5 +20,7 @@ module.exports = {
     '@typescript-eslint/no-non-null-assertion': 'off',
     '@typescript-eslint/no-explicit-any': 'off',
     '@typescript-eslint/no-var-requires': 'off',
+    '@typescript-eslint/no-empty-interface': 'off',
+    'no-undef': 'off',
   },
 };

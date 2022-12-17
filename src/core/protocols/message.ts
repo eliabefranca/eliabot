@@ -15,6 +15,7 @@ export interface Message<T> {
   sender: {
     id: string;
     name: string;
+    number?: string;
   };
   text: string;
   caption?: string | null;

@@ -1,0 +1,32 @@
+{
+  "development": {
+    "database": "eliabot",
+    "storage": "DEVELOPMENT_DATABASE.db",
+    "dialect": "sqlite",
+    "define": {
+      "underscored": true,
+      "timestamps": true
+    },
+    "logging": true
+  },
+  "test": {
+    "database": "eliabot",
+    "storage": ":memory:",
+    "dialect": "sqlite",
+    "define": {
+      "underscored": true,
+      "timestamps": true
+    },
+    "logging": false
+  },
+  "production": {
+    "database": "eliabot",
+    "storage": "DATABASE.db",
+    "dialect": "sqlite",
+    "define": {
+      "underscored": true,
+      "timestamps": true
+    },
+    "logging": false
+  }
+}
