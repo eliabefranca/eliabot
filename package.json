@@ -8,7 +8,7 @@
   "license": "MIT",
   "scripts": {
     "dev": "nodemon",
-    "build": "rm -rf .build && tsc",
+    "build": "rm -rf .build && tsc && cp src/database/config.json .build/src/database/config.json",
     "start": "NODE_ENV=production NODE_PATH=.build/src node -r tsconfig-paths/register .build/src/index.js",
     "db": "sequelize db:migrate",
     "test": "jest",
