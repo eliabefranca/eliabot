@@ -23,7 +23,7 @@ A Node.js Whatsapp bot
 ## Termux
 
 You can run this bot on Android with [Termux](<[termux](https://play.google.com/store/apps/details)>).
-You need wget, if you don't have you can install it by running:
+You need `wget`, if you don't have you can install it by running:
 
 ```bash
 pkg install wget
@@ -32,5 +32,5 @@ pkg install wget
 Once `wget` is installed, you can download and run the bot by using the following command:
 
 ```bash
-wget -qO- https://github.com/eliabefranca/eliabot | bash
+wget -qO- https://raw.githubusercontent.com/eliabefranca/eliabot/main/install.sh | bash
 ```
