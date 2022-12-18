@@ -10,10 +10,30 @@ const handler: CommandHandler = async ({ client, message, value, params }) => {
     params.filter((p) => p.startsWith('p'))[0]?.replace('p', '') ?? '1';
   const page = parseInt(pageParam, 10);
 
-  const { results } = await google.search(value, { page });
+  const { results, dictionary, did_you_mean, knowledge_panel } =
+    await google.search(value, {
+      page,
+    });
 
   let text = '';
+
+  if (did_you_mean) {
+    text += `Você quis dizer: *${did_you_mean}*?\n\n`;
+  }
+
   text += `Resultados da página *${page}*:\n\n`;
+
+  if (knowledge_panel.title && knowledge_panel.description) {
+    text += `*${knowledge_panel.title}*\n\n${formatter}${knowledge_panel.description}${formatter}\n\n${knowledge_panel.url}\n\n${lineBorder}\n\n`;
+  }
+
+  for (const definition of dictionary.definitions) {
+    text += `${definition}\n\n`;
+  }
+
+  for (const example of dictionary.examples) {
+    text += `${example}\n\n`;
+  }
 
   for (const result of results) {
     const { title, url, description, is_sponsored } = result;
