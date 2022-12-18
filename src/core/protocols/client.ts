@@ -4,14 +4,16 @@ export type ClientEvents = 'message' | 'presence';
 export type ClientEventCallBack<T> = (arg: T) => Promise<void> | void;
 
 export interface ClientSendMessageImageData {
-  url: string;
+  url?: string;
+  buffer?: Buffer;
+  caption?: string;
 }
 
 export interface ClientSendMessageParams {
   chatId: string;
   text?: string;
   sticker?: Buffer;
-  image?: Buffer | ClientSendMessageImageData;
+  image?: ClientSendMessageImageData;
   caption?: string;
   video?: Buffer;
   quote?: Message<any>;

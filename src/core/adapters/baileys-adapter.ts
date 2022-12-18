@@ -11,6 +11,7 @@ import {
   ClientEventCallBack,
   ClientSendMessageParams,
 } from 'core/protocols/client';
+import { bufferFromUrl } from 'utils/bufferFromUrl';
 
 let sock: ReturnType<typeof makeWASocket> | null = null;
 
@@ -163,9 +164,22 @@ export class BailesAdapter implements IClient {
     }
 
     if (params.image) {
+      if (params.image.url) {
+        await sock!.sendMessage(
+          params.chatId,
+          {
+            image: { url: params.image.url },
+            caption: params.image.caption ?? '',
+          },
+          baileysAditionalCfg
+        );
+        return;
+      }
+
+      const buffer = await bufferFromUrl(params.image.url!);
       await sock!.sendMessage(
         params.chatId,
-        { image: params.image, caption: params.caption ?? '' },
+        { image: buffer, caption: params.image.caption ?? '' },
         baileysAditionalCfg
       );
       return;
