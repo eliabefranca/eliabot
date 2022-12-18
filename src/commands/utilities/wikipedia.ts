@@ -41,7 +41,7 @@ export default {
   keywords: ['.wiki', '.wikipedia'],
   category: CommandType.FUNNY,
   handler,
-  description: 'Retorna o resultado da pesquisa no Wikipedia',
+  description: 'Retorna o resultado da pesquisa no Wikipedia - .wiki <termo>',
   allowInGroups: true,
   allowInPrivate: true,
 } as CommandData;
