@@ -32,7 +32,7 @@ export default {
   keywords: ['.lyrics', '.letra'],
   category: CommandType.UTILS,
   handler,
-  description: 'Calcula a probabilidade de alguma coisa',
+  description: 'Retorna a letra da música - .lyrics <música>',
   allowInGroups: true,
   allowInPrivate: true,
 } as CommandData;
