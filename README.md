@@ -11,6 +11,7 @@ A Node.js Whatsapp bot
   cd eliabot
   npm install
   cp .env.example .env
+  npm run db
 ```
 
 ## Running
@@ -20,7 +21,7 @@ A Node.js Whatsapp bot
   npm run start
 ```
 
-## Termux
+<!-- ## Termux
 
 You can run this bot on Android with [Termux](<[termux](https://play.google.com/store/apps/details)>).
 You need `wget`, if you don't have you can install it by running:
@@ -33,4 +34,4 @@ Once `curl` is installed, you can download and run the bot by using the followin
 
 ```bash
 sudo chmod u+w,g+w /data/data/com.termux/files/usr/temp && curl -sS https://raw.githubusercontent.com/eliabefranca/eliabot/main/install.sh | bash
-```
+``` -->
