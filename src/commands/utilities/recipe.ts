@@ -49,13 +49,6 @@ const handler: CommandHandler = async ({ client, message, value }) => {
         url: recipe.photo,
         caption: recipe.text,
       },
-      buttons: [
-        {
-          id: 'recipe-1',
-          displayText: 'Ver no site',
-          url: value,
-        },
-      ],
     });
     return;
   }
