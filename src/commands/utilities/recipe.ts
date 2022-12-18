@@ -38,9 +38,8 @@ async function getRecipeByUrl(
   };
 }
 
-const handler: CommandHandler = async ({ client, message, value, args }) => {
-  const page = Number(args[1]?.replace('#p', '')) || 1;
-  const result = await searchRecipe(value, page);
+const handler: CommandHandler = async ({ client, message, value }) => {
+  const result = await searchRecipe(value, 1);
 
   if (isUrl(value)) {
     const recipe = await getRecipeByUrl(value);
@@ -77,8 +76,6 @@ const handler: CommandHandler = async ({ client, message, value, args }) => {
 .recipe ${recipe.url}`,
     });
   }
-
-  text += `Página ${result.currentPage} de ${result.totalPages}\n.recipe`;
 
   await client.sendMessage({
     chatId: message.chatId,
