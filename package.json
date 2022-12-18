@@ -24,6 +24,7 @@
     "@types/qrcode-terminal": "^0.12.0",
     "fast-glob": "^3.2.12",
     "g-i-s": "^2.1.6",
+    "genius-lyrics": "^4.4.2",
     "google-tts-api": "^2.0.2",
     "googlethis": "^1.7.0",
     "jest": "^29.3.1",
