@@ -30,7 +30,7 @@ const handler: CommandHandler = async ({ client, message, value }) => {
 
 export default {
   keywords: ['.lyrics', '.letra'],
-  category: CommandType.FUNNY,
+  category: CommandType.UTILS,
   handler,
   description: 'Calcula a probabilidade de alguma coisa',
   allowInGroups: true,

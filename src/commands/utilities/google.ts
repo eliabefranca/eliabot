@@ -61,7 +61,7 @@ const handler: CommandHandler = async ({ client, message, value, params }) => {
 
 const prob: CommandData = {
   keywords: ['.google', '.gs'],
-  category: CommandType.FUNNY,
+  category: CommandType.UTILS,
   handler,
   description: 'Pesquisa no Google - .google <termo> #p<número da página>',
   allowInGroups: true,

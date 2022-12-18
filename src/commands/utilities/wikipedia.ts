@@ -39,7 +39,7 @@ const handler: CommandHandler = async ({ client, message, value }) => {
 
 export default {
   keywords: ['.wiki', '.wikipedia'],
-  category: CommandType.FUNNY,
+  category: CommandType.UTILS,
   handler,
   description: 'Retorna o resultado da pesquisa no Wikipedia - .wiki <termo>',
   allowInGroups: true,

@@ -29,7 +29,7 @@ const handler: CommandHandler = async ({ client, message }) => {
 
 const prob: CommandData = {
   keywords: ['.news', '.gnews'],
-  category: CommandType.FUNNY,
+  category: CommandType.UTILS,
   handler,
   description: 'Retorna as últimas notícias do Google News',
   allowInGroups: true,
