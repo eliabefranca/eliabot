@@ -29,4 +29,14 @@ describe('handleCommand', () => {
     expect(result.keyword).toBe('.help');
     expect(result.value).toBe('value');
   });
+
+  it('Should Return the parameters', () => {
+    const result = parseCommand('.help #param1 #param2 #param3');
+
+    expect(result.params).toBeTruthy();
+    expect(result.params.length).toBe(3);
+    expect(result.params[0]).toBe('param1');
+    expect(result.params[1]).toBe('param2');
+    expect(result.params[2]).toBe('param3');
+  });
 });

@@ -9,7 +9,7 @@ async function main() {
   bot.on<Message<any>>('message', async (message) => {
     const text = message.text || message.caption;
 
-    const { keyword, value } = await parseCommand(text ?? '');
+    const { keyword, value, params } = await parseCommand(text ?? '');
     const command = bot.commands.find((command) =>
       command.keywords.includes(keyword)
     );
@@ -19,6 +19,7 @@ async function main() {
         client: bot,
         message,
         value: value,
+        params,
       });
     }
 

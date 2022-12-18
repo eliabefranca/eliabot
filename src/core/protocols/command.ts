@@ -3,6 +3,7 @@ import { Message } from './message';
 
 interface CommandParams {
   value: string; // text after the command
+  params: string[]; // params after the command
   client: IClient;
   message: Message<any>;
 }
