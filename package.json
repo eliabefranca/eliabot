@@ -22,6 +22,8 @@
     "@hapi/boom": "^10.0.0",
     "@prisma/client": "4.7.1",
     "@types/qrcode-terminal": "^0.12.0",
+    "cheerio": "^1.0.0-rc.12",
+    "cloudscraper": "^4.6.0",
     "fast-glob": "^3.2.12",
     "g-i-s": "^2.1.6",
     "genius-lyrics": "^4.4.2",

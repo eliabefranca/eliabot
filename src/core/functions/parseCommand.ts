@@ -1,8 +1,15 @@
 export function parseCommand(text: string) {
   const formattedText = text.replace(/^\. /, '.').replace(/^(,|\/|!|#)/, '.');
-  const keyword = formattedText.split(' ')[0].trim();
-  const value = formattedText.replace(keyword, '').trim();
-  const params = value
+  const commandPart =
+    formattedText.match(/([\.\\\/\!\,]\w+).* ?/gim)?.[0] ?? ''; // eslint-disable-line
+
+  const keyword = commandPart.split(' ')[0];
+  const value = commandPart
+    .replace(keyword, '')
+    .replace(/( \#\w+)/gim, '') // eslint-disable-line
+    .trim();
+
+  const args = commandPart
     .split(' ')
     .filter((p) => p.startsWith('#'))
     .map((p) => p.replace('#', ''));
@@ -10,6 +17,6 @@ export function parseCommand(text: string) {
   return {
     keyword,
     value,
-    params,
+    args,
   };
 }

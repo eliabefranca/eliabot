@@ -5,14 +5,15 @@ import { makeSock, logger } from './baileys';
 import makeWASocket, {
   AnyMessageContent,
   downloadMediaMessage,
+  MessageUpsertType,
   MiscMessageGenerationOptions,
   proto,
 } from '@adiwajshing/baileys';
 import {
   ClientEventCallBack,
   ClientSendMessageParams,
+  RegisteredCallback,
 } from 'core/protocols/client';
-import { bufferFromUrl } from 'utils/bufferFromUrl';
 
 let sock: ReturnType<typeof makeWASocket> | null = null;
 
@@ -85,7 +86,7 @@ async function parseBailesQuotedMessage(
   }
 
   return {
-    id: '', // todo: maybe we can get the name of the quoted message sender
+    id: messageInfo.agentId ?? '', // todo: maybe we can get the name of the quoted message sender
     chatId: quotedMessage?.chat?.id as string,
     sender: {
       id: '', // todo: maybe we can get the name of the quoted message sender
@@ -128,6 +129,10 @@ async function parseBaileysMessage(
     video = await imageOrVideoFromMessage(messageInfo);
   }
 
+  if (messageInfo.message?.buttonsResponseMessage?.selectedDisplayText) {
+    text = messageInfo.message?.buttonsResponseMessage?.selectedDisplayText;
+  }
+
   return {
     id: messageInfo.key.id!,
     chatId: messageInfo.key.remoteJid!,
@@ -145,6 +150,28 @@ async function parseBaileysMessage(
   };
 }
 
+interface BaileysButton {
+  buttonId: string;
+  buttonText: { displayText: string };
+  type: number;
+}
+
+function parseButtons(params: ClientSendMessageParams): BaileysButton[] | null {
+  if (!params.buttons) return null;
+
+  const buttons = [];
+
+  for (const button of params.buttons) {
+    buttons.push({
+      buttonId: button.id,
+      buttonText: { displayText: button.displayText },
+      type: 1,
+    });
+  }
+
+  return buttons;
+}
+
 export class BailesAdapter implements IClient {
   commands: CommandData[] = [];
 
@@ -156,11 +183,17 @@ export class BailesAdapter implements IClient {
     }
 
     if (params.text) {
+      const buttons = parseButtons(params);
+
       await sock!.sendMessage(
         params.chatId,
-        { text: params.text },
+        {
+          text: params.text,
+          buttons: buttons ?? undefined,
+        },
         baileysAditionalCfg
       );
+
       return;
     }
 
@@ -205,18 +238,38 @@ export class BailesAdapter implements IClient {
     }
   }
 
-  on<T>(event: ClientEvents, callback: ClientEventCallBack<T>): void {
+  off = (event: ClientEvents, callback: RegisteredCallback): void => {
+    if (event === 'message') sock!.ev.off('messages.upsert', callback);
+  };
+
+  on<T>(
+    event: ClientEvents,
+    callback: ClientEventCallBack<T>
+  ): RegisteredCallback {
     if (event === 'message') {
-      sock!.ev.on('messages.upsert', async (upsert) => {
+      const cb = async (upsert: {
+        messages: proto.IWebMessageInfo[];
+        type: MessageUpsertType;
+      }) => {
         if (upsert.type === 'notify') {
           for (const messageInfo of upsert.messages) {
+            if (messageInfo.key.fromMe) {
+              console.dir(messageInfo);
+            }
+
             await sock!.readMessages([messageInfo.key]);
             const message = await parseBaileysMessage(messageInfo);
             callback(message as T);
           }
         }
-      });
+      };
+      sock!.ev.on('messages.upsert', cb);
+      return cb;
     }
+
+    return () => {
+      console.log('no callback');
+    };
   }
 
   async start(): Promise<void> {

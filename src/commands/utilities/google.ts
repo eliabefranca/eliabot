@@ -5,7 +5,7 @@ import { CommandData, CommandHandler, CommandType } from 'core/protocols';
 const formatter = '```';
 const lineBorder = '______________________________';
 
-const handler: CommandHandler = async ({ client, message, value, params }) => {
+const handler: CommandHandler = async ({ client, message, value, args }) => {
   if (!value) {
     await client.sendMessage({
       chatId: message.chatId,
@@ -16,7 +16,7 @@ const handler: CommandHandler = async ({ client, message, value, params }) => {
   }
 
   const pageParam =
-    params.filter((p) => p.startsWith('p'))[0]?.replace('p', '') ?? '1';
+    args.filter((p) => p.startsWith('p'))[0]?.replace('p', '') ?? '1';
   const page = parseInt(pageParam, 10);
 
   const { results, dictionary, did_you_mean, knowledge_panel } =

@@ -9,6 +9,14 @@ export interface ClientSendMediaData {
   caption?: string;
 }
 
+interface Button {
+  id: string;
+  displayText: string;
+  url?: string;
+  phoneNumber?: string;
+  [key: string]: any;
+}
+
 export interface ClientSendMessageParams {
   chatId: string;
   text?: string;
@@ -18,13 +26,19 @@ export interface ClientSendMessageParams {
   video?: ClientSendMediaData;
   quote?: Message<any>;
   originalDriverMessage?: any;
+  buttons?: Button[];
 }
 
+export type RegisteredCallback = (params: any) => Promise<void> | void;
 export interface IClient {
   commands: CommandData[];
-  sendMessage(params: ClientSendMessageParams): Promise<void>;
 
-  on<T>(event: ClientEvents, callback: ClientEventCallBack<T>): void;
+  sendMessage(params: ClientSendMessageParams): Promise<void>;
+  on<T>(
+    event: ClientEvents,
+    callback: ClientEventCallBack<T>
+  ): RegisteredCallback;
+  off(event: ClientEvents, callback: RegisteredCallback): void;
 
   start(): Promise<void>;
 }
