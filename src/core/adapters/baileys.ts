@@ -6,7 +6,7 @@ import makeWASocket, {
 import mainLogger from '@adiwajshing/baileys/lib/Utils/logger';
 
 export const logger = mainLogger.child({});
-logger.level = 'trace';
+logger.level = 'silent';
 
 // external map to store retry counts of messages when decryption/encryption fails
 // keep this out of the socket itself, so as to prevent a message decryption/encryption loop across socket restarts
