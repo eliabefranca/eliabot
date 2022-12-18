@@ -200,11 +200,9 @@ export class BailesAdapter implements IClient {
       sock!.ev.on('messages.upsert', async (upsert) => {
         if (upsert.type === 'notify') {
           for (const messageInfo of upsert.messages) {
-            if (!messageInfo.key.fromMe) {
-              await sock!.readMessages([messageInfo.key]);
-              const message = await parseBaileysMessage(messageInfo);
-              callback(message as T);
-            }
+            await sock!.readMessages([messageInfo.key]);
+            const message = await parseBaileysMessage(messageInfo);
+            callback(message as T);
           }
         }
       });
