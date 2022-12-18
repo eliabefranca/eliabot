@@ -3,7 +3,7 @@ import { Message, CommandData } from '.';
 export type ClientEvents = 'message' | 'presence';
 export type ClientEventCallBack<T> = (arg: T) => Promise<void> | void;
 
-export interface ClientSendMessageImageData {
+export interface ClientSendMediaData {
   url?: string;
   buffer?: Buffer;
   caption?: string;
@@ -13,9 +13,9 @@ export interface ClientSendMessageParams {
   chatId: string;
   text?: string;
   sticker?: Buffer;
-  image?: ClientSendMessageImageData;
+  image?: ClientSendMediaData;
   caption?: string;
-  video?: Buffer;
+  video?: ClientSendMediaData;
   quote?: Message<any>;
   originalDriverMessage?: any;
 }

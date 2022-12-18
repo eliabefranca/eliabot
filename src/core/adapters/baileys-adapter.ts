@@ -3,6 +3,7 @@ import { getCommandList } from 'commands';
 import { IClient, Message, ClientEvents } from '../protocols';
 import { makeSock, logger } from './baileys';
 import makeWASocket, {
+  AnyMessageContent,
   downloadMediaMessage,
   MiscMessageGenerationOptions,
   proto,
@@ -163,23 +164,32 @@ export class BailesAdapter implements IClient {
       return;
     }
 
-    if (params.image) {
-      if (params.image.url) {
+    if (params.image || params.video) {
+      let type = 'image';
+      let paramsMediaData = params.image!;
+      if (params.video?.buffer || params.video?.url) {
+        type = 'video';
+        paramsMediaData = params.video;
+      }
+
+      if (paramsMediaData.url) {
         await sock!.sendMessage(
           params.chatId,
           {
-            image: { url: params.image.url },
-            caption: params.image.caption ?? '',
-          },
+            [type as keyof object]: { url: paramsMediaData.url },
+            caption: paramsMediaData.caption ?? '',
+          } as AnyMessageContent,
           baileysAditionalCfg
         );
         return;
       }
 
-      const buffer = await bufferFromUrl(params.image.url!);
       await sock!.sendMessage(
         params.chatId,
-        { image: buffer, caption: params.image.caption ?? '' },
+        {
+          [type as keyof object]: paramsMediaData.buffer,
+          caption: paramsMediaData.caption ?? '',
+        } as AnyMessageContent,
         baileysAditionalCfg
       );
       return;
