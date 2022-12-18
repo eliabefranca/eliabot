@@ -119,7 +119,6 @@ export default {
   category: CommandType.MEDIA,
   description: 'Baixa um vídeo do youtube (Beta).',
   handler,
-  hidden: true,
   allowInGroups: true,
   allowInPrivate: true,
 } as CommandData;
