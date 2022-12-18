@@ -95,7 +95,8 @@ const handler: CommandHandler = async ({ value, client, message }) => {
         deleteFile();
       }
     });
-    stream.on('finish', async () => {
+
+    stream.on('end', async () => {
       stream.destroy();
       await client.sendMessage({
         chatId: message.chatId,
