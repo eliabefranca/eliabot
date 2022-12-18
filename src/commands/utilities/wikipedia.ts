@@ -18,7 +18,7 @@ const handler: CommandHandler = async ({ client, message, value }) => {
 
     let text = '';
     text += `*${summary.title}*\n\n`;
-    text += `${summary.description}`;
+    text += `${summary.description ?? ''}`;
     text += `\n\n${summary.extract ?? ''}`;
     text += `\n\n${page.fullurl}`;
 
