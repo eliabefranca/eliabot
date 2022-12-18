@@ -6,6 +6,15 @@ const formatter = '```';
 const lineBorder = '______________________________';
 
 const handler: CommandHandler = async ({ client, message, value, params }) => {
+  if (!value) {
+    await client.sendMessage({
+      chatId: message.chatId,
+      text: 'Você precisa informar um termo para pesquisar',
+      quote: message,
+    });
+    return;
+  }
+
   const pageParam =
     params.filter((p) => p.startsWith('p'))[0]?.replace('p', '') ?? '1';
   const page = parseInt(pageParam, 10);
