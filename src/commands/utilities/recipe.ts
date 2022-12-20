@@ -4,7 +4,7 @@ import {
   CommandType,
   Message,
 } from 'core/protocols';
-import { ClientSendMessageParams } from 'core/protocols/client';
+import { ClientSendMessageParams, IClient } from 'core/protocols/client';
 import { getRecipe, searchRecipe } from 'lib/tudogostoso';
 import { isUrl } from 'utils/isUrl';
 
@@ -38,42 +38,71 @@ async function getRecipeByUrl(
   };
 }
 
-const handler: CommandHandler = async ({ client, message, value }) => {
-  const result = await searchRecipe(value, 1);
+function getRecipeUrlFromQuoted(n: string, recipes: string): string {
+  const lines = recipes.split('\n').map((l) => l.trim().replace(/\*/g, ''));
 
-  if (isUrl(value)) {
-    const recipe = await getRecipeByUrl(value);
-    client.sendMessage({
-      chatId: message.chatId,
-      image: {
-        url: recipe.photo,
-        caption: recipe.text,
-      },
-    });
+  for (const line of lines) {
+    const lineNumber = line.split(' - ')[0].trim();
+    if (lineNumber === n) {
+      return line.match(/https?:\/\/[^\s]+/g)![0].trim();
+    }
+  }
+
+  return '';
+}
+
+async function handleByUrl(
+  client: IClient,
+  url: string,
+  message: Message<any>
+) {
+  const recipe = await getRecipeByUrl(url);
+  client.sendMessage({
+    chatId: message.chatId,
+    image: {
+      url: recipe.photo,
+      caption: recipe.text,
+    },
+  });
+  return;
+}
+
+const handler: CommandHandler = async ({ client, message, value, args }) => {
+  if (args.includes('handleReply')) {
+    const url = getRecipeUrlFromQuoted(value, message.quoted!.text);
+    console.log('URRRLLLLL: ', url);
+    handleByUrl(client, url, message);
     return;
   }
 
-  let text = '';
+  if (isUrl(value)) {
+    handleByUrl(client, value, message);
+    return;
+  }
 
+  const result = await searchRecipe(value, 1);
+
+  let text = '';
   let index = 1;
-  const buttons: ClientSendMessageParams['buttons'] = [];
+  // const buttons: ClientSendMessageParams['buttons'] = [];
   for (const recipe of result.recipes) {
-    text += `*${index} - ${recipe.title}*`;
-    text += `\n${recipe.url}`;
+    text += `*${index} - ${recipe.title}* - ${recipe.url}\n`;
     text += `\n${recipe.category} - ${recipe.author} - ${recipe.duration} - ${recipe.portions}`;
     text += '\n\n';
     index++;
-    buttons.push({
-      id: `recipe-${index}`,
-      displayText: `${index}. ${recipe.title} \u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0 
-.recipe ${recipe.url}`,
-    });
+    //     buttons.push({
+    //       id: `recipe-${index}`,
+    //       displayText: `${index}. ${recipe.title} \u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0
+    // .recipe ${recipe.url}`,
+    //     });
   }
+
+  text += '\n%.recipe%';
 
   await client.sendMessage({
     chatId: message.chatId,
     text,
-    buttons,
+    // buttons,
     quote: message,
   });
 };
