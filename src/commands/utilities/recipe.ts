@@ -90,8 +90,7 @@ const handler: CommandHandler = async ({ client, message, value, args }) => {
   // const buttons: ClientSendMessageParams['buttons'] = [];
   for (const recipe of result.recipes) {
     text += `*${index} - ${recipe.title}* - ${recipe.url}\n`;
-    text += `\n${recipe.category} - ${recipe.author} - ${recipe.duration} - ${recipe.portions}`;
-    text += '\n\n';
+    text += `${recipe.category} - ${recipe.author} - ${recipe.duration} - ${recipe.portions}\n\n`;
     index++;
     //     buttons.push({
     //       id: `recipe-${index}`,
