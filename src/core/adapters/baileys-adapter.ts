@@ -49,6 +49,15 @@ function getMessageType(
   return type;
 }
 
+function getTextFromMessage(messageInfo: proto.IMessage | undefined | null) {
+  return (
+    messageInfo?.conversation ||
+    messageInfo?.buttonsMessage?.contentText ||
+    messageInfo?.contactMessage?.displayName ||
+    ''
+  );
+}
+
 async function imageOrVideoFromMessage(
   messageInfo: proto.IWebMessageInfo
 ): Promise<Buffer | undefined> {
@@ -85,6 +94,8 @@ async function parseBailesQuotedMessage(
     );
   }
 
+  const text = getTextFromMessage(quotedMessage);
+
   return {
     id: messageInfo.agentId ?? '', // todo: maybe we can get the name of the quoted message sender
     chatId: quotedMessage?.chat?.id as string,
@@ -92,7 +103,7 @@ async function parseBailesQuotedMessage(
       id: '', // todo: maybe we can get the name of the quoted message sender
       name: '', // todo: maybe we can get the name of the quoted message sender
     },
-    text: quotedMessage?.conversation ?? '',
+    text: text,
     type,
     image,
     video,
