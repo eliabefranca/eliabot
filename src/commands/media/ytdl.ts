@@ -44,7 +44,7 @@ const handler: CommandHandler = async ({ value, client, message }) => {
       return;
     }
 
-    const MAX_BUFFER_SIZE = 1024 * 1024 * 15; // the max size that can be sent in a single message is 16MB
+    const MAX_BUFFER_SIZE = 1024 * 1024 * 16; // the max size that can be sent in a single message is 16MB
 
     const videoName = message.sender.id + '.mp4';
     const filePath = path.join(__dirname, '..', '..', '..', 'temp', videoName);
@@ -59,14 +59,13 @@ const handler: CommandHandler = async ({ value, client, message }) => {
     }
 
     fs.writeFileSync(filePath, '');
-    const deleteFile = () =>
-      fs.unlink(filePath, (err) => {
-        if (err) {
-          console.error(err);
-          return;
-        }
-      });
-
+    const deleteFile = () => {
+      try {
+        fs.unlinkSync(filePath);
+      } catch (err) {
+        console.error(err);
+      }
+    };
     let streamDestroyed = false;
     const stream = ytdl(videoUrl, {
       quality: 'lowest',

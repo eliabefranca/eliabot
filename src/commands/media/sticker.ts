@@ -1,7 +1,8 @@
-import { CommandData, CommandHandler, CommandType } from 'core/protocols';
+import path from 'path';
 import { createSticker } from 'wa-sticker';
 import { unlinkSync, writeFileSync } from 'fs';
-import path from 'path';
+import { CommandData, CommandHandler, CommandType } from 'core/protocols';
+import { fileTypeFromBuffer } from 'utils/fileTypeFromBuffer';
 
 const handler: CommandHandler = async ({ client, message }) => {
   let image = message.image;
@@ -21,10 +22,8 @@ const handler: CommandHandler = async ({ client, message }) => {
     return;
   }
 
-  let extension = '.mp4';
-  if (image) {
-    extension = '.png';
-  }
+  const extension = fileTypeFromBuffer(video ?? image!) as string;
+
   const filePath = path.join(
     __dirname,
     '..',
@@ -33,6 +32,7 @@ const handler: CommandHandler = async ({ client, message }) => {
     'temp',
     `${message.sender.id}.${extension}`
   );
+
   const fileToBeCreated = (image ?? video) as Buffer;
   await writeFileSync(filePath, fileToBeCreated);
 
