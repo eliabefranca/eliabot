@@ -69,8 +69,11 @@ async function handleByUrl(
 
 const handler: CommandHandler = async ({ client, message, value, args }) => {
   if (args.includes('handleReply')) {
+    if (isNaN(Number(value))) {
+      return;
+    }
+
     const url = getRecipeUrlFromQuoted(value, message.quoted!.text);
-    console.log('URRRLLLLL: ', url);
     handleByUrl(client, url, message);
     return;
   }

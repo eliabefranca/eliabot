@@ -36,7 +36,7 @@ async function main() {
       const commandStr = quotedText
         .match(quotedKeywordReg)![0]
         .replace(/%/gi, '');
-      const { args, keyword, value } = parseCommand(commandStr);
+      const { args, keyword } = parseCommand(commandStr);
 
       const command = bot.commands.find((command) =>
         command.keywords.includes(keyword)
