@@ -9,6 +9,7 @@
     },
     "logging": true
   },
+
   "test": {
     "database": "eliabot",
     "storage": ":memory:",
