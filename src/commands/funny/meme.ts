@@ -6,7 +6,7 @@ const handler: CommandHandler = async ({ client, message, value }) => {
 
   const [top, bottom] = value.split('/');
 
-  if (!image || !top || !bottom) {
+  if (!image || (!top && !bottom)) {
     return client.sendMessage({
       chatId: message.chatId,
       text: 'Você precisa enviar uma imagem e duas frases separadas por "/"',
