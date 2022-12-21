@@ -13,12 +13,12 @@ const handler: CommandHandler = async ({ client, message, value }) => {
 
   try {
     await wiki.setLang('pt');
-    const page = await wiki.page(value);
+    const page = await wiki.page(value, { autoSuggest: true });
     const summary = await page.summary();
 
     let text = '';
     text += `*${summary.title}*\n\n`;
-    text += `${summary.description + '\n\n' ?? ''}`;
+    text += `${summary.description ? summary.description + '\n\n' : ''}`;
     text += `${summary.extract ?? ''}`;
     text += `\n\n${page.fullurl}`;
 
