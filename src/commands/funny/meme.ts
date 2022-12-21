@@ -9,7 +9,7 @@ const handler: CommandHandler = async ({ client, message, value }) => {
   if (!image || !top || !bottom) {
     return client.sendMessage({
       chatId: message.chatId,
-      text: 'Você precisa enviar uma imagem e duas frases separadas por "_"',
+      text: 'Você precisa enviar uma imagem e duas frases separadas por "/"',
       quote: message,
     });
   }
@@ -30,7 +30,7 @@ export default {
   category: CommandType.FUNNY,
   handler,
   description:
-    '(Beta) Cria a partir de uma imagem e duas frases .meme <imagem> <frase1>_<frase2>',
+    '(Beta) Cria a partir de uma imagem e duas frases .meme <imagem> <frase1>/<frase2>',
   allowInGroups: true,
   allowInPrivate: true,
 } as CommandData;
