@@ -4,7 +4,7 @@ import memeGenerator from 'lib/memeGenerator';
 const handler: CommandHandler = async ({ client, message, value }) => {
   const image = message.image ?? message.quoted?.image;
 
-  const [top, bottom] = value.split('_');
+  const [top, bottom] = value.split('/');
 
   if (!image || !top || !bottom) {
     return client.sendMessage({
