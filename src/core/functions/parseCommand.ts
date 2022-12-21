@@ -1,7 +1,7 @@
 export function parseCommand(text: string) {
   const formattedText = text.replace(/^\. /, '.').replace(/^(,|\/|!|#)/, '.');
   const commandPart =
-    formattedText.match(/([\.\\\/\!\,]\w+).* ?/gim)?.[0] ?? ''; // eslint-disable-line
+    formattedText.match(/^([\.\\\/\!\,]\w+).* ?/gim)?.[0] ?? ''; // eslint-disable-line
 
   const keyword = commandPart.split(' ')[0];
   const value = commandPart

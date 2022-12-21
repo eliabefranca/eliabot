@@ -2,7 +2,7 @@ import ytdl, { videoInfo } from 'ytdl-core';
 const yts = require('yt-search');
 import { CommandData, CommandHandler, CommandType } from 'core/protocols';
 import { isUrl } from 'utils/isUrl';
-import { existsSync, writeFileSync } from 'fs';
+import { existsSync } from 'fs';
 import fs from 'fs';
 import path from 'path';
 
@@ -25,7 +25,7 @@ const handler: CommandHandler = async ({ value, client, message }) => {
       if (!videos || !videos.all || !videos.all[0]) {
         client.sendMessage({
           chatId: message.chatId,
-          text: 'Não foi possível encontrar o vídeo [' + value + ']',
+          text: 'Não foi possível encontrar o vídeo.',
           quote: message,
         });
         return;

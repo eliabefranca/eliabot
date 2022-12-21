@@ -40,17 +40,13 @@ describe('handleCommand', () => {
     expect(result.args[2]).toBe('param3');
   });
 
-  it('Should parse commands in the end of the string', () => {
+  it('Should not parse commands in the end of the string', () => {
     const result = parseCommand(
       'This is a message with a command at the end .help #param1 #param2 #param3 value here'
     );
 
-    expect(result.args).toBeTruthy();
-    expect(result.args.length).toBe(3);
-    expect(result.args[0]).toBe('param1');
-    expect(result.args[1]).toBe('param2');
-    expect(result.args[2]).toBe('param3');
-    expect(result.value).toBe('value here');
+    expect(result.args.length).toBe(0);
+    expect(result.keyword).toBe('');
   });
 
   it('Should accept special characters in the value', () => {

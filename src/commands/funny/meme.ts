@@ -9,7 +9,7 @@ const handler: CommandHandler = async ({ client, message, value }) => {
   if (!image || !top || !bottom) {
     return client.sendMessage({
       chatId: message.chatId,
-      text: 'Você precisa enviar uma imagem e duas frases separadas por vírgula',
+      text: 'Você precisa enviar uma imagem e duas frases separadas por "_"',
       quote: message,
     });
   }
