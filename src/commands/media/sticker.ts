@@ -45,7 +45,11 @@ const handler: CommandHandler = async ({ client, message }) => {
     },
   });
 
-  unlinkSync(filePath);
+  try {
+    unlinkSync(filePath);
+  } catch (error) {
+    console.error(error);
+  }
 
   client.sendMessage({
     chatId: message.chatId,
