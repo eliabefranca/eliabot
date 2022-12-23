@@ -13,7 +13,9 @@ async function getRandomCopyPastaPage() {
   }).then((text: string) => text);
 
   const $ = load(htmlText);
-  const allLinks = $('.mw-allpages-body li a').toArray();
+  const allLinks = $('.mw-allpages-body li a')
+    .toArray()
+    .filter((a) => !a.attribs.href.includes('Main_Page'));
   const random = getRandom(allLinks);
 
   return `https://copypasta-br.fandom.com${random.attribs.href}`;
