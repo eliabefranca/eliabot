@@ -85,9 +85,19 @@ const handler: CommandHandler = async ({ client, message, value, args }) => {
 
   const result = await searchRecipe(value, 1);
 
+  if (result.recipes.length === 0) {
+    await client.sendMessage({
+      chatId: message.chatId,
+      text: 'Nenhuma receita encontrada.',
+      quote: message,
+    });
+    return;
+  }
+
   let text = '';
   let index = 1;
   // const buttons: ClientSendMessageParams['buttons'] = [];
+
   for (const recipe of result.recipes) {
     text += `*${index} - ${recipe.title}* - ${recipe.url}\n`;
     text += `${recipe.category} - ${recipe.author} - ${recipe.duration} - ${recipe.portions}\n\n`;
