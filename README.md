@@ -1,4 +1,7 @@
 <h1 align="center">Eliabot</h1>
+<p align="center">
+  <img src="logo.png" alt="Eliabot" width="200" />
+</p>
 
 ## What is this?
 
