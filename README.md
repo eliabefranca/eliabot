@@ -7,6 +7,11 @@
 
 A Node.js Whatsapp bot
 
+## Prerequisites
+
+- [Node.js](https://nodejs.org/en/) v12 or higher
+- [FFmpeg](https://ffmpeg.org/download.html) installed and added to PATH
+
 ## Installing
 
 ```bash
