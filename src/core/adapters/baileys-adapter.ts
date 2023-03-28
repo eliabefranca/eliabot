@@ -284,9 +284,9 @@ export class BailesAdapter implements IClient {
   }
 
   async start(): Promise<void> {
-    console.log('Eliabot started');
-
     this.commands = await getCommandList();
     sock = await makeSock();
+
+    console.log('Eliabot started');
   }
 }
