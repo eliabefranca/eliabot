@@ -1,8 +1,8 @@
 import path from 'path';
 import { createSticker } from 'wa-sticker';
+import { fromBuffer } from 'file-type';
 import { unlinkSync, writeFileSync } from 'fs';
 import { CommandData, CommandHandler, CommandType } from 'core/protocols';
-import { fileTypeFromBuffer } from 'utils/fileTypeFromBuffer';
 
 const handler: CommandHandler = async ({ client, message }) => {
   let image = message.image;
@@ -22,7 +22,7 @@ const handler: CommandHandler = async ({ client, message }) => {
     return;
   }
 
-  const extension = fileTypeFromBuffer(video ?? image!) as string;
+  const fileType = await fromBuffer(video ?? image!);
 
   const filePath = path.join(
     __dirname,
@@ -30,7 +30,7 @@ const handler: CommandHandler = async ({ client, message }) => {
     '..',
     '..',
     'temp',
-    `${message.sender.id}.${extension}`
+    `${message.sender.id}.${fileType?.ext}`
   );
 
   const fileToBeCreated = (image ?? video) as Buffer;
