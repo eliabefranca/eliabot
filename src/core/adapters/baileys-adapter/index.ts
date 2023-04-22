@@ -1,6 +1,6 @@
 import { CommandData } from 'core/protocols';
 import { getCommandList } from 'commands';
-import { IClient, Message, ClientEvents } from '../protocols';
+import { IClient, Message, ClientEvents } from '../../protocols';
 import { makeSock, logger } from './baileys';
 import makeWASocket, {
   AnyMessageContent,
