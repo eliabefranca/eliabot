@@ -29,6 +29,11 @@ export interface ClientSendMessageParams {
   buttons?: Button[];
 }
 
+export interface ClientDeleteMessageParams {
+  chatId: string;
+  message: any;
+}
+
 export type RegisteredCallback = (params: any) => Promise<void> | void;
 export interface IClient {
   commands: CommandData[];
