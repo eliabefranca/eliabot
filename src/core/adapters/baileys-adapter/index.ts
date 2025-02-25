@@ -8,8 +8,9 @@ import makeWASocket, {
   MessageUpsertType,
   MiscMessageGenerationOptions,
   proto,
-} from '@adiwajshing/baileys';
+} from 'baileys';
 import {
+  ClientDeleteMessageParams,
   ClientEventCallBack,
   ClientSendMessageParams,
   RegisteredCallback,
@@ -194,13 +195,13 @@ export class BailesAdapter implements IClient {
     }
 
     if (params.text) {
-      const buttons = parseButtons(params);
+      // TODO: add buttons
+      // const buttons = parseButtons(params);
 
       await sock!.sendMessage(
         params.chatId,
         {
           text: params.text,
-          buttons: buttons ?? undefined,
         },
         baileysAditionalCfg
       );
@@ -247,6 +248,15 @@ export class BailesAdapter implements IClient {
       );
       return;
     }
+  }
+
+  async deleteMessage({
+    message,
+    chatId,
+  }: ClientDeleteMessageParams): Promise<void> {
+    await sock!.sendMessage(chatId, {
+      delete: message.originalDriverMessage.key,
+    });
   }
 
   off = (event: ClientEvents, callback: RegisteredCallback): void => {
