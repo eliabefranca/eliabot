@@ -5,7 +5,18 @@ import { UserCreationAttributes, UserModel } from 'database/models/user/user';
 
 const isEuNamoro = (text: string) => {
   const lowerCase = text.toLowerCase();
-  return lowerCase.includes('eu') && lowerCase.includes('namor');
+  const hasNamoro =
+    lowerCase.includes('namor') ||
+    lowerCase.includes('nam0ro') ||
+    lowerCase.includes('nam0r0') ||
+    lowerCase.includes('n4m0r0') ||
+    lowerCase.includes('n4mor0') ||
+    lowerCase.includes('n4m0ro') ||
+    lowerCase.includes('tenho um relacionamento');
+
+  const hasEu = lowerCase.includes('eu') || lowerCase.includes('3u');
+
+  return hasEu && hasNamoro;
 };
 
 async function main() {
@@ -15,8 +26,6 @@ async function main() {
     const text = message.text || message.caption || '';
     const { keyword, value, args } = await parseCommand(text ?? '');
 
-    // 553193413855
-    console.log(message.sender.id);
     if (
       message.sender.id === '553193413855@s.whatsapp.net' &&
       isEuNamoro(text)
